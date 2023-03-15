@@ -128,15 +128,14 @@ var availableGigsData = []
 async function getOngoingGigs() { //Return gigs in an arraylist
     const gigArray = []
 
-
     const q = query(collection(db, 'gigs'), where ("completed", "==", false)); //Filters gigs that are already done
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        gigArray.push(doc.data()); //Append gigs to gigArray-list
-       // console.log(doc.id, "=>", doc.data()); //for testing purposes
+        const id = gigArray.length
+        const formattedGig = formatAvailableGigsData(doc.data(), id)
+        gigArray.push(formattedGig); //Append gigs to gigArray-list
     availableGigsData = gigArray
 });
-//console.log(availableGigsData)
 }
 
 //Export non-temp functions and data here

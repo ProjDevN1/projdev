@@ -20,8 +20,8 @@ import ActiveGigsScreen from "./screens/ActiveGigsScreen";
 import DrivingScreen from "./screens/DrivingScreen";
 import AddPicsAndInfo from "./screens/AddPicsAndInfo";
 import ForgotPassword from "./screens/ForgotPasswordScreen";
-import GigApply from "./screens/GigApplyScreen";
-import GigStart from "./screens/GigStartScreen";
+import GigApplyScreen from "./screens/GigApplyScreen";
+import GigStartScreen from "./screens/GigStartScreen";
 
 
 //Temporary screen for backend work
@@ -79,8 +79,8 @@ export default function App() {
 				<Stack.Screen name="Arrival" component={ArrivalScreen} />
 				<Stack.Screen name="AddPicInfo" component={AddPicsAndInfo} />
 				<Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-				<Stack.Screen name="GigApply" component={GigApply}/>
-				<Stack.Screen name="GigStart" component={GigStart}/>
+				<Stack.Screen name="GigApply" component={GigApplyScreen}/>
+				<Stack.Screen name="GigStart" component={GigStartScreen}/>
 
 				<Stack.Screen name="DBTest" component={DatabaseTestingScreen}/>	
 
