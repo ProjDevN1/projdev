@@ -4,18 +4,21 @@ import React, { useState } from 'react'
 import { STYLES } from '../constants/styles'
 import { availableGigsData } from '../api/api'
 
-const Item = ({gig_id, startCity, endCity, reward, date, startTime, endTime}) => (
+
+
+//This is the frontend code for an individual list item
+const Item = ({gig_id, startLocation, endLocation, reward, date, startTime, endTime}) => (
   <SafeAreaView>
-    <Text>{date}</Text>
-    <Text>{startCity}</Text>
-    <Text>{endCity}</Text>
-    <Text>{reward}€</Text>
-    <Text>{startTime}</Text>
-    <Text>{endTime}</Text>
+    <Text>{gig_id}</Text> 
+    <Text>From {startLocation}</Text>
+    <Text>To {endLocation}</Text>
+    <Text>Reward {reward}€</Text>
+    <Text>Departure time: {startTime}</Text>
+    <Text>Arrival time: {endTime}</Text>
   </SafeAreaView>
 )
 
-
+//This has the frontend code that shows either a list of available gigs or a text thing. Style accordingly
 function List() {
   if (availableGigsData.length === 0) {
     return ( 
@@ -38,8 +41,10 @@ function List() {
   }
 }
 console.log(availableGigsData)
-
 const GigListScreen = () => {
+  
+  //The List component is the function above. It returns the forntend code for available gigs list if there are available gigs
+  //Otherwise just returns text component telling the user that no gigs are available
   return(
     <SafeAreaView>
       <List/>
