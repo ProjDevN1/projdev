@@ -1,5 +1,6 @@
 import { View, Text, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import MapView from "react-native-maps";
 
 
 const ArrivalScreen = () => {
@@ -22,9 +23,19 @@ const ArrivalScreen = () => {
   
   // Screen itself
 
+
   return (
     <View>
-      <Text style={{fontSize: 36}}>Map goes here</Text>
+      <MapView
+      style={{width:300, height: 300}}
+        //specify our coordinates.
+        initialRegion={{
+          latitude: 60.45167733942584,
+          longitude: 22.266609036440343,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
       <Text>You have arrived at your destination</Text>
       <Text>Arrival Time: {arrivalTime} </Text>
       <Text>Location: </Text>

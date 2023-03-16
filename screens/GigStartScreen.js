@@ -2,6 +2,8 @@ import { View, Text, Pressable } from "react-native";
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 import React from "react";
+import MapView from "react-native-maps";
+
 
 /*This screen is very similar to the GigApplyScreen, because apparently the 
 only thing changing is that the apply-button changes to start-button*/
@@ -11,7 +13,15 @@ const GigStartScreen = () => {
 		<View style={STARTGIG.screenWrapper}>
 			{/*Actual map*/}
 			<View style={STARTGIG.mapWrapper}>
-				<Text style={{ fontSize: 36 }}>Map goes here</Text>
+			<MapView style={STARTGIG.mapWrapper}
+        //specify our coordinates.
+        		initialRegion={{
+          		latitude: 60.45167733942584,
+          		longitude: 22.266609036440343,
+          		latitudeDelta: 0.0922,
+          		longitudeDelta: 0.0421,
+        }}
+      />
 			</View>
 			{/*Search/info buttons - absolute element */}
 			<View style={STARTGIG.infoBtnWrapper}>

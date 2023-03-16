@@ -22,6 +22,7 @@ import AddPicsAndInfo from "./screens/AddPicsAndInfo";
 import ForgotPassword from "./screens/ForgotPasswordScreen";
 import GigApplyScreen from "./screens/GigApplyScreen";
 import GigStartScreen from "./screens/GigStartScreen";
+import MapsTestScreen from "./screens/MapTestScreen.js";
 
 
 //Temporary screen for backend work
@@ -83,6 +84,7 @@ export default function App() {
 				<Stack.Screen name="GigStart" component={GigStartScreen}/>
 
 				<Stack.Screen name="DBTest" component={DatabaseTestingScreen}/>	
+				<Stack.Screen name="MapTest" component={MapsTestScreen}/>	
 
 				
 			</Stack.Navigator>
