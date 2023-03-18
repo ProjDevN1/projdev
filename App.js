@@ -22,7 +22,7 @@ import AddPicsAndInfo from "./screens/AddPicsAndInfo";
 import ForgotPassword from "./screens/ForgotPasswordScreen";
 import GigApplyScreen from "./screens/GigApplyScreen";
 import GigStartScreen from "./screens/GigStartScreen";
-import MapsTestScreen from "./screens/MapTestScreen.js";
+// import MapsTestScreen from "./screens/MapTestScreen.js";
 
 
 //Temporary screen for backend work
@@ -31,6 +31,8 @@ import DatabaseTestingScreen from "./screens/DatabaseTestingScreen";
 
 //Imports and executes the getActiveGigs and getUser funtions, so that ActiveGigsScreen does not need to wait for data fetching to happen
 import { getActiveGigs, getUser, getOngoingGigs } from './api/api'
+
+
 
 async function initializeData() {
 	await getUser()
@@ -83,11 +85,11 @@ export default function App() {
 				<Stack.Screen name="GigApply" component={GigApplyScreen}/>
 				<Stack.Screen name="GigStart" component={GigStartScreen}/>
 
-				<Stack.Screen name="DBTest" component={DatabaseTestingScreen}/>	
-				<Stack.Screen name="MapTest" component={MapsTestScreen}/>	
+				<Stack.Screen name="DBTest" component={DatabaseTestingScreen}/>		
 
 				
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
 }
+// <Stack.Screen name="MapTest" component={MapsTestScreen}/>	

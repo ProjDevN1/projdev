@@ -2,7 +2,7 @@ import { View, Text, Pressable, SafeAreaView, FlatList } from 'react-native'
 import React, { useState } from 'react'
 
 import { STYLES } from '../constants/styles'
-import { availableGigsData } from '../api/api'
+import { availableGigsData, getClientName } from '../api/api'
 
 
 
@@ -13,7 +13,7 @@ function List(props) {
   //This is the frontend code for an individual list item
   const Item = ({id, startLocation, endLocation, reward, startTime, endTime}) => (
     <View>
-      <Pressable onPress={() => onListItemPress(navRef)}> 
+      <Pressable onPress={() => onListItemPress(navRef, id)}> 
         <Text>From {startLocation}</Text>
         <Text>To {endLocation}</Text>
         <Text>Reward {reward}€</Text>
@@ -55,10 +55,18 @@ const GigListScreen = ({navigation}) => {
   )
 }
 
-function onListItemPress(navigation){
+//This function saves info about which item was clicked, ans well as gets the client name ready for next screen
+//Putting the client name function here ensures that the data gets fetched before the next screen renders
+let clickedListItem = ''
+let clientName = ''
+async function onListItemPress(navigation, id){
+  clickedListItem = id
+  clientName = await getClientName('available', id)
   navigation.navigate('GigApply')
 }
 
 
 
+
 export default GigListScreen
+export { clickedListItem, clientName }

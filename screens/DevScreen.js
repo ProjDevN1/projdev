@@ -40,7 +40,6 @@ const DevScreen = ({navigation}) => {
 
         <Text>Danger zone, don't touch unless you know what you are doing</Text>
         <Button title="DB Testing" onPress={() => navigation.navigate('DBTest')}/>
-        <Button title="Map testing" onPress={() => navigation.navigate('MapTest')}/>
         <Button title="Camera permission" onPress={requestCameraPermission}/>
         <Button title="Get location" onPress={curLocation}/>
     </View>
@@ -55,6 +54,6 @@ const devStyles = StyleSheet.create({
         textAlign: 'center',
     }
 })
-
+// <Button title="Map testing" onPress={() => navigation.navigate('MapTest')}/>
 
 export default DevScreen

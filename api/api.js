@@ -67,6 +67,7 @@ function formatActiveGigsData(gigsData, id){
         estimatedTime: 'Not implemented',
         addInfo: 'DOnt have these yet either lol',
         reward: gigsData.reward,
+        client: gigsData.client,
     }
     return ITEM
 }
@@ -79,6 +80,8 @@ function formatAvailableGigsData(aGigsData, id) {
         reward: aGigsData.reward,
         startTime: aGigsData.startTime,
         endTime: aGigsData.endTime,
+        client: aGigsData.client,
+        route: `${aGigsData.startLocation} - ${aGigsData.endLocation}`
     }
     return ITEM
 }
@@ -138,5 +141,28 @@ async function getOngoingGigs() { //Return gigs in an arraylist
 });
 }
 
+
+//This functon gets the client names associated with a gig in the gigstart or gigapply screens
+async function getClientName(gigType, id){ //Gig type should be either available or active, depending on which screen it is called from
+    let clientId = ''
+
+    //Checks if to get the client from active or available gigs and returns the correct clients name
+    if (gigType === 'available'){
+        clientId = availableGigsData[id].client
+        const clientSnap = await getDoc(doc(db, 'clients', clientId))
+        return clientSnap.data().name
+
+    } else if (gigType === 'active'){
+        clientId = activeGigsData[id].client
+        const clientSnap = await getDoc(doc(db, 'clients', clientId))
+        return clientSnap.data().name
+    } else {
+        console.log('Incorrect gig type')
+    }
+
+
+}
+
+
 //Export non-temp functions and data here
-export { getOngoingGigs, getUser, getActiveGigs, activeGigsData, currentUser, switchUser, availableGigsData }
+export { getClientName, getOngoingGigs, getUser, getActiveGigs, activeGigsData, currentUser, switchUser, availableGigsData }
