@@ -4,11 +4,17 @@ import { STARTGIG } from "../constants/styles";
 import React from "react";
 import MapView from "react-native-maps";
 
+import { clickedListItem, clientName } from "../screens/ActiveGigsScreen"
+import { activeGigsData } from '../api/api'
+
 
 /*This screen is very similar to the GigApplyScreen, because apparently the 
 only thing changing is that the apply-button changes to start-button*/
 
+
 const GigStartScreen = () => {
+	const currentGig = activeGigsData[clickedListItem]
+	console.log(clickedListItem)
 	return (
 		<View style={STARTGIG.screenWrapper}>
 			{/*Actual map*/}
@@ -45,16 +51,16 @@ const GigStartScreen = () => {
 				<View style={[STARTGIG.textWrapper]}>
 					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
 						<Text style={ELSTYLES.titleL}>Route:</Text>
-						<Text style={ELSTYLES.titleLlight}>Turku–Helsinki</Text>
+						<Text style={ELSTYLES.titleLlight}>{currentGig.title}</Text>
 					</View>
 					<View style={[STARTGIG.section, { justifyContent: "space-evenly" }]}>
-						<Text style={ELSTYLES.txtAlt}>Pickup time 00:00–14:00</Text>
-						<Text style={ELSTYLES.txtAlt}>Delivery time 00:00–14:00</Text>
-						<Text style={ELSTYLES.txtAlt}>Pay: 69eur</Text>
+						<Text style={ELSTYLES.txtAlt}>{currentGig.leaveTime}</Text>
+						<Text style={ELSTYLES.txtAlt}>{currentGig.arrivalTime}</Text>
+						<Text style={ELSTYLES.txtAlt}>Pay: {currentGig.reward} €</Text>
 					</View>
 					<View style={[STARTGIG.section, { justifyContent: "space-evenly" }]}>
-						<Text style={ELSTYLES.txtAlt}>Fuel budget 69eur</Text>
-						<Text style={ELSTYLES.txtAlt}>Client name</Text>
+						<Text style={ELSTYLES.txtAlt}>Fuel budget: 69 €</Text>
+						<Text style={ELSTYLES.txtAlt}>Client name: {clientName}</Text>
 					</View>
 				</View>
 

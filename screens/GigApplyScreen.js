@@ -2,7 +2,12 @@ import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import MapView from "react-native-maps";
 
+import { clickedListItem, clientName } from "../screens/GigListScreen"
+import { availableGigsData } from '../api/api'
+
 const GigApplyScreen = () => {
+
+  const currentGig = availableGigsData[clickedListItem]
   return (
     <View>
     {/*Render our MapView*/}
@@ -26,12 +31,12 @@ const GigApplyScreen = () => {
 
       <Text>Rating goes here</Text>
       <Text>Route:</Text>
-      <Text>Turku–Helsinki</Text>
-      <Text>Pickup time 00:00–14:00</Text>
-      <Text>Delivery time 00:00–14:00</Text>
-      <Text>Pay: 69eur</Text>
-      <Text>Fuel budget 69eur</Text>
-      <Text>Client name</Text>
+      <Text>{currentGig.route}</Text>
+      <Text>Pickup time: {currentGig.startTime}</Text>
+      <Text>Delivery time: {currentGig.endTime}</Text>
+      <Text>Pay: {currentGig.reward} €</Text>
+      <Text>Fuel budget: 69eur</Text>
+      <Text>Client name: {clientName}</Text>
 
       <Pressable>
         <Text>Apply</Text>  
