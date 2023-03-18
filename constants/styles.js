@@ -425,3 +425,16 @@ export const STARTGIG = StyleSheet.create({
 		justifyContent: "flex-start",
 	},
 });
+
+//gig list layout
+export const GIGLIST = StyleSheet.create({
+	navbar: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		padding: 4,
+	},
+	navbarR: {
+		flexDirection: "row",
+	},
+});
