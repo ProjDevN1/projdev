@@ -77,9 +77,10 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsXL,
 		color: colorBase,
 	},
+
 	titleSm: {
 		fontFamily: fontMedium,
-		fontSize: fsL,
+		fontSize: fsSm,
 		color: colorBase,
 	},
 
@@ -428,6 +429,10 @@ export const STARTGIG = StyleSheet.create({
 
 //gig list layout
 export const GIGLIST = StyleSheet.create({
+	screenWrapper: {
+		flex: 1,
+		backgroundColor: colorBase,
+	},
 	navbar: {
 		flexDirection: "row",
 		justifyContent: "space-between",
@@ -436,5 +441,40 @@ export const GIGLIST = StyleSheet.create({
 	},
 	navbarR: {
 		flexDirection: "row",
+	},
+	content: {
+		flex: 1,
+		padding: 12,
+		backgroundColor: colorAccent,
+	},
+	listBtn: {
+		backgroundColor: colorAccent,
+		padding: 12,
+		borderColor: colorAlt,
+		borderWidth: 2,
+		margin: 4,
+		borderRadius: borderRadius,
+	},
+	listBtnTitle: {
+		fontFamily: fontMedium,
+		fontSize: fsL,
+		color: colorAlt,
+	},
+	reward: {
+		fontSize: fsL,
+		color: colorAlt,
+	},
+	departure: {
+		fontSize: fsM,
+		color: colorAlt,
+		font: fontMedium,
+	},
+
+	modalWrapper: {
+		backgroundColor: colorBase,
+		flex: 0.5,
+		padding: 12,
+		flexDirection: "column",
+		justifyContent: "space-between",
 	},
 });

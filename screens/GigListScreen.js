@@ -28,12 +28,30 @@ function List(props) {
 		endTime,
 	}) => (
 		<View>
-			<Pressable onPress={() => onListItemPress(navRef, id)}>
-				<Text>From {startLocation}</Text>
-				<Text>To {endLocation}</Text>
-				<Text>Reward {reward}€</Text>
-				<Text>Departure time: {startTime}</Text>
-				<Text>Arrival time: {endTime}</Text>
+			<Pressable
+				onPress={() => onListItemPress(navRef, id)}
+				style={GIGLIST.listBtn}>
+				<View style={{ flexDirection: "row" }}>
+					<View
+						style={{
+							flex: 1,
+							flexDirection: "column",
+							justifyContent: "space-between",
+						}}>
+						<Text style={GIGLIST.listBtnTitle}>
+							{startLocation} - {endLocation}
+						</Text>
+						<Text style={GIGLIST.departure}>Departure: {startTime}</Text>
+					</View>
+					<View
+						style={{
+							flexDirection: "column",
+							alignItems: "center",
+							justifyContent: "center",
+						}}>
+						<Text style={GIGLIST.reward}>{reward}€</Text>
+					</View>
+				</View>
 			</Pressable>
 		</View>
 	);
@@ -70,28 +88,40 @@ const GigListScreen = ({ navigation }) => {
 	};
 
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={GIGLIST.screenWrapper}>
 			<View style={GIGLIST.navbar}>
 				<View>
-					<Button title="Show modal" onPress={toggleModal} />
+					<Button title="Search" onPress={toggleModal} />
 				</View>
 				<View style={GIGLIST.navbarR}>
 					<Pressable style={ELSTYLES.buttonRound}>
 						<Text>S</Text>
 					</Pressable>
-
-					<Pressable style={ELSTYLES.buttonRound}>
-						<Text>F</Text>
-					</Pressable>
 				</View>
 			</View>
-			<List nav={navigation} />
+			<View style={GIGLIST.content}>
+				<List nav={navigation} />
+			</View>
+			<Modal
+				isVisible={isModalVisible}
+				style={{ margin: 0, justifyContent: "flex-end" }}
+				swipeDirection="down">
+				<View style={GIGLIST.modalWrapper}>
+					<View>
+						<View>
+							<Text>From-to filter</Text>
+						</View>
+						<View>
+							<Text>Pay filter</Text>
+						</View>
+						<View>
+							<Text>date filter</Text>
+						</View>
+					</View>
 
-			<Modal isVisible={isModalVisible}>
-				<View style={{ flex: 1 }}>
-					<Text>Hello!</Text>
-
-					<Button title="Hide modal" onPress={toggleModal} />
+					<View style={{ alignSelf: "stretch" }}>
+						<Button title="Close" onPress={toggleModal} />
+					</View>
 				</View>
 			</Modal>
 		</SafeAreaView>
