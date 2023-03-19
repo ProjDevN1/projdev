@@ -148,9 +148,18 @@ const GigListScreen = ({ navigation }) => {
 		<SafeAreaView style={GIGLIST.screenWrapper}>
 			<View style={GIGLIST.navbar}>
 				<View>
-					<Button title="Search" onPress={toggleModal} />
+					<Pressable onPress={toggleModal} style={ELSTYLES.button}>
+						<Text style={GIGLIST.searchBtnTxt}>Search</Text>
+					</Pressable>
 				</View>
 				<View style={GIGLIST.navbarR}>
+					<Pressable
+						style={ELSTYLES.buttonRound}
+						onPress={() => {
+							activeGigs(navigation);
+						}}>
+						<Text>A</Text>
+					</Pressable>
 					<Pressable style={ELSTYLES.buttonRound}>
 						<Text>S</Text>
 					</Pressable>
@@ -159,6 +168,7 @@ const GigListScreen = ({ navigation }) => {
 			<View style={GIGLIST.content}>
 				<List nav={navigation} />
 			</View>
+			{/*overlay menu*/}
 			<Modal
 				isVisible={isModalVisible}
 				style={{ margin: 0, justifyContent: "flex-end" }}
@@ -280,6 +290,10 @@ async function onListItemPress(navigation, id) {
 	clientName = await getClientName("available", id);
 	navigation.navigate("GigApply");
 }
+
+const activeGigs = (navigation) => {
+	navigation.navigate("ActiveGigs");
+};
 
 export default GigListScreen;
 export { clickedListItem, clientName };

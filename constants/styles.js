@@ -431,13 +431,15 @@ export const STARTGIG = StyleSheet.create({
 export const GIGLIST = StyleSheet.create({
 	screenWrapper: {
 		flex: 1,
-		backgroundColor: colorBase,
+		backgroundColor: colorAlt,
 	},
 	navbar: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		padding: 4,
+		padding: 8,
+		borderColor: colorDark,
+		borderBottomWidth: 4,
 	},
 	navbarR: {
 		flexDirection: "row",
@@ -476,6 +478,13 @@ export const GIGLIST = StyleSheet.create({
 		padding: 16,
 		flexDirection: "column",
 		justifyContent: "space-between",
+	},
+	searchBtnTxt: {
+		fontSize: fsM,
+		paddingHorizontal: 12,
+		paddingVertical: 10,
+		fontFamily: fontMedium,
+		color: colorDarker,
 	},
 });
 
