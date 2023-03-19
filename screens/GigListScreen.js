@@ -11,9 +11,13 @@ import React, { useState } from "react";
 import { STYLES } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
+import { GIGLISTFILTER } from "../constants/styles";
 import { availableGigsData, getClientName } from "../api/api";
 
 import Modal from "react-native-modal";
+import DropDownPicker from "react-native-dropdown-picker";
+import Slider from "@react-native-community/slider";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 //This has the frontend code that shows either a list of available gigs or a text thing. Style accordingly
 function List(props) {
@@ -87,6 +91,59 @@ const GigListScreen = ({ navigation }) => {
 		setModalVisible(!isModalVisible);
 	};
 
+	//From picker
+	const [openFrom, setOpenFrom] = useState(false);
+	const [valueFrom, setValueFrom] = useState(null);
+	const [itemsFrom, setItemsFrom] = useState([
+		{ label: "Apple", value: "apple" },
+		{ label: "Banana", value: "banana" },
+	]);
+
+	//To picker
+	const [openTo, setOpenTo] = useState(false);
+	const [valueTo, setValueTo] = useState(null);
+	const [itemsTo, setItemsTo] = useState([
+		{ label: "Apple", value: "apple" },
+		{ label: "Banana", value: "banana" },
+	]);
+
+	//state for slider
+	const [priceDisplayQuantity, setPriceDisplayQuantity] = useState(0);
+	const [priceQuantity, setPriceQuantity] = useState(0);
+	//set Date
+	const [selectedDate, setSelectedDate] = useState(null);
+	const [datePickerVisible, setDatePickerVisible] = useState(false);
+
+	const showDatePicker = () => {
+		setDatePickerVisible(true);
+	};
+
+	const hideDatePicker = () => {
+		setDatePickerVisible(false);
+	};
+
+	const handleConfirm = (date) => {
+		setSelectedDate(date);
+		hideDatePicker();
+	};
+
+	//setTime
+	const [selectedTime, setSelectedTime] = useState(null);
+	const [timePickerVisible, setTimePickerVisible] = useState(false);
+
+	const showTimePicker = () => {
+		setTimePickerVisible(true);
+	};
+
+	const hideTimePicker = () => {
+		setTimePickerVisible(false);
+	};
+
+	const handleConfirmTime = (time) => {
+		setSelectedTime(time);
+		hideTimePicker();
+	};
+
 	return (
 		<SafeAreaView style={GIGLIST.screenWrapper}>
 			<View style={GIGLIST.navbar}>
@@ -107,15 +164,101 @@ const GigListScreen = ({ navigation }) => {
 				style={{ margin: 0, justifyContent: "flex-end" }}
 				swipeDirection="down">
 				<View style={GIGLIST.modalWrapper}>
-					<View>
+					<View style={{ flex: 1 }}>
 						<View>
-							<Text>From-to filter</Text>
+							<Text style={GIGLISTFILTER.title}>Search:</Text>
+						</View>
+						<View
+							style={{ flexDirection: "row", marginBottom: 16 }}
+							zIndex={2000}>
+							<View style={{ flex: 1 }}>
+								<DropDownPicker
+									open={openFrom}
+									value={valueFrom}
+									items={itemsFrom}
+									setOpen={setOpenFrom}
+									setValue={setValueFrom}
+									setItems={setItemsFrom}
+									placeholder={"From:"}
+								/>
+							</View>
+							<View
+								style={{
+									flex: 0.64,
+									justifyContent: "center",
+									alignItems: "center",
+								}}>
+								<Text>-</Text>
+							</View>
+							<View style={{ flex: 1 }}>
+								<DropDownPicker
+									open={openTo}
+									value={valueTo}
+									items={itemsTo}
+									setOpen={setOpenTo}
+									setValue={setValueTo}
+									setItems={setItemsTo}
+									placeholder={"To:"}
+								/>
+							</View>
+						</View>
+						<View style={{ marginBottom: 16 }}>
+							<View style={{ flexDirection: "row" }}>
+								<Text>Pay: </Text>
+								<Text>{priceDisplayQuantity}</Text>
+								<Text> Eur</Text>
+							</View>
+							<Slider
+								style={{ height: 40 }}
+								step={1}
+								minimumValue={0}
+								maximumValue={1000}
+								minimumTrackTintColor="#FFFFFF"
+								maximumTrackTintColor="#000000"
+								onSlidingComplete={(value) => setPriceQuantity(value)}
+								onValueChange={(value) => setPriceDisplayQuantity(value)}
+							/>
 						</View>
 						<View>
-							<Text>Pay filter</Text>
-						</View>
-						<View>
-							<Text>date filter</Text>
+							<Text>Date and time: </Text>
+							<View
+								style={{
+									flexDirection: "row",
+									justifyContent: "space-between",
+								}}>
+								<Pressable
+									onPress={showDatePicker}
+									style={GIGLISTFILTER.dateTimeBtn}>
+									<Text>
+										{selectedDate
+											? selectedDate.toLocaleDateString()
+											: "Select date"}
+									</Text>
+								</Pressable>
+								<Pressable
+									onPress={showTimePicker}
+									style={GIGLISTFILTER.dateTimeBtn}>
+									<Text>
+										{selectedTime
+											? selectedTime.toLocaleTimeString()
+											: "Select time"}
+									</Text>
+								</Pressable>
+								<DateTimePickerModal
+									value={selectedDate}
+									isVisible={datePickerVisible}
+									mode="date"
+									onConfirm={handleConfirm}
+									onCancel={hideDatePicker}
+								/>
+								<DateTimePickerModal
+									value={selectedTime}
+									isVisible={timePickerVisible}
+									mode="time"
+									onConfirm={handleConfirmTime}
+									onCancel={hideTimePicker}
+								/>
+							</View>
 						</View>
 					</View>
 

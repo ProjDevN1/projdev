@@ -471,10 +471,29 @@ export const GIGLIST = StyleSheet.create({
 	},
 
 	modalWrapper: {
+		flex: 0.6,
 		backgroundColor: colorBase,
-		flex: 0.5,
-		padding: 12,
+		padding: 16,
 		flexDirection: "column",
 		justifyContent: "space-between",
+	},
+});
+
+export const GIGLISTFILTER = StyleSheet.create({
+	title: {
+		fontSize: fsXL,
+		fontFamily: fontLight,
+		color: colorDarker,
+		marginBottom: 24,
+	},
+	dateTimeBtn: {
+		flex: 0.49,
+		justifyContent: "center",
+		alignItems: "center",
+		borderColor: colorAccent,
+		borderWidth: 2,
+		borderRadius: borderRadius,
+		padding: 16,
+		marginTop: 16,
 	},
 });
