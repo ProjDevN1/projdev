@@ -4,30 +4,29 @@ import { STARTGIG } from "../constants/styles";
 import React from "react";
 import MapView from "react-native-maps";
 
-import { clickedListItem, clientName } from "../screens/ActiveGigsScreen"
-import { activeGigsData } from '../api/api'
-
+import { clickedListItem, clientName } from "../screens/ActiveGigsScreen";
+import { activeGigsData } from "../api/api";
 
 /*This screen is very similar to the GigApplyScreen, because apparently the 
 only thing changing is that the apply-button changes to start-button*/
 
-
 const GigStartScreen = () => {
-	const currentGig = activeGigsData[clickedListItem]
-	console.log(clickedListItem)
+	const currentGig = activeGigsData[clickedListItem];
+	console.log(clickedListItem);
 	return (
 		<View style={STARTGIG.screenWrapper}>
 			{/*Actual map*/}
 			<View style={STARTGIG.mapWrapper}>
-			<MapView style={STARTGIG.mapWrapper}
-        //specify our coordinates.
-        		initialRegion={{
-          		latitude: 60.45167733942584,
-          		longitude: 22.266609036440343,
-          		latitudeDelta: 0.0922,
-          		longitudeDelta: 0.0421,
-        }}
-      />
+				<MapView
+					style={STARTGIG.mapWrapper}
+					//specify our coordinates.
+					initialRegion={{
+						latitude: 60.45167733942584,
+						longitude: 22.266609036440343,
+						latitudeDelta: 0.0922,
+						longitudeDelta: 0.0421,
+					}}
+				/>
 			</View>
 			{/*Search/info buttons - absolute element */}
 			<View style={STARTGIG.infoBtnWrapper}>

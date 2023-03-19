@@ -82,7 +82,7 @@ const checkLogin = (navigation) => {
 		{
 			/*Uses the navigation module to switch to the home screen in the navigation stack*/
 		}
-		navigation.navigate("Landing");
+		navigation.navigate("GigList");
 	} else {
 		Alert.alert(
 			"Incorrect login",
