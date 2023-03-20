@@ -67,7 +67,7 @@ const GigApplyScreen = ({ navigation }) => {
 
 				<View style={STARTGIG.buttonWrapper}>
 					<Pressable style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}>
-						<Text style={ELSTYLES.buttonAltTxt}>Start</Text>
+						<Text style={ELSTYLES.buttonAltTxt}>Apply</Text>
 					</Pressable>
 
 					<Pressable style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}>

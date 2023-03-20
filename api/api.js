@@ -66,10 +66,10 @@ function formatActiveGigsData(gigsData, id) {
 		leaveTime: `${gigsData.startTime}`,
 		arrivalTime: `${gigsData.endTime}`,
 		vehicle: gigsData.vehicle,
-		startAddress: "SampleAdressKatu 8",
-		arrivalAddress: "SampleAddressGatan 27b",
+		startAddress: gigsData.startAddress,
+		arrivalAddress: gigsData.endAddress,
 		estimatedTime: "Not implemented",
-		addInfo: "DOnt have these yet either lol",
+		addInfo: "Not implemented",
 		reward: gigsData.reward,
 		client: gigsData.client,
 	};
