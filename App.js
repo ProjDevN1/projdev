@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
+import GetLocation from 'react-native-get-location'
 
 //Database related imports
 import { signInAnonymously } from "firebase/auth";
@@ -22,7 +23,7 @@ import AddPicsAndInfo from "./screens/AddPicsAndInfo";
 import ForgotPassword from "./screens/ForgotPasswordScreen";
 import GigApplyScreen from "./screens/GigApplyScreen";
 import GigStartScreen from "./screens/GigStartScreen";
-// import MapsTestScreen from "./screens/MapTestScreen.js";
+import MapsTestScreen from "./screens/MapTestScreen.js";
 
 
 //Temporary screen for backend work
@@ -40,7 +41,21 @@ async function initializeData() {
 	await getOngoingGigs()
 }
 initializeData()
+const curLocation = () => {
+	GetLocation.getCurrentPosition({
+	  enableHighAccuracy: true,
+	  timeout: 6000,
+	})
+	.then(location => {
+	  console.log(location);
+	})
+	.catch(error => {
+	  const { code, message} = error;
+	  console.warn(code, message)
+	})
+  }
 
+curLocation()
 //Initializes the stack navigator module, used to navigate between screens
 const Stack = createNativeStackNavigator();
 
@@ -86,6 +101,7 @@ export default function App() {
 				<Stack.Screen name="GigStart" component={GigStartScreen}/>
 
 				<Stack.Screen name="DBTest" component={DatabaseTestingScreen}/>		
+				<Stack.Screen name="MapTest" component={MapsTestScreen}/>		
 
 				
 			</Stack.Navigator>
