@@ -69,7 +69,7 @@ function formatActiveGigsData(gigsData, id) {
 		startAddress: gigsData.startAddress,
 		arrivalAddress: gigsData.endAddress,
 		estimatedTime: "Not implemented",
-		addInfo: "Dont have these yet either lol",
+		addInfo: "DOnt have these yet either lol",
 		reward: gigsData.reward,
 		client: gigsData.client,
 		startCoord: gigsData.startCoord,
