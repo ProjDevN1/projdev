@@ -367,6 +367,15 @@ export const STARTGIG = StyleSheet.create({
 		flex: 1,
 		backgroundColor: colorBase,
 	},
+	labelM: {
+		fontFamily: fontMedium,
+		color: colorAlt,
+		fontSize: fsM,
+	},
+	labelL: {
+		color: colorAlt,
+		fontSize: fsL,
+	},
 	infoWrapper: {
 		flex: 1,
 		justifyContent: "space-between",
