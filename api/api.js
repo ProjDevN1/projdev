@@ -69,9 +69,15 @@ function formatActiveGigsData(gigsData, id) {
 		startAddress: gigsData.startAddress,
 		arrivalAddress: gigsData.endAddress,
 		estimatedTime: "Not implemented",
-		addInfo: "Not implemented",
+		addInfo: "DOnt have these yet either lol",
 		reward: gigsData.reward,
 		client: gigsData.client,
+		startCoord: gigsData.startCoord,
+		endCoord: gigsData.endCoord,
+		startLat: gigsData.startLat,
+		startLon: gigsData.startLon,
+		endLat: gigsData.endLat,
+		endLon: gigsData.endLon,
 	};
 	return ITEM;
 }
@@ -81,10 +87,16 @@ function formatAvailableGigsData(aGigsData, id) {
 		id: id,
 		startLocation: `${aGigsData.startLocation}`,
 		endLocation: `${aGigsData.endLocation}`,
+		startCoord: aGigsData.startCoord,
+		endCoord: aGigsData.endCoord,
 		reward: aGigsData.reward,
 		startTime: aGigsData.startTime,
 		endTime: aGigsData.endTime,
 		client: aGigsData.client,
+		startLat: aGigsData.startLat,
+		startLon: aGigsData.startLon,
+		endLat: aGigsData.endLat,
+		endLon: aGigsData.endLon,
 		route: `${aGigsData.startLocation} - ${aGigsData.endLocation}`,
 	};
 	return ITEM;

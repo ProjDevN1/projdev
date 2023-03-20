@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import MapView from "react-native-maps";
 
@@ -20,6 +20,11 @@ const ArrivalScreen = () => {
       hours + ':' + min
     );
   }, []);
+
+  const finishAlert = () =>
+  Alert.alert("Congrats on finishing the drive", "This button is not yet fully functional", [
+    {text:"Done", style:"cancel"}
+  ])
   
   // Screen itself
 
@@ -40,7 +45,7 @@ const ArrivalScreen = () => {
       <Text>Arrival Time: {arrivalTime} </Text>
       <Text>Location: </Text>
       <Text>Reward: </Text>
-      <Pressable style={{borderColor: 'black', borderWidth: 5}}>
+      <Pressable style={{borderColor: 'black', borderWidth: 5}} onPress={finishAlert}>
         <Text>Finish drive</Text>
       </Pressable>
     </View>

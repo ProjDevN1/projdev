@@ -1,12 +1,14 @@
 <application>
    <!-- You will only need to add this meta-data tag, but make sure it's a child of application -->
-   <meta-data
-     android:name="com.google.android.geo.API_KEY"
-     android:value="AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo"/> <!-- Currently Riku's personal key, will need changing!. -->
+  <meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo"/> <!-- Currently Riku's personal key, will need changing!. -->
  
-   <!-- You will also only need to add this uses-library tag -->
-   <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <!-- You will also only need to add this uses-library tag -->
+  <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+  <uses-permission android:name="android.permission.CAMERA" />
 
 </application>
