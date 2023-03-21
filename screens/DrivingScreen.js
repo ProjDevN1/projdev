@@ -6,6 +6,8 @@ import MapViewDirections from "react-native-maps-directions";
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
+import { activeGig } from "../api/api.js"
+
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const DrivingScreen = () => {
@@ -30,15 +32,15 @@ const DrivingScreen = () => {
 				showsUserLocation={true}
 				followsUserLocation={true}
 				initialRegion={{
-					latitude: 60.45167733942584,
-					longitude: 22.266609036440343,
+					latitude: activeGig.startLat,
+					longitude: activeGig.startLon,
 					latitudeDelta: 0.0922,
 					longitudeDelta: 0.0421,
 				}}>
 				{/*Renders the route for the gig on the map screen*/}
 				<MapViewDirections
-					origin="60.436431242849096, 22.264518536084235"
-					destination="60.584568433593105, 22.737131310210604"
+					origin={activeGig.startCoord}
+					destination={activeGig.endCoord}
 					apikey={GOOGLE_MAPS_APIKEY}
 					strokeWidth={3}
 					strokeColor="blue"
@@ -68,7 +70,7 @@ const DrivingScreen = () => {
 				<View style={[STARTGIG.textWrapper]}>
 					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
 						<Text style={ELSTYLES.titleL}>Route:</Text>
-						<Text style={ELSTYLES.titleLlight}>From - To</Text>
+						<Text style={ELSTYLES.titleLlight}>{activeGig.title}</Text>
 					</View>
 					<View
 						style={[
@@ -99,8 +101,8 @@ const DrivingScreen = () => {
 						</View>
 					</View>
 					<View style={[STARTGIG.section, { justifyContent: "space-evenly" }]}>
-						<Text style={ELSTYLES.txtAlt}>Departure: 00:00</Text>
-						<Text style={ELSTYLES.txtAlt}>Arrival: 00:00</Text>
+						<Text style={ELSTYLES.txtAlt}>Departure: {activeGig.leaveTime}</Text>
+						<Text style={ELSTYLES.txtAlt}>Arrival: {activeGig.arrivalTime}</Text>
 					</View>
 				</View>
 				<View style={STARTGIG.buttonWrapper}>

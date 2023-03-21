@@ -3,7 +3,7 @@ import React from "react";
 import { ADDPICTURES } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
 
-const AddPicsAndInfo = () => {
+const AddPicsAndInfo = ({ navigation }) => {
 	return (
 		<View style={ADDPICTURES.screenWrapper}>
 			<View style={ADDPICTURES.contentWrapperTopBottom}>
@@ -29,12 +29,13 @@ const AddPicsAndInfo = () => {
 						style={ELSTYLES.input}></TextInput>
 				</View>
 			</View>
-
 			<View style={ADDPICTURES.contentWrapperTopBottom}>
 				<Pressable style={ADDPICTURES.roundBtn}>
 					<Text style={ELSTYLES.buttonTxt}>Back</Text>
 				</Pressable>
-				<Pressable style={ADDPICTURES.roundBtn}>
+				<Pressable style={ADDPICTURES.roundBtn}
+				onPress={() => navigation.navigate('Driving')}
+				>
 					<Text style={ELSTYLES.buttonTxt}>Next</Text>
 				</Pressable>
 			</View>
