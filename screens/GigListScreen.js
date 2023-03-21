@@ -5,6 +5,7 @@ import {
 	SafeAreaView,
 	FlatList,
 	Button,
+	Image,
 } from "react-native";
 import React, { useState } from "react";
 
@@ -148,20 +149,24 @@ const GigListScreen = ({ navigation }) => {
 		<SafeAreaView style={GIGLIST.screenWrapper}>
 			<View style={GIGLIST.navbar}>
 				<View>
-					<Pressable onPress={toggleModal} style={ELSTYLES.button}>
-						<Text style={GIGLIST.searchBtnTxt}>Search</Text>
+					<Pressable
+						onPress={() => {
+							activeGigs(navigation);
+						}}
+						style={ELSTYLES.button}>
+						<Text style={GIGLIST.searchBtnTxt}>Active gigs</Text>
 					</Pressable>
 				</View>
 				<View style={GIGLIST.navbarR}>
-					<Pressable
-						style={ELSTYLES.buttonRound}
-						onPress={() => {
-							activeGigs(navigation);
-						}}>
-						<Text>A</Text>
+					<Pressable style={ELSTYLES.buttonRound} onPress={toggleModal}>
+						<Image
+							style={{ width: "50%", height: "50%" }}
+							source={require("../assets/icons/searchIco.png")}></Image>
 					</Pressable>
 					<Pressable style={ELSTYLES.buttonRound}>
-						<Text>S</Text>
+						<Image
+							style={{ width: "50%", height: "50%" }}
+							source={require("../assets/icons/settingIco.png")}></Image>
 					</Pressable>
 				</View>
 			</View>

@@ -6,18 +6,21 @@ import MapViewDirections from "react-native-maps-directions";
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
-const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo"
+const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const DrivingScreen = () => {
-
-	const showContactInfo = () => 
-	Alert.alert("Client contact information", "this alert is not yet functional", [
-		{text: "Cancel", style: "cancel"},
-		{
-			text:"Client phone number",
-			style: "cancel",
-		},
-	]);
+	const showContactInfo = () =>
+		Alert.alert(
+			"Client contact information",
+			"this alert is not yet functional",
+			[
+				{ text: "Cancel", style: "cancel" },
+				{
+					text: "Client phone number",
+					style: "cancel",
+				},
+			]
+		);
 	return (
 		<View style={STARTGIG.screenWrapper}>
 			<MapView
@@ -32,23 +35,25 @@ const DrivingScreen = () => {
 					latitudeDelta: 0.0922,
 					longitudeDelta: 0.0421,
 				}}>
-					{/*Renders the route for the gig on the map screen*/}
-					<MapViewDirections
-						origin= "60.436431242849096, 22.264518536084235"
-						destination="60.584568433593105, 22.737131310210604"
-						apikey={GOOGLE_MAPS_APIKEY}
-						strokeWidth={3}
-						strokeColor="blue"
-						optimizeWaypoints={true}
-						onStart={(params) => {
-							console.log(`Started routing between "${params.origin}" and "${params.destination}"`)
-						}}
-						onReady={result => {
-							console.log(`Distance: ${result.distance} km`)
-							console.log(`Duration: ${result.duration} min`)
-						}}
-					/>
-				</MapView>
+				{/*Renders the route for the gig on the map screen*/}
+				<MapViewDirections
+					origin="60.436431242849096, 22.264518536084235"
+					destination="60.584568433593105, 22.737131310210604"
+					apikey={GOOGLE_MAPS_APIKEY}
+					strokeWidth={3}
+					strokeColor="blue"
+					optimizeWaypoints={true}
+					onStart={(params) => {
+						console.log(
+							`Started routing between "${params.origin}" and "${params.destination}"`
+						);
+					}}
+					onReady={(result) => {
+						console.log(`Distance: ${result.distance} km`);
+						console.log(`Duration: ${result.duration} min`);
+					}}
+				/>
+			</MapView>
 			{/*Search/info buttons - absolute element */}
 			<View style={STARTGIG.infoBtnWrapper}>
 				<Pressable style={ELSTYLES.buttonRound}>
@@ -76,7 +81,7 @@ const DrivingScreen = () => {
 								alignItems: "baseline",
 							}}>
 							<Text style={[STARTGIG.labelM, { flex: 1 }]}>
-								Estimated arrival: 
+								Estimated arrival:
 							</Text>
 							<Text style={[STARTGIG.labelL, { flex: 0.5, textAlign: "left" }]}>
 								00:00
@@ -103,7 +108,9 @@ const DrivingScreen = () => {
 						<Text style={ELSTYLES.buttonAltTxt}>Finish gig</Text>
 					</Pressable>
 
-					<Pressable style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]} onPress={showContactInfo}>
+					<Pressable
+						style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
+						onPress={showContactInfo}>
 						<Text style={ELSTYLES.buttonAltTxt}>Contact info</Text>
 					</Pressable>
 				</View>

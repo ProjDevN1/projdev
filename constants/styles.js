@@ -392,6 +392,14 @@ export const STARTGIG = StyleSheet.create({
 		flexDirection: "row",
 		right: 0,
 	},
+	mapNavBtnWarpper: {
+		position: "absolute",
+		flexDirection: "column",
+		flex: 1,
+		left: 0,
+		top: 0,
+		margin: 4,
+	},
 
 	ratingWrapper: {
 		position: "absolute",
