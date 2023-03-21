@@ -1,5 +1,6 @@
-import { View, Text, Modal, TextInput, Pressable } from 'react-native'
+import { View, Text, TextInput, Pressable } from 'react-native'
 import React from 'react'
+import Modal from "react-native-modal";
 
 // Reward amounts and times could be a slider? Completely doable if design ppl want it
 
@@ -9,7 +10,6 @@ const SearchFiltersModal = (props) => {
     <Modal
     visible={props.showModal} 
     animationType='slide'
-    onRequestClose={props.hideModal}
     >
 
       <View>

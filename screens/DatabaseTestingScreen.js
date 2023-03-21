@@ -56,6 +56,8 @@ export default function DatabaseTestingScreen() {
 
         <Button title="Get gigs" onPress={getOngoingGigs}></Button>
 
+        <Button title="Test" onPress={() => console.log(currentUser)}></Button>
+
 
     </SafeAreaView>
   )

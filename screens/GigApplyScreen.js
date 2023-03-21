@@ -12,7 +12,7 @@ import MapView, { Circle, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
 import { clickedListItem, clientName } from "../screens/GigListScreen";
-import { availableGigsData } from "../api/api";
+import { availableGigsData, applyForGig } from "../api/api";
 
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
@@ -161,7 +161,8 @@ const GigApplyScreen = ({ navigation }) => {
 				<View style={STARTGIG.buttonWrapper}>
 					<Pressable
 						style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
-						onPress={() => Apply(navigation)}>
+						onPress={() =>applyForGig(currentGig.gigId, currentGig.id)}
+						>
 						<Text style={ELSTYLES.buttonAltTxt}>Apply</Text>
 					</Pressable>
 

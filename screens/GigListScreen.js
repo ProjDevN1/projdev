@@ -13,7 +13,7 @@ import { STYLES } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
 import { GIGLISTFILTER } from "../constants/styles";
-import { availableGigsData, getClientName } from "../api/api";
+import { availableGigsData, getClientName, getOngoingGigs } from "../api/api";
 
 import Modal from "react-native-modal";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -177,7 +177,13 @@ const GigListScreen = ({ navigation }) => {
 			<Modal
 				isVisible={isModalVisible}
 				style={{ margin: 0, justifyContent: "flex-end" }}
-				swipeDirection="down">
+				swipeDirection="down"
+				onRequestClose={toggleModal}
+    			onBackButtonPress={toggleModal}
+    			scrollOffset={1}
+				onSwipeComplete={toggleModal}
+				>
+				
 				<View style={GIGLIST.modalWrapper}>
 					<View style={{ flex: 1 }}>
 						<View>

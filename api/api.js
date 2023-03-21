@@ -5,10 +5,17 @@ import {
 	getDocs,
 	doc,
 	getDoc,
+	setDoc,
+	updateDoc,
+	arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig.js";
 import { getCurrentTime, getCurrentDate } from "./DataHandling.js";
 import React, { useState } from "react";
+
+
+//This enables applying for gigs ad other test features
+const testMode = false
 
 // FOR FUNCTIONS THAT START WITH TEMP:
 // Only used in database testing, no not make any actual app logic rely on them
@@ -32,6 +39,7 @@ export { tempGetGig };
 
 //This stores the current user so that other functions can use it
 var currentUser = "";
+var currentUserId = "";
 //This stores all users so user switching remembers which order it should do it
 var allUsers = [];
 //Gets all users as an array and returns it. Very much work in progress
@@ -39,7 +47,9 @@ async function getUser() {
 	var users = [];
 	const usersSnapshot = await getDocs(collection(db, "users"));
 	usersSnapshot.forEach((doc) => {
-		users.push(doc.data());
+		const data = doc.data();
+		data.id = doc.id
+		users.push(data);
 	});
 	currentUser = users[0];
 	if (allUsers.length === 0) {
@@ -59,9 +69,10 @@ async function switchUser() {
 }
 
 //Edits the required data in correct format for activegigslist screen
-function formatActiveGigsData(gigsData, id) {
+function formatActiveGigsData(gigsData, id, gigId) {
 	const ITEM = {
 		id: id,
+		gigId: gigId,
 		title: `${gigsData.startLocation} - ${gigsData.endLocation}`,
 		leaveTime: `${gigsData.startTime}`,
 		arrivalTime: `${gigsData.endTime}`,
@@ -82,9 +93,10 @@ function formatActiveGigsData(gigsData, id) {
 	return ITEM;
 }
 
-function formatAvailableGigsData(aGigsData, id) {
+function formatAvailableGigsData(aGigsData, id, gigId) {
 	const ITEM = {
 		id: id,
+		gigId: gigId,
 		startLocation: `${aGigsData.startLocation}`,
 		endLocation: `${aGigsData.endLocation}`,
 		startCoord: aGigsData.startCoord,
@@ -113,7 +125,7 @@ async function getActiveGigs() {
 	//Gets a gig, formats it with another function, increments the id and pushes the result to activegigs array
 	async function getGig(value) {
 		const gigSnapshot = await getDoc(doc(db, "gigs", value));
-		const formattedGigs = formatActiveGigsData(gigSnapshot.data(), id);
+		const formattedGigs = formatActiveGigsData(gigSnapshot.data(), id, gigSnapshot.id);
 		activeGigs.push(formattedGigs);
 		id += 1;
 	}
@@ -128,7 +140,6 @@ async function getActiveGigs() {
 		return "No active gigs";
 	} else {
 		await activeGigsPerUser.forEach(getGig);
-		console.log("Active gigs data fetched");
 		activeGigsData = activeGigs;
 		return activeGigs;
 	}
@@ -142,11 +153,11 @@ async function getOngoingGigs() {
 	//Return gigs in an arraylist
 	const gigArray = [];
 
-	const q = query(collection(db, "gigs"), where("completed", "==", false)); //Filters gigs that are already done
+	const q = query(collection(db, "gigs"), where("user", "==", "")); //Filters gigs that are already done
 	const querySnapshot = await getDocs(q);
 	querySnapshot.forEach((doc) => {
 		const id = gigArray.length;
-		const formattedGig = formatAvailableGigsData(doc.data(), id);
+		const formattedGig = formatAvailableGigsData(doc.data(), id, doc.id);
 		gigArray.push(formattedGig); //Append gigs to gigArray-list
 		availableGigsData = gigArray;
 	});
@@ -171,6 +182,32 @@ async function getClientName(gigType, id) {
 	}
 }
 
+let activeGig = ''
+function setActiveGig(gig){
+	activeGig = gig;
+}
+
+
+async function applyForGig(gigId, arrayPos){
+	if (testMode === true){
+		const gigRef = doc(db, "gigs", gigId)
+		updateDoc(gigRef, {user: currentUser.id})
+		const gig = await getDoc(gigRef)
+		const userRef = doc(db, "users", currentUser.id)
+		updateDoc(userRef, {
+			gigsActive: arrayUnion(gigId)
+		})
+		availableGigsData.splice(arrayPos, 1)
+		console.log(gig.data())
+		const id = activeGigsData.lenght - 1
+		const formattedGig = formatActiveGigsData(gig.data(), id, gig.id)
+		activeGigsData.push(formattedGig)
+		console.log(formattedGig)
+	} else {
+		console.log('Test mode is disabled, no changes to DB made')
+	}
+}
+
 //Export non-temp functions and data here
 export {
 	getClientName,
@@ -181,4 +218,7 @@ export {
 	currentUser,
 	switchUser,
 	availableGigsData,
+	setActiveGig,
+	activeGig,
+	applyForGig,
 };

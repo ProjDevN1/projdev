@@ -14,7 +14,7 @@ import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
 import { clickedListItem, clientName } from "../screens/ActiveGigsScreen";
-import { activeGigsData } from "../api/api";
+import { activeGigsData, setActiveGig } from "../api/api";
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
@@ -162,7 +162,9 @@ const GigStartScreen = ({ navigation }) => {
 				</View>
 
 				<View style={STARTGIG.buttonWrapper}>
-					<Pressable style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}>
+					<Pressable style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
+						onPress={() => startDrive(navigation, currentGig)}
+					>
 						<Text style={ELSTYLES.buttonAltTxt}>Start</Text>
 					</Pressable>
 
@@ -176,8 +178,15 @@ const GigStartScreen = ({ navigation }) => {
 		</View>
 	);
 };
+
 const Search = (navigation) => {
 	navigation.navigate("GigList");
 };
+
+function startDrive(navigation, gig){
+	setActiveGig(gig)
+	navigation.navigate('AddPicInfo')
+
+}
 
 export default GigStartScreen;
