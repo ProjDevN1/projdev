@@ -21,7 +21,8 @@
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo"
-      }
+      },
+      "bundleIdentifier": "com.projdevn1.carthing"
     },
     "android": {
       "config": {

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Alert } from "react-native";
+import { View, Text, Pressable, Alert, Linking } from "react-native";
 import React from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
@@ -70,7 +70,13 @@ const DrivingScreen = () => {
 				<View style={[STARTGIG.textWrapper]}>
 					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
 						<Text style={ELSTYLES.titleL}>Route:</Text>
-						<Text style={ELSTYLES.titleLlight}>{activeGig.title}</Text>
+						{/* Pressing the city name will open maps with navigation to the gig address, either start or end */}
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(`google.navigation:q=${activeGig.startLat}+${activeGig.startLon}`) }>
+							<Text style={ELSTYLES.titleLlight}>{activeGig.startLocation}</Text>
+						</Pressable>
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(`google.navigation:q=${activeGig.endLat}+${activeGig.endLon}`) }>
+							<Text style={ELSTYLES.titleLlight}>{activeGig.endLocation}</Text>
+						</Pressable>
 					</View>
 					<View
 						style={[

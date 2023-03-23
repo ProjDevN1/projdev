@@ -146,7 +146,13 @@ const GigStartScreen = ({ navigation }) => {
 				<View style={[STARTGIG.textWrapper]}>
 					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
 						<Text style={ELSTYLES.titleL}>Route:</Text>
-						<Text style={ELSTYLES.titleLlight}>{currentGig.title}</Text>
+						{/* Pressing the city name will open maps with navigation to the gig address, either start or end */}
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(`google.navigation:q=${currentGig.startLat}+${currentGig.startLon}`) }>
+							<Text style={ELSTYLES.titleLlight}>{currentGig.startLocation}</Text>
+						</Pressable>
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(`google.navigation:q=${currentGig.endLat}+${currentGig.endLon}`) }>
+							<Text style={ELSTYLES.titleLlight}>{currentGig.endLocation}</Text>
+						</Pressable>
 					</View>
 					<View style={[STARTGIG.section, { justifyContent: "space-evenly" }]}>
 						<Text style={ELSTYLES.txtAlt}>Leave: {currentGig.leaveTime}</Text>

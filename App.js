@@ -43,21 +43,21 @@ async function initializeData() {
 initializeData()
 
 // Asks for location on start
-// const curLocation = () => {
-// 	GetLocation.getCurrentPosition({
-// 	  enableHighAccuracy: true,
-// 	  timeout: 6000,
-// 	})
-// 	.then(location => {
-// 	  console.log(location);
-// 	})
-// 	.catch(error => {
-// 	  const { code, message} = error;
-// 	  console.warn(code, message)
-// 	})
-//   }
+const curLocation = () => {
+	GetLocation.getCurrentPosition({
+	  enableHighAccuracy: true,
+	  timeout: 6000,
+	})
+	.then(location => {
+	  console.log(location);
+	})
+	.catch(error => {
+	  const { code, message} = error;
+	  console.warn(code, message)
+	})
+  }
 
-// curLocation()
+curLocation()
 //Initializes the stack navigator module, used to navigate between screens
 const Stack = createNativeStackNavigator();
 
