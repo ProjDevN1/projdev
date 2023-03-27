@@ -47,6 +47,7 @@ const RegistrationScreen = () => {
 					</Text>
 				</Pressable>
 
+
 				<Pressable
 					style={[ELSTYLES.button, REGISTER.registerBtn]}
 					onPress={() => verifyRegistration()}>

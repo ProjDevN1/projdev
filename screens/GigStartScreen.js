@@ -6,6 +6,7 @@ import {
 	Alert,
 	Button,
 	Image,
+	Platform,
 } from "react-native";
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
@@ -24,6 +25,23 @@ only thing changing is that the apply-button changes to start-button*/
 const GigStartScreen = ({ navigation }) => {
 	const currentGig = activeGigsData[clickedListItem];
 	console.log(clickedListItem);
+
+
+	const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+	const sLatLng = `${currentGig.startLat},${currentGig.startLon}`;
+	const startLabel = `${currentGig.startAddress}`;
+	const startURL = Platform.select({
+	  ios: `${scheme}${startLabel}@${sLatLng}`,
+	  android: `${scheme}${sLatLng}(${startLabel})`
+	});
+
+	const eLatLng = `${currentGig.endLat},${currentGig.endLon}`;
+	const endLabel = `${currentGig.arrivalAddress}`
+	const endURL = Platform.select({
+	  ios: `${scheme}${endLabel}@${eLatLng}`,
+	  android: `${scheme}${eLatLng}(${endLabel})`
+	});
+
 
 	// Here we will have a prompt with the phone number of the client
 	const showContactInfo = () =>
@@ -147,10 +165,10 @@ const GigStartScreen = ({ navigation }) => {
 					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
 						<Text style={ELSTYLES.titleL}>Route:</Text>
 						{/* Pressing the city name will open maps with navigation to the gig address, either start or end */}
-						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(`google.navigation:q=${currentGig.startLat}+${currentGig.startLon}`) }>
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(startURL) }>
 							<Text style={ELSTYLES.titleLlight}>{currentGig.startLocation}</Text>
 						</Pressable>
-						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(`google.navigation:q=${currentGig.endLat}+${currentGig.endLon}`) }>
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(endURL) }>
 							<Text style={ELSTYLES.titleLlight}>{currentGig.endLocation}</Text>
 						</Pressable>
 					</View>
