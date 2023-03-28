@@ -3,6 +3,7 @@ import { Text, View, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { ELSTYLES } from "../constants/styles";
 import { LANDING } from "../constants/styles";
+import Ripple from "react-native-material-ripple";
 
 const LandingScreen = ({ navigation }) => {
 	//Gradient object
@@ -29,38 +30,18 @@ const LandingScreen = ({ navigation }) => {
 
 			{/*Buttons*/}
 			<View style={LANDING.buttonWrapper}>
-				<Pressable
-					style={({ pressed }) => [
-						pressed ? ELSTYLES.buttonPressed : ELSTYLES.button,
-						LANDING.buttonLanding,
-					]}
-					onPress={() => openLogin(navigation)}>
-					{({ pressed }) => (
-						<Text
-							style={[
-								pressed ? ELSTYLES.buttonTxtPressed : ELSTYLES.buttonTxt,
-								ELSTYLES.txtL,
-							]}>
-							Login
-						</Text>
-					)}
-				</Pressable>
-				<Pressable
-					style={({ pressed }) => [
-						pressed ? ELSTYLES.buttonPressed : ELSTYLES.button,
-						LANDING.buttonLanding,
-					]}
-					onPress={() => openRegister(navigation)}>
-					{({ pressed }) => (
-						<Text
-							style={[
-								pressed ? ELSTYLES.buttonTxtPressed : ELSTYLES.buttonTxt,
-								ELSTYLES.txtL,
-							]}>
-							Register
-						</Text>
-					)}
-				</Pressable>
+				<Ripple
+					style={[ELSTYLES.button, LANDING.buttonLanding]}
+					onPress={() => openLogin(navigation)}
+					rippleColor={LANDING.rippleColors().colorAccent}>
+					<Text style={[ELSTYLES.buttonTxt, ELSTYLES.txtL]}>Login</Text>
+				</Ripple>
+				<Ripple
+					style={[ELSTYLES.button, LANDING.buttonLanding]}
+					onPress={() => openRegister(navigation)}
+					rippleColor={LANDING.rippleColors().colorAccent}>
+					<Text style={[ELSTYLES.buttonTxt, ELSTYLES.txtL]}>Register</Text>
+				</Ripple>
 			</View>
 		</LinearGradient>
 	);

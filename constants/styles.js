@@ -240,6 +240,11 @@ export const LANDING = StyleSheet.create({
 		color1: colorAccent,
 		color2: colorDark,
 	}),
+	rippleColors: () => ({
+		colorBase: colorBase,
+		colorAccent: colorAccent,
+		colorAlt: colorAlt,
+	}),
 	contentWrapper: {
 		flex: 1,
 		justifyContent: "space-around",
