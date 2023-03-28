@@ -2,12 +2,11 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
-import GetLocation from 'react-native-get-location'
+import GetLocation from "react-native-get-location";
 
 //Database related imports
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "./firebaseConfig.js";
-
 
 //Under here imports for screens contained in other files in the screens folder
 
@@ -25,39 +24,35 @@ import GigApplyScreen from "./screens/GigApplyScreen";
 import GigStartScreen from "./screens/GigStartScreen";
 import MapsTestScreen from "./screens/MapTestScreen.js";
 
-
 //Temporary screen for backend work
 import DatabaseTestingScreen from "./screens/DatabaseTestingScreen";
 
-
 //Imports and executes the getActiveGigs and getUser funtions, so that ActiveGigsScreen does not need to wait for data fetching to happen
-import { getActiveGigs, getUser, getOngoingGigs } from './api/api'
-
-
+import { getActiveGigs, getUser, getOngoingGigs } from "./api/api";
 
 async function initializeData() {
-	await getUser()
-	await getActiveGigs()
-	await getOngoingGigs()
+	await getUser();
+	await getActiveGigs();
+	await getOngoingGigs();
 }
-initializeData()
+initializeData();
 
 // Asks for location on start
 const curLocation = () => {
 	GetLocation.getCurrentPosition({
-	  enableHighAccuracy: true,
-	  timeout: 6000,
+		enableHighAccuracy: true,
+		timeout: 6000,
 	})
-	.then(location => {
-	  console.log(location);
-	})
-	.catch(error => {
-	  const { code, message} = error;
-	  console.warn(code, message)
-	})
-  }
+		.then((location) => {
+			console.log(location);
+		})
+		.catch((error) => {
+			const { code, message } = error;
+			console.warn(code, message);
+		});
+};
 
-curLocation()
+curLocation();
 //Initializes the stack navigator module, used to navigate between screens
 const Stack = createNativeStackNavigator();
 
@@ -69,6 +64,7 @@ export default function App() {
 		RalewayMedium: require("./assets/fonts/Raleway/static/Raleway-Medium.ttf"),
 		RalewayLight: require("./assets/fonts/Raleway/static/Raleway-Light.ttf"),
 		RalewayBold: require("./assets/fonts/Raleway/static/Raleway-Bold.ttf"),
+		RalewayExtraLight: require("./assets/fonts/Raleway/static/Raleway-ExtraLight.ttf"),
 	});
 
 	if (!fontsLoaded) {
@@ -77,14 +73,13 @@ export default function App() {
 
 	// This function autenthicates to firebase, allowing the app to access the database
 	signInAnonymously(auth)
-  		.then(() => {
-    		console.log('Auth successful');
-  		})
-  		.catch((error) => {
-    		const errorCode = error.code;
-    		const errorMessage = error.message;
-  		});
-
+		.then(() => {
+			console.log("Auth successful");
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+		});
 
 	return (
 		<NavigationContainer>
@@ -98,16 +93,14 @@ export default function App() {
 				<Stack.Screen name="Driving" component={DrivingScreen} />
 				<Stack.Screen name="Arrival" component={ArrivalScreen} />
 				<Stack.Screen name="AddPicInfo" component={AddPicsAndInfo} />
-				<Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-				<Stack.Screen name="GigApply" component={GigApplyScreen}/>
-				<Stack.Screen name="GigStart" component={GigStartScreen}/>
+				<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+				<Stack.Screen name="GigApply" component={GigApplyScreen} />
+				<Stack.Screen name="GigStart" component={GigStartScreen} />
 
-				<Stack.Screen name="DBTest" component={DatabaseTestingScreen}/>		
-				<Stack.Screen name="MapTest" component={MapsTestScreen}/>		
-
-				
+				<Stack.Screen name="DBTest" component={DatabaseTestingScreen} />
+				<Stack.Screen name="MapTest" component={MapsTestScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
 }
-// <Stack.Screen name="MapTest" component={MapsTestScreen}/>	
+// <Stack.Screen name="MapTest" component={MapsTestScreen}/>

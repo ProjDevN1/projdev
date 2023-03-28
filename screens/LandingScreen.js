@@ -19,8 +19,12 @@ const LandingScreen = ({ navigation }) => {
 			end={gradientOptions.end}>
 			{/*Title container*/}
 			<View style={LANDING.titleWrapper}>
-				<Text style={ELSTYLES.title}>Title</Text>
-				<Text style={ELSTYLES.titleSm}>Lorem ipsum etc</Text>
+				<Text style={[ELSTYLES.titleXXLlight, { marginBottom: 16 }]}>
+					Toimauto
+				</Text>
+				<Text style={[ELSTYLES.titleMlight, { paddingLeft: 8 }]}>
+					Lorem ipsum etc
+				</Text>
 			</View>
 
 			{/*Buttons*/}
