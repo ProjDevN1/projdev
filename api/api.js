@@ -73,6 +73,8 @@ function formatActiveGigsData(gigsData, id, gigId) {
 	const ITEM = {
 		id: id,
 		gigId: gigId,
+		startLocation: `${gigsData.startLocation}`,
+		endLocation: `${gigsData.endLocation}`,
 		title: `${gigsData.startLocation} - ${gigsData.endLocation}`,
 		leaveTime: `${gigsData.startTime}`,
 		arrivalTime: `${gigsData.endTime}`,

@@ -32,11 +32,12 @@ const font = "Raleway";
 const fontMedium = "RalewayMedium";
 const fontLight = "RalewayLight";
 const fontBold = "RalewayBold";
+const fontExtraLight = "RalewayExtraLight";
 const fsXXXL = 68;
-const fsXXL = 52;
+const fsXXL = 64;
 const fsXL = 36;
 const fsL = 24;
-const fsM = 16;
+const fsM = 20;
 const fsSm = 12;
 const fsXs = 8;
 const borderRadius = 8;
@@ -55,11 +56,21 @@ export const STYLES = StyleSheet.create({
 
 //Global styles for elements - should consist only of colors pretty much
 export const ELSTYLES = StyleSheet.create({
+	//Titles - supposed to be in descending order
 	title: {
 		fontFamily: font,
 		fontSize: fsXXXL,
 		color: colorBase,
-		marginBottom: 16,
+	},
+	titleXXLlight: {
+		fontFamily: fontExtraLight,
+		fontSize: fsXXL,
+		color: colorBase,
+	},
+	titleXL: {
+		fontFamily: fontMedium,
+		fontSize: fsXL,
+		color: colorBase,
 	},
 
 	titleL: {
@@ -72,9 +83,14 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsL,
 		color: colorBase,
 	},
-	titleXL: {
-		fontFamily: fontMedium,
-		fontSize: fsXL,
+	titleLExtralight: {
+		fontFamily: fontExtraLight,
+		fontSize: fsL,
+		color: colorBase,
+	},
+	titleMlight: {
+		fontFamily: fontLight,
+		fontSize: fsM,
 		color: colorBase,
 	},
 
@@ -83,7 +99,8 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsSm,
 		color: colorBase,
 	},
-
+	//End of titles
+	//texts and labels
 	txtL: {
 		fontSize: fsL,
 	},
@@ -105,6 +122,9 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsM,
 		marginTop: 16,
 	},
+	//end of text and labels
+
+	//inputs and buttons
 	input: {
 		fontSize: fsSm,
 		fontFamily: fontLight,
@@ -220,19 +240,24 @@ export const LANDING = StyleSheet.create({
 		color1: colorAccent,
 		color2: colorDark,
 	}),
+	rippleColors: () => ({
+		colorBase: colorBase,
+		colorAccent: colorAccent,
+		colorAlt: colorAlt,
+	}),
 	contentWrapper: {
 		flex: 1,
 		justifyContent: "space-around",
-		paddingHorizontal: 50,
+		paddingHorizontal: 40,
 	},
 	buttonWrapper: {
 		flex: 1,
 		flexDirection: "row",
-		justifyContent: "center",
+		justifyContent: "space-between",
 	},
 	buttonLanding: {
 		alignSelf: "center",
-		flex: 1,
+		flex: 0.48,
 		alignItems: "center",
 		paddingVertical: "8%",
 	},

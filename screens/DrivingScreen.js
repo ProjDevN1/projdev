@@ -1,6 +1,6 @@
-import { View, Text, Pressable, Alert } from "react-native";
-import React from "react";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { View, Text, Pressable, Alert, Linking, Platform } from "react-native";
+import React, { useState, useRef } from "react";
+import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
 import { ELSTYLES } from "../constants/styles";
@@ -23,12 +23,57 @@ const DrivingScreen = () => {
 				},
 			]
 		);
+
+	// Code for opening maps navigation to start address
+	const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+	const sLatLng = `${activeGig.startLat},${activeGig.startLon}`;
+	const startLabel = `${activeGig.startAddress}`;
+	const startURL = Platform.select({
+	  ios: `${scheme}${startLabel}@${sLatLng}`,
+	  android: `${scheme}${sLatLng}(${startLabel})`
+	});
+	// Code for opening maps navigation to end address
+	const eLatLng = `${activeGig.endLat},${activeGig.endLon}`;
+	const endLabel = `${activeGig.arrivalAddress}`
+	const endURL = Platform.select({
+	  ios: `${scheme}${endLabel}@${eLatLng}`,
+	  android: `${scheme}${eLatLng}(${endLabel})`
+	});
+
+
+	// Code used for moving the map to the start and end locations
+	const mapRef = useRef(null);
+	const [region, setRegion] = useState({
+		latitude: 51.5079145,
+		longitude: -0.0899163,
+		latitudeDelta: 0.01,
+		longitudeDelta: 0.01,
+	});
+	const startData = {
+		latitude: activeGig.startLat,
+		longitude: activeGig.startLon,
+		latitudeDelta: 0.01,
+		longitudeDelta: 0.01,
+	};
+	const endData = {
+		latitude: activeGig.endLat,
+		longitude: activeGig.endLon,
+		latitudeDelta: 0.01,
+		longitudeDelta: 0.01,
+	};
+	const goToStart = () => {
+		mapRef.current.animateToRegion(startData, 3000);
+	};
+	const goToEnd = () => {
+		mapRef.current.animateToRegion(endData, 3000);
+	};
+
 	return (
 		<View style={STARTGIG.screenWrapper}>
 			<MapView
+				ref={mapRef}
 				style={STARTGIG.mapWrapper}
 				//specify our coordinates.
-				provider={PROVIDER_GOOGLE}
 				showsUserLocation={true}
 				followsUserLocation={true}
 				initialRegion={{
@@ -36,7 +81,10 @@ const DrivingScreen = () => {
 					longitude: activeGig.startLon,
 					latitudeDelta: 0.0922,
 					longitudeDelta: 0.0421,
-				}}>
+				}}
+				onRegionChangeComplete={(region) => setRegion(region)}>
+				<Marker coordinate={startData} />
+				<Marker coordinate={endData} />
 				{/*Renders the route for the gig on the map screen*/}
 				<MapViewDirections
 					origin={activeGig.startCoord}
@@ -66,11 +114,29 @@ const DrivingScreen = () => {
 					<Text>F</Text>
 				</Pressable>
 			</View>
+			<View style={STARTGIG.mapNavBtnWarpper}>
+				<Pressable
+					style={[ELSTYLES.button, { padding: 4 }]}
+					onPress={() => goToStart()}>
+					<Text style={{ textAlign: "center" }}>Origin</Text>
+				</Pressable>
+				<Pressable
+					style={[ELSTYLES.button, { padding: 4 }]}
+					onPress={() => goToEnd()}>
+					<Text>Destination</Text>
+				</Pressable>
+			</View>
 			<View style={STARTGIG.infoWrapper}>
 				<View style={[STARTGIG.textWrapper]}>
 					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
 						<Text style={ELSTYLES.titleL}>Route:</Text>
-						<Text style={ELSTYLES.titleLlight}>{activeGig.title}</Text>
+						{/* Pressing the city name will open maps with navigation to the gig address, either start or end */}
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(startURL) }>
+							<Text style={ELSTYLES.titleLlight}>{activeGig.startLocation}</Text>
+						</Pressable>
+						<Pressable style={ELSTYLES.titleLlight} onPress = {() => Linking.openURL(endURL) }>
+							<Text style={ELSTYLES.titleLlight}>{activeGig.endLocation}</Text>
+						</Pressable>
 					</View>
 					<View
 						style={[

@@ -3,6 +3,7 @@ import { Text, View, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { ELSTYLES } from "../constants/styles";
 import { LANDING } from "../constants/styles";
+import Ripple from "react-native-material-ripple";
 
 const LandingScreen = ({ navigation }) => {
 	//Gradient object
@@ -19,44 +20,28 @@ const LandingScreen = ({ navigation }) => {
 			end={gradientOptions.end}>
 			{/*Title container*/}
 			<View style={LANDING.titleWrapper}>
-				<Text style={ELSTYLES.title}>Title</Text>
-				<Text style={ELSTYLES.titleSm}>Lorem ipsum etc</Text>
+				<Text style={[ELSTYLES.titleXXLlight, { marginBottom: 16 }]}>
+					Toimauto
+				</Text>
+				<Text style={[ELSTYLES.titleMlight, { paddingLeft: 8 }]}>
+					Lorem ipsum etc
+				</Text>
 			</View>
 
 			{/*Buttons*/}
 			<View style={LANDING.buttonWrapper}>
-				<Pressable
-					style={({ pressed }) => [
-						pressed ? ELSTYLES.buttonPressed : ELSTYLES.button,
-						LANDING.buttonLanding,
-					]}
-					onPress={() => openLogin(navigation)}>
-					{({ pressed }) => (
-						<Text
-							style={[
-								pressed ? ELSTYLES.buttonTxtPressed : ELSTYLES.buttonTxt,
-								ELSTYLES.txtL,
-							]}>
-							Login
-						</Text>
-					)}
-				</Pressable>
-				<Pressable
-					style={({ pressed }) => [
-						pressed ? ELSTYLES.buttonPressed : ELSTYLES.button,
-						LANDING.buttonLanding,
-					]}
-					onPress={() => openRegister(navigation)}>
-					{({ pressed }) => (
-						<Text
-							style={[
-								pressed ? ELSTYLES.buttonTxtPressed : ELSTYLES.buttonTxt,
-								ELSTYLES.txtL,
-							]}>
-							Register
-						</Text>
-					)}
-				</Pressable>
+				<Ripple
+					style={[ELSTYLES.button, LANDING.buttonLanding]}
+					onPress={() => openLogin(navigation)}
+					rippleColor={LANDING.rippleColors().colorAccent}>
+					<Text style={[ELSTYLES.buttonTxt, ELSTYLES.txtL]}>Login</Text>
+				</Ripple>
+				<Ripple
+					style={[ELSTYLES.button, LANDING.buttonLanding]}
+					onPress={() => openRegister(navigation)}
+					rippleColor={LANDING.rippleColors().colorAccent}>
+					<Text style={[ELSTYLES.buttonTxt, ELSTYLES.txtL]}>Register</Text>
+				</Ripple>
 			</View>
 		</LinearGradient>
 	);
