@@ -113,6 +113,10 @@ export const ELSTYLES = StyleSheet.create({
 	txt: {
 		fontSize: fsSm,
 	},
+	txtLight: {
+		fontFamily: fontLight,
+		fontSize: fsSm,
+	},
 	txtAlt: {
 		color: colorBase,
 		font: fontMedium,
@@ -185,7 +189,7 @@ export const ELSTYLES = StyleSheet.create({
 	},
 
 	buttonTxt: {
-		font: font,
+		fontFamily: fontMedium,
 		color: colorAccent,
 	},
 	buttonAltTxt: {
@@ -207,6 +211,7 @@ export const ELSTYLES = StyleSheet.create({
 	},
 
 	forgotPasswordTxt: {
+		fontFamily: fontMedium,
 		color: colorAccent,
 		fontStyle: "italic",
 		textDecorationLine: "underline",
@@ -316,8 +321,8 @@ export const FORGOTPASS = StyleSheet.create({
 	},
 	contentWrapper: {
 		backgroundColor: colorAlt,
-		padding: 8,
-		width: "60%",
+		padding: 16,
+		width: "70%",
 		borderRadius: borderRadius,
 		margin: 8,
 	},
