@@ -105,6 +105,7 @@ const RegistrationScreen = ({ navigation }) => {
 							<Text style={ELSTYLES.label}>Re-enter password</Text>
 							<TextInput
 								placeholder="password"
+								secureTextEntry={true}
 								style={ELSTYLES.input}></TextInput>
 
 							<Text style={ELSTYLES.label}>Email:</Text>
