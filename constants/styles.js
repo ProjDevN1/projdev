@@ -328,27 +328,24 @@ export const ADDPICTURES = StyleSheet.create({
 		backgroundColor: colorAccent,
 		flex: 1,
 		justifyContent: "space-evenly",
-		//align items didnt actually work before because you used flex - you didnt have any space to align to
-		alignItems: "center",
-		//this is redundant - doesnt change anything in Native as default direction is column
-		//flexDirection: "column",
 	},
 	contentWrapperTopBottom: {
-		//in this case i dont think flex is the key - because then it controls the separation - not the justify
 		flexDirection: "row",
 		justifyContent: "center",
 		justifyContent: "space-around",
-		//just added red here so you see how wide the containers actually are - think about width if you want the buttons/text to be even
-		backgroundColor: "red",
+		widht: "100%",
+		height: "22,5%",
+		alignItems: "center",
+		paddingTop: 50,
+		paddingHorizontal: 16,
 	},
 	innerTop: {
 		display: "flex",
 	},
 	contentWrapperMiddle: {
-		//removed flex - if you use flex you cant control anything with justify
-		// think about this - if something occupies space - you cant move anything else in that space
-		justifyContent: "center",
-		justifyContent: "space-around",
+		height: "55%",
+		justifyContent: "space-evenly",
+		alignItems: "center",
 	},
 	innerContentWrapper1: {
 		backgroundColor: colorAlt,
@@ -357,6 +354,7 @@ export const ADDPICTURES = StyleSheet.create({
 		borderRadius: borderRadius,
 		flexDirection: "row",
 		alignItems: "center",
+		height: "25%",
 	},
 	innerContentWrapper2: {
 		backgroundColor: colorAlt,
@@ -364,6 +362,8 @@ export const ADDPICTURES = StyleSheet.create({
 		width: 250,
 		borderRadius: borderRadius,
 		alignItems: "center",
+		height: "60%",
+		justifyContent: "space-evenly",
 	},
 	addPicsBtn: {
 		alignSelf: "center",
@@ -372,13 +372,19 @@ export const ADDPICTURES = StyleSheet.create({
 		paddingVertical: "8%",
 		margin: "8%",
 	},
-	roundBtn: {
+	input: {
+		fontSize: fsSm,
+		fontFamily: fontLight,
 		backgroundColor: colorBase,
-		borderRadius: 100,
-		borderColor: colorAccent,
+		borderRadius: borderRadius,
+		paddingVertical: 8,
+		paddingHorizontal: 12,
+		marginTop: 8,
+		marginBottom: 8,
 		borderWidth: 2,
-		color: colorDark,
-		margin: 8,
+		borderColor: colorAccent,
+		color: colorDarker,
+		height: "90%",
 	},
 });
 
