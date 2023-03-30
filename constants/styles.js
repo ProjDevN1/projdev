@@ -293,7 +293,8 @@ export const REGISTER = StyleSheet.create({
 	inputContainer: {
 		backgroundColor: colorAlt,
 		padding: 16,
-		width: 250,
+		width: "100%",
+		marginBottom: 16,
 		borderRadius: borderRadius,
 	},
 
