@@ -33,13 +33,13 @@ const LandingScreen = ({ navigation }) => {
 				<Ripple
 					style={[ELSTYLES.button, LANDING.buttonLanding]}
 					onPress={() => openLogin(navigation)}
-					rippleColor={LANDING.rippleColors().colorAccent}>
+					rippleColor={ELSTYLES.rippleColors().colorAccent}>
 					<Text style={[ELSTYLES.buttonTxt, ELSTYLES.txtL]}>Login</Text>
 				</Ripple>
 				<Ripple
 					style={[ELSTYLES.button, LANDING.buttonLanding]}
 					onPress={() => openRegister(navigation)}
-					rippleColor={LANDING.rippleColors().colorAccent}>
+					rippleColor={ELSTYLES.rippleColors().colorAccent}>
 					<Text style={[ELSTYLES.buttonTxt, ELSTYLES.txtL]}>Register</Text>
 				</Ripple>
 			</View>

@@ -22,7 +22,7 @@ To use the styles, give the object in the app code the style attribute with STYL
 
 //Global variables
 const colorBase = "#E9EDF0";
-const colorAlt = "#E8EAEC";
+const colorAlt = "#ededed";
 const colorAccent = "#389ADE";
 const colorDark = "#1F5673";
 const colorDarker = "#000000";
@@ -38,8 +38,8 @@ const fsXXL = 64;
 const fsXL = 36;
 const fsL = 24;
 const fsM = 20;
-const fsSm = 12;
-const fsXs = 8;
+const fsSm = 16;
+const fsXs = 12;
 const borderRadius = 8;
 
 //example stylesheet - don't touch
@@ -56,6 +56,11 @@ export const STYLES = StyleSheet.create({
 
 //Global styles for elements - should consist only of colors pretty much
 export const ELSTYLES = StyleSheet.create({
+	rippleColors: () => ({
+		colorBase: colorBase,
+		colorAccent: colorAccent,
+		colorAlt: colorAlt,
+	}),
 	//Titles - supposed to be in descending order
 	title: {
 		fontFamily: font,
@@ -113,7 +118,7 @@ export const ELSTYLES = StyleSheet.create({
 		font: fontMedium,
 	},
 	label: {
-		fontFamily: font,
+		fontFamily: fontExtraLight,
 		fontSize: fsL,
 		marginTop: 6,
 	},
@@ -130,7 +135,7 @@ export const ELSTYLES = StyleSheet.create({
 		fontFamily: fontLight,
 		backgroundColor: colorBase,
 		borderRadius: borderRadius,
-		paddingVertical: 8,
+		paddingVertical: 12,
 		paddingHorizontal: 12,
 		marginTop: 8,
 		marginBottom: 8,
@@ -154,6 +159,10 @@ export const ELSTYLES = StyleSheet.create({
 		borderWidth: 2,
 		color: colorDark,
 		marginVertical: 4,
+	},
+	buttonFitImg: {
+		width: "50%",
+		height: "50%",
 	},
 	buttonRound: {
 		backgroundColor: colorBase,
@@ -198,11 +207,11 @@ export const ELSTYLES = StyleSheet.create({
 	},
 
 	forgotPasswordTxt: {
-		color: colorDarker,
-		font: font,
+		color: colorAccent,
 		fontStyle: "italic",
-		fontSize: fsXs,
 		textDecorationLine: "underline",
+		font: fontExtraLight,
+		fontSize: fsXs,
 		marginVertical: 12,
 	},
 });
@@ -240,11 +249,7 @@ export const LANDING = StyleSheet.create({
 		color1: colorAccent,
 		color2: colorDark,
 	}),
-	rippleColors: () => ({
-		colorBase: colorBase,
-		colorAccent: colorAccent,
-		colorAlt: colorAlt,
-	}),
+
 	contentWrapper: {
 		flex: 1,
 		justifyContent: "space-around",
