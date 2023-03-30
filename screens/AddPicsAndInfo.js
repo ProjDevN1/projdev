@@ -2,13 +2,14 @@ import { View, Text, Pressable, TextInput } from "react-native";
 import React from "react";
 import { ADDPICTURES } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
+import { elastic } from "react-native/Libraries/Animated/Easing";
 
 const AddPicsAndInfo = ({ navigation }) => {
 	return (
 		<View style={ADDPICTURES.screenWrapper}>
 			<View style={ADDPICTURES.contentWrapperTopBottom}>
-				<Text style={ELSTYLES.titleSm}>Add Pics And Info</Text>
-				<Pressable style={ADDPICTURES.roundBtn}>
+				<Text style={ELSTYLES.titleLlight}>Before starting your drive</Text>
+				<Pressable style={ELSTYLES.buttonRound}>
 					<Text style={ELSTYLES.buttonTxt}>?</Text>
 				</Pressable>
 			</View>
@@ -26,14 +27,14 @@ const AddPicsAndInfo = ({ navigation }) => {
 				<View style={ADDPICTURES.innerContentWrapper2}>
 					<TextInput
 						placeholder="Give additional info about the vehicle"
-						style={ELSTYLES.input}></TextInput>
+						style={ADDPICTURES.input}></TextInput>
 				</View>
 			</View>
 			<View style={ADDPICTURES.contentWrapperTopBottom}>
-				<Pressable style={ADDPICTURES.roundBtn}>
+				<Pressable style={ELSTYLES.buttonRound}>
 					<Text style={ELSTYLES.buttonTxt}>Back</Text>
 				</Pressable>
-				<Pressable style={ADDPICTURES.roundBtn}
+				<Pressable style={ELSTYLES.buttonRound}
 				onPress={() => navigation.navigate('Driving')}
 				>
 					<Text style={ELSTYLES.buttonTxt}>Next</Text>
