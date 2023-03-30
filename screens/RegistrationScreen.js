@@ -7,9 +7,11 @@ import {
 	ScrollView,
 	Image,
 } from "react-native";
-import React from "react";
+import React, { useState, } from "react";
 import { STYLES } from "../constants/styles";
 import { LinearGradient } from "expo-linear-gradient";
+import { db } from "../firebaseConfig.js";
+import { collection, addDoc, getCountFromServer, QuerySnapshot } from 'firebase/firestore';
 
 import { REGISTER } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
@@ -24,6 +26,30 @@ const verifyRegistration = () => {
 // Main user interface, different fields for all needed inputs
 
 const RegistrationScreen = ({ navigation }) => {
+
+	// Adding a user to the database
+	const [userName, setUsername] = useState(""); //Setting username
+	const [userPass, setPass] = useState(""); //Setting password in cleartext
+	const [userEmail, setEmail] = useState(""); //Setting user email
+	const [userData, setUserData] = useState({gigsActive: [], gigsCompleted:[], phone: 0}) //Adds fields for active/completed gigs and phone number on database
+
+	// Code to add the inputted data to the database
+	const addUser = async (e) => {
+		try{
+			const docRef = await addDoc(collection(db, "users"),{
+				name: userName,
+				email: userEmail,
+				password: userPass,
+				gigsActive: userData.gigsActive,
+				gigsCompleted: userData.gigsCompleted,
+				phone: userData.phone,
+			});
+			console.log("User registered", docRef.id)
+			verifyRegistration()
+		} catch(e) {
+			console.error("Error adding user", e)
+		}
+	}
 	//Gradient object
 	let [gradientOptions, setGradientOptions] = React.useState({
 		colors: [REGISTER.bgColors().color1, REGISTER.bgColors().color2],
@@ -66,12 +92,15 @@ const RegistrationScreen = ({ navigation }) => {
 							<Text style={ELSTYLES.label}>Username:</Text>
 							<TextInput
 								placeholder="username"
-								style={ELSTYLES.input}></TextInput>
+								style={ELSTYLES.input}
+								onChangeText={(value) => setUsername(value)}></TextInput>
 
 							<Text style={ELSTYLES.label}>Password:</Text>
 							<TextInput
 								placeholder="password"
-								style={ELSTYLES.input}></TextInput>
+								style={ELSTYLES.input}
+								secureTextEntry={true}
+								onChangeText={(value) => setPass(value)}></TextInput>
 
 							<Text style={ELSTYLES.label}>Re-enter password</Text>
 							<TextInput
@@ -79,7 +108,10 @@ const RegistrationScreen = ({ navigation }) => {
 								style={ELSTYLES.input}></TextInput>
 
 							<Text style={ELSTYLES.label}>Email:</Text>
-							<TextInput placeholder="email" style={ELSTYLES.input}></TextInput>
+							<TextInput
+							 placeholder="email"
+							  style={ELSTYLES.input}
+							  onChangeText={(value) => setEmail(value)}></TextInput>
 
 							<Ripple
 								rippleColor={ELSTYLES.rippleColors().colorAccent}
@@ -92,7 +124,7 @@ const RegistrationScreen = ({ navigation }) => {
 							<Ripple
 								rippleColor={ELSTYLES.rippleColors().colorAccent}
 								style={[ELSTYLES.button, REGISTER.registerBtn]}
-								onPress={() => verifyRegistration()}>
+								onPress={() => addUser()}>
 								<Text style={ELSTYLES.buttonTxt}>Register</Text>
 							</Ripple>
 						</View>
