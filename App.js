@@ -38,8 +38,10 @@ async function initializeData() {
 initializeData();
 
 // Asks for location on start
+
 const curLocation = () => {
-	GetLocation.getCurrentPosition({
+	GetLocation.getCurrentPosition(
+			{
 		enableHighAccuracy: true,
 		timeout: 6000,
 	})

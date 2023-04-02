@@ -1,16 +1,36 @@
 import { View, Text, Pressable, Alert, Linking, Platform } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
+import GetLocation from "react-native-get-location";
+import { getCurrentTime } from "../api/DataHandling";
 
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
 import { activeGig } from "../api/api.js"
 
+
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const DrivingScreen = () => {
+	getCurrentTime()
+	// Gets user location coordinates for estimated arrival and distance
+	// const [userLocation, setUserLocation] = useState("null");
+	// useEffect(() => {
+	// 	GetLocation.getCurrentPosition(
+	// 		position => {
+	// 			const { latitude, longitude } = position.coords
+	// 			setUserLocation({ latitude, longitude })
+	// 			console.log("success")
+	// 		},
+	// 		error => {
+	// 			console.log(error.code, error.message)
+	// 		},
+	// 		{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
+	// 	)
+	// }, [])
+
 	const showContactInfo = () =>
 		Alert.alert(
 			"Client contact information",
@@ -23,6 +43,10 @@ const DrivingScreen = () => {
 				},
 			]
 		);
+	
+		const [distance, setDistance] = useState(false);
+		const [duration, setDuration] = useState(false)
+
 
 	// Code for opening maps navigation to start address
 	const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
@@ -99,6 +123,8 @@ const DrivingScreen = () => {
 						);
 					}}
 					onReady={(result) => {
+						setDistance(result.distance);
+						setDuration(result.duration);
 						console.log(`Distance: ${result.distance} km`);
 						console.log(`Duration: ${result.duration} min`);
 					}}
@@ -152,7 +178,7 @@ const DrivingScreen = () => {
 								Estimated arrival:
 							</Text>
 							<Text style={[STARTGIG.labelL, { flex: 0.5, textAlign: "left" }]}>
-								00:00
+								{duration}
 							</Text>
 						</View>
 						<View
@@ -162,7 +188,7 @@ const DrivingScreen = () => {
 							}}>
 							<Text style={[STARTGIG.labelM, { flex: 1 }]}>Distance left:</Text>
 							<Text style={[STARTGIG.labelL, { flex: 0.5, textAlign: "left" }]}>
-								0
+								{distance} KM
 							</Text>
 						</View>
 					</View>
