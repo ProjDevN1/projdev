@@ -19,10 +19,12 @@ import Modal from "react-native-modal";
 import DropDownPicker from "react-native-dropdown-picker";
 import Slider from "@react-native-community/slider";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import Ripple from "react-native-material-ripple";
 
 //This has the frontend code that shows either a list of available gigs or a text thing. Style accordingly
 function List(props) {
 	const navRef = props.nav;
+
 	//This is the frontend code for an individual list item
 	const Item = ({
 		id,
@@ -33,20 +35,29 @@ function List(props) {
 		endTime,
 	}) => (
 		<View>
-			<Pressable
+			<Ripple
 				onPress={() => onListItemPress(navRef, id)}
-				style={GIGLIST.listBtn}>
+				style={GIGLIST.listBtn}
+				rippleColor={ELSTYLES.rippleColors().colorBase}>
 				<View style={{ flexDirection: "row" }}>
 					<View
 						style={{
 							flex: 1,
 							flexDirection: "column",
-							justifyContent: "space-between",
+							justifyContent: "center",
+							alignItems: "flex-start",
+							paddingVertical: 4,
 						}}>
-						<Text style={GIGLIST.listBtnTitle}>
-							{startLocation} - {endLocation}
-						</Text>
-						<Text style={GIGLIST.departure}>Departure: {startTime}</Text>
+						<View>
+							<Text style={GIGLIST.listBtnTitle}>
+								{startLocation} - {endLocation}
+							</Text>
+						</View>
+						<View
+							style={{ flex: 1, flexDirection: "row", alignItems: "baseline" }}>
+							<Text style={GIGLIST.date}>DATE </Text>
+							<Text style={GIGLIST.departure}>({startTime})</Text>
+						</View>
 					</View>
 					<View
 						style={{
@@ -57,11 +68,11 @@ function List(props) {
 						<Text style={GIGLIST.reward}>{reward}€</Text>
 					</View>
 				</View>
-			</Pressable>
+			</Ripple>
 		</View>
 	);
 	if (availableGigsData.length === 0) {
-		return <Text>No available gigs</Text>;
+		return <Text style={ELSTYLES.txtAlt}>No available gigs</Text>;
 	} else {
 		return (
 			<FlatList
@@ -128,46 +139,52 @@ const GigListScreen = ({ navigation }) => {
 		hideDatePicker();
 	};
 
-	//setTime
-	const [selectedTime, setSelectedTime] = useState(null);
-	const [timePickerVisible, setTimePickerVisible] = useState(false);
+	//setDateEnd
+	const [selectedDateEnd, setSelectedDateEnd] = useState(null);
+	const [dateEndPickerVisible, setDateEndPickerVisible] = useState(false);
 
-	const showTimePicker = () => {
-		setTimePickerVisible(true);
+	const showDateEndPicker = () => {
+		setDateEndPickerVisible(true);
 	};
 
-	const hideTimePicker = () => {
-		setTimePickerVisible(false);
+	const hideDateEndPicker = () => {
+		setDateEndPickerVisible(false);
 	};
 
-	const handleConfirmTime = (time) => {
-		setSelectedTime(time);
-		hideTimePicker();
+	const handleConfirmDateEnd = (dateEnd) => {
+		setSelectedDateEnd(dateEnd);
+		hideDateEndPicker();
 	};
 
 	return (
 		<SafeAreaView style={GIGLIST.screenWrapper}>
 			<View style={GIGLIST.navbar}>
 				<View>
-					<Pressable
+					<Ripple
+						rippleColor={ELSTYLES.rippleColors().colorAccent}
 						onPress={() => {
 							activeGigs(navigation);
 						}}
 						style={ELSTYLES.button}>
 						<Text style={GIGLIST.searchBtnTxt}>Active gigs</Text>
-					</Pressable>
+					</Ripple>
 				</View>
 				<View style={GIGLIST.navbarR}>
-					<Pressable style={ELSTYLES.buttonRound} onPress={toggleModal}>
+					<Ripple
+						rippleColor={ELSTYLES.rippleColors().colorAccent}
+						style={ELSTYLES.buttonRound}
+						onPress={toggleModal}>
 						<Image
 							style={{ width: "50%", height: "50%" }}
 							source={require("../assets/icons/searchIco.png")}></Image>
-					</Pressable>
-					<Pressable style={ELSTYLES.buttonRound}>
+					</Ripple>
+					<Ripple
+						rippleColor={ELSTYLES.rippleColors().colorAccent}
+						style={ELSTYLES.buttonRound}>
 						<Image
 							style={{ width: "50%", height: "50%" }}
 							source={require("../assets/icons/settingIco.png")}></Image>
-					</Pressable>
+					</Ripple>
 				</View>
 			</View>
 			<View style={GIGLIST.content}>
@@ -179,11 +196,9 @@ const GigListScreen = ({ navigation }) => {
 				style={{ margin: 0, justifyContent: "flex-end" }}
 				swipeDirection="down"
 				onRequestClose={toggleModal}
-    			onBackButtonPress={toggleModal}
-    			scrollOffset={1}
-				onSwipeComplete={toggleModal}
-				>
-				
+				onBackButtonPress={toggleModal}
+				scrollOffset={1}
+				onSwipeComplete={toggleModal}>
 				<View style={GIGLIST.modalWrapper}>
 					<View style={{ flex: 1 }}>
 						<View>
@@ -201,6 +216,7 @@ const GigListScreen = ({ navigation }) => {
 									setValue={setValueFrom}
 									setItems={setItemsFrom}
 									placeholder={"From:"}
+									style={GIGLIST.dropdown}
 								/>
 							</View>
 							<View
@@ -220,28 +236,28 @@ const GigListScreen = ({ navigation }) => {
 									setValue={setValueTo}
 									setItems={setItemsTo}
 									placeholder={"To:"}
+									style={GIGLIST.dropdown}
 								/>
 							</View>
 						</View>
 						<View style={{ marginBottom: 16 }}>
-							<View style={{ flexDirection: "row" }}>
-								<Text>Pay: </Text>
+							<View style={{ flexDirection: "row", alignItems: "baseline" }}>
+								<Text style={ELSTYLES.txt}>Pay: </Text>
 								<Text>{priceDisplayQuantity}</Text>
-								<Text> Eur</Text>
+								<Text style={ELSTYLES.txt}> €</Text>
 							</View>
 							<Slider
 								style={{ height: 40 }}
 								step={1}
 								minimumValue={0}
 								maximumValue={1000}
-								minimumTrackTintColor="#FFFFFF"
-								maximumTrackTintColor="#000000"
+								minimumTrackTintColor={ELSTYLES.rippleColors().colorAccent}
 								onSlidingComplete={(value) => setPriceQuantity(value)}
 								onValueChange={(value) => setPriceDisplayQuantity(value)}
 							/>
 						</View>
 						<View>
-							<Text>Date and time: </Text>
+							<Text style={ELSTYLES.txt}>Date and time: </Text>
 							<View
 								style={{
 									flexDirection: "row",
@@ -253,16 +269,16 @@ const GigListScreen = ({ navigation }) => {
 									<Text>
 										{selectedDate
 											? selectedDate.toLocaleDateString()
-											: "Select date"}
+											: "Start date"}
 									</Text>
 								</Pressable>
 								<Pressable
-									onPress={showTimePicker}
+									onPress={showDateEndPicker}
 									style={GIGLISTFILTER.dateTimeBtn}>
 									<Text>
-										{selectedTime
-											? selectedTime.toLocaleTimeString()
-											: "Select time"}
+										{selectedDateEnd
+											? selectedDateEnd.toLocaleDateString()
+											: "End date"}
 									</Text>
 								</Pressable>
 								<DateTimePickerModal
@@ -273,11 +289,11 @@ const GigListScreen = ({ navigation }) => {
 									onCancel={hideDatePicker}
 								/>
 								<DateTimePickerModal
-									value={selectedTime}
-									isVisible={timePickerVisible}
-									mode="time"
-									onConfirm={handleConfirmTime}
-									onCancel={hideTimePicker}
+									value={selectedDateEnd}
+									isVisible={dateEndPickerVisible}
+									mode="date"
+									onConfirm={handleConfirmDateEnd}
+									onCancel={hideDateEndPicker}
 								/>
 							</View>
 						</View>

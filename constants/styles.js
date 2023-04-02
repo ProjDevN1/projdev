@@ -60,6 +60,7 @@ export const ELSTYLES = StyleSheet.create({
 		colorBase: colorBase,
 		colorAccent: colorAccent,
 		colorAlt: colorAlt,
+		colorDark: colorDark,
 	}),
 	//Titles - supposed to be in descending order
 	title: {
@@ -107,10 +108,12 @@ export const ELSTYLES = StyleSheet.create({
 	//End of titles
 	//texts and labels
 	txtL: {
+		fontFamily: fontMedium,
 		fontSize: fsL,
 	},
 
 	txt: {
+		fontFamily: fontMedium,
 		fontSize: fsSm,
 	},
 	txtLight: {
@@ -520,15 +523,21 @@ export const GIGLIST = StyleSheet.create({
 		fontFamily: fontMedium,
 		fontSize: fsL,
 		color: colorAlt,
+		marginBottom: 4,
 	},
 	reward: {
 		fontSize: fsL,
 		color: colorAlt,
 	},
-	departure: {
+	date: {
 		fontSize: fsM,
 		color: colorAlt,
-		font: fontMedium,
+		fontWeight: "500",
+	},
+	departure: {
+		fontSize: fsSm,
+		color: colorAlt,
+		fontWeight: "300",
 	},
 
 	modalWrapper: {
@@ -544,6 +553,13 @@ export const GIGLIST = StyleSheet.create({
 		paddingVertical: 10,
 		fontFamily: fontMedium,
 		color: colorDarker,
+	},
+	dropdown: {
+		backgroundColor: colorBase,
+		fontFamily: fontMedium,
+		color: colorDarker,
+		borderColor: colorAccent,
+		borderWidth: 2,
 	},
 });
 
