@@ -7,12 +7,16 @@ import {
 	Button,
 	Image,
 	Platform,
+	SafeAreaView
 } from "react-native";
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
+import GetLocation from "react-native-get-location";
+import Modal from "react-native-modal";
+
 
 import { clickedListItem, clientName } from "../screens/ActiveGigsScreen";
 import { activeGigsData, setActiveGig } from "../api/api";
@@ -23,10 +27,27 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 only thing changing is that the apply-button changes to start-button*/
 
 const GigStartScreen = ({ navigation }) => {
+
+	// code for jackshit right now
+	const [location, setLocation] = useState(null);
+	useEffect(() => {
+		GetLocation.getCurrentPosition({
+		  enableHighAccuracy: true,
+		  timeout: 15000,
+		})
+		  .then(location => {
+			setLocation(location);
+		  })
+		  .catch(error => {
+			const { code, message } = error;
+			console.warn(code, message);
+		  });
+	  }, []);
+
 	const currentGig = activeGigsData[clickedListItem];
 	console.log(clickedListItem);
 
-
+	// Code for navigation line on ios and android
 	const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
 	const sLatLng = `${currentGig.startLat},${currentGig.startLon}`;
 	const startLabel = `${currentGig.startAddress}`;
@@ -42,20 +63,13 @@ const GigStartScreen = ({ navigation }) => {
 	  android: `${scheme}${eLatLng}(${endLabel})`
 	});
 
+	// Code for contact info modal visibility
+	const [contactModalVisible, setContactVisible] = useState(false);
+	const toggleContactModal = () => {
+		setContactVisible(!contactModalVisible)
+	}
 
-	// Here we will have a prompt with the phone number of the client
-	const showContactInfo = () =>
-		Alert.alert(
-			"Client contact information",
-			"this alert is not yet functional",
-			[
-				{ text: "Cancel", style: "cancel" },
-				{
-					text: "Client phone number",
-					style: "cancel",
-				},
-			]
-		);
+
 	// Code used for moving the map to the start and end locations
 	const mapRef = useRef(null);
 	const [region, setRegion] = useState({
@@ -84,7 +98,7 @@ const GigStartScreen = ({ navigation }) => {
 	};
 
 	return (
-		<View style={STARTGIG.screenWrapper}>
+		<SafeAreaView style={STARTGIG.screenWrapper}>
 			{/*Render our MapView*/}
 			<View style={STARTGIG.mapWrapper}>
 				<MapView
@@ -194,12 +208,30 @@ const GigStartScreen = ({ navigation }) => {
 
 					<Pressable
 						style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
-						onPress={showContactInfo}>
+						onPress={toggleContactModal}>
 						<Text style={ELSTYLES.buttonAltTxt}>Contact info</Text>
 					</Pressable>
 				</View>
 			</View>
-		</View>
+			<Modal
+				isVisible={contactModalVisible}
+				style={{ margin: 0, justifyContent: "flex-end" }}
+				swipeDirection="down"
+				onRequestClose={toggleContactModal}
+				onBackButtonPress={toggleContactModal}
+				scrollOffset={1}
+				onSwipeComplete={toggleContactModal}>
+				<View>
+					<Text>Client name goes here</Text>
+					<Pressable style={{borderColor: "blue", borderWidth: 5}}>
+						<Text>Client phone number</Text>
+					</Pressable>
+					<Pressable style={{borderColor: "red", borderWidth: 5}} onPress={toggleContactModal}>
+						<Text>Close</Text>
+					</Pressable>
+				</View>
+			</Modal>
+		</SafeAreaView>
 	);
 };
 
@@ -207,9 +239,16 @@ const Search = (navigation) => {
 	navigation.navigate("GigList");
 };
 
+// function startDrive(navigation, gig){
+// 	setActiveGig(gig)
+// 	navigation.navigate('AddPicInfo')
+
+// }
+
+// Temp until addpicinfo screen gets fixed for android
 function startDrive(navigation, gig){
 	setActiveGig(gig)
-	navigation.navigate('AddPicInfo')
+	navigation.navigate('Driving')
 
 }
 

@@ -15,7 +15,7 @@ import React, { useState } from "react";
 
 
 //This enables applying for gigs ad other test features
-const testMode = false
+const testMode = true
 
 // FOR FUNCTIONS THAT START WITH TEMP:
 // Only used in database testing, no not make any actual app logic rely on them
@@ -91,6 +91,7 @@ function formatActiveGigsData(gigsData, id, gigId) {
 		startLon: gigsData.startLon,
 		endLat: gigsData.endLat,
 		endLon: gigsData.endLon,
+		date: gigsData.date,
 	};
 	return ITEM;
 }
@@ -112,6 +113,7 @@ function formatAvailableGigsData(aGigsData, id, gigId) {
 		endLat: aGigsData.endLat,
 		endLon: aGigsData.endLon,
 		route: `${aGigsData.startLocation} - ${aGigsData.endLocation}`,
+		date: aGigsData.date,
 	};
 	return ITEM;
 }
@@ -210,6 +212,15 @@ async function applyForGig(gigId, arrayPos){
 	}
 }
 
+async function finishDrive(activeGig, arrayPos){
+	if (testMode === true){
+		const gigRef = doc(db, "gigs", activeGig)
+		updateDoc(gigRef, {vehicle: "something else"})
+		activeGigsData.splice(arrayPos, 1)
+	} else {
+		console.log("didnt work")
+	}
+}
 //Export non-temp functions and data here
 export {
 	getClientName,
@@ -223,4 +234,5 @@ export {
 	setActiveGig,
 	activeGig,
 	applyForGig,
+	finishDrive,	
 };

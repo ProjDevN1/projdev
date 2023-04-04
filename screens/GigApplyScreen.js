@@ -6,10 +6,13 @@ import {
 	Linking,
 	Button,
 	Image,
+	SafeAreaView,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import MapView, { Circle, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
+import Modal from "react-native-modal";
+
 
 import { clickedListItem, clientName } from "../screens/GigListScreen";
 import { availableGigsData, applyForGig } from "../api/api";
@@ -22,19 +25,13 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 const GigApplyScreen = ({ navigation }) => {
 	const currentGig = availableGigsData[clickedListItem];
 
-	// Here we will have a prompt with the phone number of the client
-	const showContactInfo = () =>
-		Alert.alert(
-			"Client contact information",
-			"this alert is not yet functional",
-			[
-				{ text: "Cancel", style: "cancel" },
-				{
-					text: "Client phone number",
-					style: "cancel",
-				},
-			]
-		);
+
+	// Code for contact info modal visibility
+	const [contactModalVisible, setContactVisible] = useState(false);
+	const toggleContactModal = () => {
+		setContactVisible(!contactModalVisible)
+	}
+	
 
 	// Code used for moving the map to the start and end locations
 	const mapRef = useRef(null);
@@ -64,7 +61,7 @@ const GigApplyScreen = ({ navigation }) => {
 	};
 
 	return (
-		<View style={STARTGIG.screenWrapper}>
+		<SafeAreaView style={STARTGIG.screenWrapper}>
 			{/*Render our MapView*/}
 			<View style={STARTGIG.mapWrapper}>
 				<MapView
@@ -168,12 +165,30 @@ const GigApplyScreen = ({ navigation }) => {
 
 					<Pressable
 						style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
-						onPress={showContactInfo}>
+						onPress={toggleContactModal}>
 						<Text style={ELSTYLES.buttonAltTxt}>Contact info</Text>
 					</Pressable>
 				</View>
 			</View>
-		</View>
+			<Modal
+				isVisible={contactModalVisible}
+				style={{ margin: 0, justifyContent: "flex-end" }}
+				swipeDirection="down"
+				onRequestClose={toggleContactModal}
+				onBackButtonPress={toggleContactModal}
+				scrollOffset={1}
+				onSwipeComplete={toggleContactModal}>
+				<View>
+					<Text>Client name goes here</Text>
+					<Pressable style={{borderColor: "blue", borderWidth: 5}}>
+						<Text>Client phone number</Text>
+					</Pressable>
+					<Pressable style={{borderColor: "red", borderWidth: 5}} onPress={toggleContactModal}>
+						<Text>Close</Text>
+					</Pressable>
+				</View>
+			</Modal>
+		</SafeAreaView>
 	);
 };
 

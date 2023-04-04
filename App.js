@@ -15,7 +15,6 @@ import LandingScreen from "./screens/LandingScreen";
 import DevScreen from "./screens/DevScreen";
 import GigListScreen from "./screens/GigListScreen";
 import RegistrationScreen from "./screens/RegistrationScreen";
-import ArrivalScreen from "./screens/ArrivalScreen";
 import ActiveGigsScreen from "./screens/ActiveGigsScreen";
 import DrivingScreen from "./screens/DrivingScreen";
 import AddPicsAndInfo from "./screens/AddPicsAndInfo";
@@ -40,6 +39,7 @@ initializeData();
 // Asks for location on start
 
 const curLocation = () => {
+
 	GetLocation.getCurrentPosition(
 			{
 		enableHighAccuracy: true,
@@ -93,7 +93,6 @@ export default function App() {
 				<Stack.Screen name="ActiveGigs" component={ActiveGigsScreen} />
 				<Stack.Screen name="Registration" component={RegistrationScreen} />
 				<Stack.Screen name="Driving" component={DrivingScreen} />
-				<Stack.Screen name="Arrival" component={ArrivalScreen} />
 				<Stack.Screen name="AddPicInfo" component={AddPicsAndInfo} />
 				<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 				<Stack.Screen name="GigApply" component={GigApplyScreen} />

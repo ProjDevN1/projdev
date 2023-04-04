@@ -55,7 +55,7 @@ function List(props) {
 						</View>
 						<View
 							style={{ flex: 1, flexDirection: "row", alignItems: "baseline" }}>
-							<Text style={GIGLIST.date}>DATE </Text>
+							<Text style={GIGLIST.date}>DATE</Text>
 							<Text style={GIGLIST.departure}>({startTime})</Text>
 						</View>
 					</View>
