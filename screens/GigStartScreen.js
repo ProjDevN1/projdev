@@ -19,7 +19,7 @@ import Modal from "react-native-modal";
 
 
 import { clickedListItem, clientName } from "../screens/ActiveGigsScreen";
-import { activeGigsData, setActiveGig } from "../api/api";
+import { activeGigsData, setActiveGig, addStartingTime } from "../api/api";
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
@@ -247,9 +247,10 @@ const Search = (navigation) => {
 
 // Temp until addpicinfo screen gets fixed for android
 function startDrive(navigation, gig){
+	addStartingTime(gig)
 	setActiveGig(gig)
 	navigation.navigate('Driving')
-
+	
 }
 
 export default GigStartScreen;

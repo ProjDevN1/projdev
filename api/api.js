@@ -221,6 +221,17 @@ async function finishDrive(activeGig, arrayPos){
 		console.log("didnt work")
 	}
 }
+
+//Function to add starting time to Firebase while user pressses "Start"-button on GigStartScreen
+//@Ira
+//NOT YET FUNCTIONING 4.4.2023
+async function addStartingTime(gig) {
+    const time = getCurrentTime();
+    const tempGig = doc(db, "gigs", gig);
+    updateDoc(tempGig, {driveStartTime: time})
+    console.log("Gig starting time added")
+}
+
 //Export non-temp functions and data here
 export {
 	getClientName,
@@ -234,5 +245,6 @@ export {
 	setActiveGig,
 	activeGig,
 	applyForGig,
-	finishDrive,	
+	finishDrive,
+	addStartingTime,	
 };
