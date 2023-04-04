@@ -84,6 +84,11 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsL,
 		color: colorBase,
 	},
+	titleLalt: {
+		fontFamily: fontMedium,
+		fontSize: fsL,
+		color: colorDarker,
+	},
 	titleLlight: {
 		fontFamily: fontLight,
 		fontSize: fsL,
@@ -523,7 +528,6 @@ export const GIGLIST = StyleSheet.create({
 		fontFamily: fontMedium,
 		fontSize: fsL,
 		color: colorAlt,
-		marginBottom: 4,
 	},
 	reward: {
 		fontSize: fsL,
@@ -536,8 +540,17 @@ export const GIGLIST = StyleSheet.create({
 	},
 	departure: {
 		fontSize: fsSm,
+
 		color: colorAlt,
-		fontWeight: "300",
+		fontWeight: "400",
+		marginVertical: 1,
+	},
+	vehicle: {
+		fontSize: fsSm,
+		color: colorAlt,
+		fontWeight: "400",
+		marginHorizontal: 4,
+		flex: 1,
 	},
 
 	modalWrapper: {
