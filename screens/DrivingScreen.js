@@ -1,51 +1,60 @@
-import { View, Text, Pressable, Alert, Linking, Platform } from "react-native";
+import { 
+	View,
+	Text, 
+	Pressable, 
+	Alert, 
+	Linking, 
+	Platform, 
+	SafeAreaView, 
+} from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import GetLocation from "react-native-get-location";
-import { getCurrentTime } from "../api/DataHandling";
+import Modal from "react-native-modal";
 
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
-import { activeGig } from "../api/api.js"
-
+import { activeGig, finishDrive } from "../api/api.js"
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
-const DrivingScreen = () => {
-	getCurrentTime()
-	// Gets user location coordinates for estimated arrival and distance
-	// const [userLocation, setUserLocation] = useState("null");
-	// useEffect(() => {
-	// 	GetLocation.getCurrentPosition(
-	// 		position => {
-	// 			const { latitude, longitude } = position.coords
-	// 			setUserLocation({ latitude, longitude })
-	// 			console.log("success")
-	// 		},
-	// 		error => {
-	// 			console.log(error.code, error.message)
-	// 		},
-	// 		{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
-	// 	)
-	// }, [])
 
-	const showContactInfo = () =>
-		Alert.alert(
-			"Client contact information",
-			"this alert is not yet functional",
-			[
-				{ text: "Cancel", style: "cancel" },
-				{
-					text: "Client phone number",
-					style: "cancel",
-				},
-			]
-		);
+const DrivingScreen = ({ navigation }) => {
+
+    // Sets arrival time
+	const [arrivalTime, setArrival] = useState('');
+
+	// Gets current hours:minutes from device
+	useEffect(() => {
+	  var hours = new Date().getHours(); //Current Hours
+	  var min = new Date().getMinutes(); //Current Minutes
+
+	  setArrival(
+		hours + ':' + min
+	  );
+	}, []);
+
+	// Code for finish gig modal visibility
+	const [finishModalVisible, setFinishVisible] = useState(false);
+	const toggleFinishModal = () => {
+		setFinishVisible(!finishModalVisible);
+	};
+
+	// Code for contact info modal visibility
+	const [contactModalVisible, setContactVisible] = useState(false);
+	const toggleContactModal = () => {
+		setContactVisible(!contactModalVisible)
+	}
 	
-		const [distance, setDistance] = useState(false);
-		const [duration, setDuration] = useState(false)
+	// Finishing drive function 
+	const finishGig = () => {
+		finishDrive()
+		toggleFinishModal()
+	}
+	
+	const [distance, setDistance] = useState(false);
+	const [duration, setDuration] = useState(false)
 
 
 	// Code for opening maps navigation to start address
@@ -93,7 +102,7 @@ const DrivingScreen = () => {
 	};
 
 	return (
-		<View style={STARTGIG.screenWrapper}>
+		<SafeAreaView style={STARTGIG.screenWrapper}>
 			<MapView
 				ref={mapRef}
 				style={STARTGIG.mapWrapper}
@@ -198,18 +207,59 @@ const DrivingScreen = () => {
 					</View>
 				</View>
 				<View style={STARTGIG.buttonWrapper}>
-					<Pressable style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}>
+					<Pressable style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]} onPress={toggleFinishModal}>
 						<Text style={ELSTYLES.buttonAltTxt}>Finish gig</Text>
 					</Pressable>
 
+
 					<Pressable
 						style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
-						onPress={showContactInfo}>
+						onPress={toggleContactModal}>
 						<Text style={ELSTYLES.buttonAltTxt}>Contact info</Text>
 					</Pressable>
 				</View>
 			</View>
-		</View>
+			<Modal 				
+				isVisible={finishModalVisible}
+				style={{ margin: 0, justifyContent: "flex-end" }}
+				swipeDirection="down"
+				onRequestClose={toggleFinishModal}
+				onBackButtonPress={toggleFinishModal}
+				scrollOffset={1}
+				onSwipeComplete={toggleFinishModal}>
+				<View>
+					<Text>You have arrived at your destination</Text>
+					<Text>Arrival time: {arrivalTime}</Text>
+					<Text>Reward: {activeGig.reward}€</Text>
+				</View>
+				<View>
+					<Pressable style={{borderColor: "black", borderWidth: 5}} onPress={finishGig}>
+						<Text> Finish drive </Text>
+					</Pressable>
+					<Pressable style={{borderColor: 'black', borderWidth: 5}} onPress={toggleFinishModal}>
+       					<Text>CLOSE MODAL</Text>
+      				</Pressable>
+				</View>
+			</Modal>
+			<Modal
+				isVisible={contactModalVisible}
+				style={{ margin: 0, justifyContent: "flex-end" }}
+				swipeDirection="down"
+				onRequestClose={toggleContactModal}
+				onBackButtonPress={toggleContactModal}
+				scrollOffset={1}
+				onSwipeComplete={toggleContactModal}>
+				<View>
+					<Text>Client name goes here</Text>
+					<Pressable style={{borderColor: "blue", borderWidth: 5}}>
+						<Text>Client phone number</Text>
+					</Pressable>
+					<Pressable style={{borderColor: "red", borderWidth: 5}} onPress={toggleContactModal}>
+						<Text>Close</Text>
+					</Pressable>
+				</View>
+			</Modal>
+		</SafeAreaView>
 	);
 };
 
