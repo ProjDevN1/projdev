@@ -129,6 +129,17 @@ export const ELSTYLES = StyleSheet.create({
 		color: colorBase,
 		font: fontMedium,
 	},
+	txtAltM: {
+		color: colorBase,
+		fontSize: fsM,
+		font: fontMedium,
+	},
+	numtxtAltM: {
+		color: colorBase,
+		fontSize: fsM,
+		font: fontMedium,
+		maxWidth: 120,
+	},
 	label: {
 		fontFamily: fontExtraLight,
 		fontSize: fsL,
@@ -428,10 +439,7 @@ export const STARTGIG = StyleSheet.create({
 	},
 	infoWrapper: {
 		flex: 1,
-		justifyContent: "space-between",
-		paddingBottom: 24,
-		paddingLeft: 24,
-		paddingRight: 24,
+		padding: 16,
 		borderColor: colorDark,
 		borderTopWidth: 4,
 	},
@@ -466,6 +474,11 @@ export const STARTGIG = StyleSheet.create({
 		backgroundColor: colorAlt,
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	ratingTxt: {
+		color: colorDark,
+		fontSize: fsL,
+		fontWeight: "500",
 	},
 
 	buttonWrapper: {
@@ -528,6 +541,7 @@ export const GIGLIST = StyleSheet.create({
 		fontFamily: fontMedium,
 		fontSize: fsL,
 		color: colorAlt,
+		flex: 1,
 	},
 	reward: {
 		fontSize: fsL,
@@ -537,6 +551,7 @@ export const GIGLIST = StyleSheet.create({
 		fontSize: fsM,
 		color: colorAlt,
 		fontWeight: "500",
+		marginRight: 2,
 	},
 	departure: {
 		fontSize: fsSm,
@@ -544,6 +559,7 @@ export const GIGLIST = StyleSheet.create({
 		color: colorAlt,
 		fontWeight: "400",
 		marginVertical: 1,
+		flex: 1,
 	},
 	vehicle: {
 		fontSize: fsSm,

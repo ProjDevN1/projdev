@@ -48,24 +48,34 @@ function List(props) {
 							alignItems: "flex-start",
 							paddingVertical: 4,
 						}}>
-						<View>
-							<Text style={GIGLIST.listBtnTitle}>
+						<View
+							style={{
+								width: "100%",
+							}}>
+							<Text style={GIGLIST.listBtnTitle} numberOfLines={1}>
 								{startLocation} - {endLocation}
 							</Text>
 						</View>
 						<View
 							style={{ flex: 1, flexDirection: "row", alignItems: "baseline" }}>
 							<Text style={GIGLIST.date}>DATE</Text>
-							<Text style={GIGLIST.departure}>({startTime})</Text>
+							<Text style={GIGLIST.departure} numberOfLines={1}>
+								({startTime})
+							</Text>
 						</View>
 					</View>
 					<View
 						style={{
-							flexDirection: "column",
+							flex: 0.4,
+							flexDirection: "row",
 							alignItems: "center",
 							justifyContent: "center",
 						}}>
-						<Text style={GIGLIST.reward}>{reward}€</Text>
+						{/*number needs to be rounded before sending*/}
+						<Text style={GIGLIST.reward} numberOfLines={1}>
+							{reward}
+						</Text>
+						<Text style={GIGLIST.reward}>€</Text>
 					</View>
 				</View>
 			</Ripple>
