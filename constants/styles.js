@@ -60,6 +60,7 @@ export const ELSTYLES = StyleSheet.create({
 		colorBase: colorBase,
 		colorAccent: colorAccent,
 		colorAlt: colorAlt,
+		colorDark: colorDark,
 	}),
 	//Titles - supposed to be in descending order
 	title: {
@@ -82,6 +83,11 @@ export const ELSTYLES = StyleSheet.create({
 		fontFamily: fontMedium,
 		fontSize: fsL,
 		color: colorBase,
+	},
+	titleLalt: {
+		fontFamily: fontMedium,
+		fontSize: fsL,
+		color: colorDarker,
 	},
 	titleLlight: {
 		fontFamily: fontLight,
@@ -107,10 +113,12 @@ export const ELSTYLES = StyleSheet.create({
 	//End of titles
 	//texts and labels
 	txtL: {
+		fontFamily: fontMedium,
 		fontSize: fsL,
 	},
 
 	txt: {
+		fontFamily: fontMedium,
 		fontSize: fsSm,
 	},
 	txtLight: {
@@ -120,6 +128,17 @@ export const ELSTYLES = StyleSheet.create({
 	txtAlt: {
 		color: colorBase,
 		font: fontMedium,
+	},
+	txtAltM: {
+		color: colorBase,
+		fontSize: fsM,
+		font: fontMedium,
+	},
+	numtxtAltM: {
+		color: colorBase,
+		fontSize: fsM,
+		font: fontMedium,
+		maxWidth: 120,
 	},
 	label: {
 		fontFamily: fontExtraLight,
@@ -420,10 +439,7 @@ export const STARTGIG = StyleSheet.create({
 	},
 	infoWrapper: {
 		flex: 1,
-		justifyContent: "space-between",
-		paddingBottom: 24,
-		paddingLeft: 24,
-		paddingRight: 24,
+		padding: 16,
 		borderColor: colorDark,
 		borderTopWidth: 4,
 	},
@@ -458,6 +474,11 @@ export const STARTGIG = StyleSheet.create({
 		backgroundColor: colorAlt,
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	ratingTxt: {
+		color: colorDark,
+		fontSize: fsL,
+		fontWeight: "500",
 	},
 
 	buttonWrapper: {
@@ -520,15 +541,32 @@ export const GIGLIST = StyleSheet.create({
 		fontFamily: fontMedium,
 		fontSize: fsL,
 		color: colorAlt,
+		flex: 1,
 	},
 	reward: {
 		fontSize: fsL,
 		color: colorAlt,
 	},
-	departure: {
+	date: {
 		fontSize: fsM,
 		color: colorAlt,
-		font: fontMedium,
+		fontWeight: "500",
+		marginRight: 2,
+	},
+	departure: {
+		fontSize: fsSm,
+
+		color: colorAlt,
+		fontWeight: "400",
+		marginVertical: 1,
+		flex: 1,
+	},
+	vehicle: {
+		fontSize: fsSm,
+		color: colorAlt,
+		fontWeight: "400",
+		marginHorizontal: 4,
+		flex: 1,
 	},
 
 	modalWrapper: {
@@ -544,6 +582,13 @@ export const GIGLIST = StyleSheet.create({
 		paddingVertical: 10,
 		fontFamily: fontMedium,
 		color: colorDarker,
+	},
+	dropdown: {
+		backgroundColor: colorBase,
+		fontFamily: fontMedium,
+		color: colorDarker,
+		borderColor: colorAccent,
+		borderWidth: 2,
 	},
 });
 

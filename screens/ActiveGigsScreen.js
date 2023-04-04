@@ -1,4 +1,11 @@
-import { View, Text, Pressable, SafeAreaView, FlatList } from "react-native";
+import {
+	View,
+	Text,
+	Pressable,
+	SafeAreaView,
+	FlatList,
+	Image,
+} from "react-native";
 import React, { useState } from "react";
 
 import { STYLES } from "../constants/styles";
@@ -6,6 +13,7 @@ import { activeGigsData, getClientName } from "../api/api";
 
 import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
+import Ripple from "react-native-material-ripple";
 
 //This has the frontend code that shows either a list of active gigs or a text thing. Style accordingly
 function List(props) {
@@ -31,12 +39,13 @@ function List(props) {
 					style={{
 						flexDirection: "row",
 						alignItems: "baseline",
-						marginBottom: 8,
 					}}>
 					<Text style={GIGLIST.listBtnTitle}>{title} |</Text>
-					<Text style={GIGLIST.departure}> {vehicle}</Text>
+					<Text style={GIGLIST.vehicle} numberOfLines={1}>
+						{vehicle}
+					</Text>
 				</View>
-				<View style={{ flexDirection: "row" }}>
+				<View style={{ flexDirection: "row", marginVertical: 8 }}>
 					<View style={{ flex: 1 }}>
 						<Text style={GIGLIST.departure}>Leave: {leaveTime}</Text>
 						<Text style={GIGLIST.departure}>Arrive: {arrivalTime}</Text>
@@ -81,6 +90,7 @@ function List(props) {
 					/>
 				)}
 				keyExtractor={(item) => item.id}
+				showsVerticalScrollIndicator={false}
 			/>
 		);
 	}
@@ -93,47 +103,25 @@ const ActiveGigsScreen = ({ navigation }) => {
 		<SafeAreaView style={GIGLIST.screenWrapper}>
 			<View style={GIGLIST.navbar}>
 				<View style={GIGLIST.navbarR}>
-					<Pressable
+					<Ripple
+						rippleColor={ELSTYLES.rippleColors().colorAccent}
 						style={ELSTYLES.buttonRound}
 						onPress={() => {
 							Search(navigation);
 						}}>
-						<Text>{"<"}</Text>
-					</Pressable>
+						<Image
+							style={ELSTYLES.buttonFitImg}
+							source={require("../assets/icons/arrowLico.png")}></Image>
+					</Ripple>
 				</View>
-				{/*} Niko said we are not using this
-				<Pressable
-					style={STYLES.button}
-					onPress={() => navigation.navigate("GigList")}>
-					<Text
-						style={{
-							color: "black",
-							height: 20,
-							width: 50,
-							marginVertical: 20,
-						}}>
-						Search
-					</Text>
-				</Pressable>
-          {*/}
-
-				{/*What is this even supposed to be?}
-				<Pressable style={STYLES.button}>
-					<Text
-						style={{
-							color: "black",
-							height: 20,
-							width: 50,
-							marginVertical: 20,
-						}}>
-						Active gigs
-					</Text>
-				</Pressable>
-          */}
-
-				<Pressable style={ELSTYLES.buttonRound}>
-					<Text>Profile?</Text>
-				</Pressable>
+				<Text style={ELSTYLES.titleLalt}>Active Gigs</Text>
+				<Ripple
+					style={ELSTYLES.buttonRound}
+					rippleColor={ELSTYLES.rippleColors().colorAccent}>
+					<Image
+						style={ELSTYLES.buttonFitImg}
+						source={require("../assets/icons/settingIco.png")}></Image>
+				</Ripple>
 			</View>
 			<View style={GIGLIST.content}>
 				<List nav={navigation} />

@@ -1,24 +1,9 @@
 import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native'
 import React from 'react'
 import { requestCameraPermission } from '../components/RequestPermissions'
-import GetLocation from 'react-native-get-location'
 
 //There should be no reason to edit this screen other than to add a button to navigate to a new screen
 //Also btw you can comment with just // if the comment is outside of a react component. If it's inside one, there are different rules
-
-const curLocation = () => {
-  GetLocation.getCurrentPosition({
-    enableHighAccuracy: true,
-    timeout: 6000,
-  })
-  .then(location => {
-    console.log(location);
-  })
-  .catch(error => {
-    const { code, message} = error;
-    console.warn(code, message)
-  })
-}
 
 const DevScreen = ({navigation}) => {
   return (
@@ -32,7 +17,6 @@ const DevScreen = ({navigation}) => {
         <Button title="Active Gigs" onPress={() => navigation.navigate('ActiveGigs')}/>
         <Button title="Register" onPress={() => navigation.navigate('Registration')}/>
         <Button title="Driving screen" onPress={() => navigation.navigate('Driving')}/>
-        <Button title="Arrival" onPress={() => navigation.navigate('Arrival')}/>
         <Button title="Add pics and info" onPress={() => navigation.navigate('AddPicInfo')}/>
         <Button title="Forgot password screen" onPress={() => navigation.navigate('ForgotPassword')}/>
         <Button title="Gig apply screen" onPress={() => navigation.navigate('GigApply')}/>
@@ -41,7 +25,6 @@ const DevScreen = ({navigation}) => {
         <Text>Danger zone, don't touch unless you know what you are doing</Text>
         <Button title="DB Testing" onPress={() => navigation.navigate('DBTest')}/>
         <Button title="Camera permission" onPress={requestCameraPermission}/>
-        <Button title="Get location" onPress={curLocation}/>
     </View>
   )
 }
