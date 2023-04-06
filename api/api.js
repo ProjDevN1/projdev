@@ -203,7 +203,7 @@ async function applyForGig(gigId, arrayPos){
 		})
 		availableGigsData.splice(arrayPos, 1)
 		console.log(gig.data())
-		const id = activeGigsData.lenght - 1
+		const id = activeGigsData.length - 1
 		const formattedGig = formatActiveGigsData(gig.data(), id, gig.id)
 		activeGigsData.push(formattedGig)
 		console.log(formattedGig)
@@ -211,16 +211,27 @@ async function applyForGig(gigId, arrayPos){
 		console.log('Test mode is disabled, no changes to DB made')
 	}
 }
-
-async function finishDrive(activeGig, arrayPos){
+// Function to mark the gig as completed in the database when user clicks "Finish" on DrivingScreen finish modal
+async function finishDrive(gigId){
 	if (testMode === true){
-		const gigRef = doc(db, "gigs", activeGig)
-		updateDoc(gigRef, {vehicle: "something else"})
-		activeGigsData.splice(arrayPos, 1)
+		const gigRef = doc(db, "gigs", gigId)
+		updateDoc(gigRef, {completed: true})
+		console.log("Finished gig")
 	} else {
 		console.log("didnt work")
 	}
 }
+
+//Function to add starting time to Firebase while user pressses "Start"-button on GigStartScreen
+//@Ira
+//NOT YET FUNCTIONING 4.4.2023
+async function addStartingTime(gig) {
+    const time = getCurrentTime();
+    const tempGig = doc(db, "gigs", gig);
+    updateDoc(tempGig, {driveStartTime: time})
+    console.log("Gig starting time added")
+}
+
 //Export non-temp functions and data here
 export {
 	getClientName,
@@ -234,5 +245,6 @@ export {
 	setActiveGig,
 	activeGig,
 	applyForGig,
-	finishDrive,	
+	finishDrive,
+	addStartingTime,	
 };

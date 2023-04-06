@@ -11,6 +11,7 @@ import React, { useState, useRef, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Modal from "react-native-modal";
+import * as Location from 'expo-location';
 
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
@@ -21,6 +22,39 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 
 const DrivingScreen = ({ navigation }) => {
+
+
+	// Get users location coordinates
+	// User coordinates are stored here
+	const [userCoords, setUserCoords] = useState({
+		coords: 0,
+		latitude: 0,
+		longitude: 0,
+		latitudeDelta: 0.0922,
+		longitudeDelta: 0.0421
+	})
+
+	// Function to get user coordinates and set them to storage
+	const getUserLocation = async () => {
+		const { coords } = await Location.getCurrentPositionAsync({});
+		const { latitude, longitude } = coords;
+		setUserCoords({
+			coords: latitude + ", " + longitude,
+			latitude: latitude,
+			longitude: longitude,
+			latitudeDelta: 0.0922,
+			longitudeDelta: 0.0421
+		})
+		console.log("Got user location in 5s")
+	}
+
+	// Updates user location every 5 seconds
+	useEffect(() => {
+		const interlId = setInterval(() => {
+			getUserLocation()
+		}, 5000);
+		return () => clearInterval(interlId)
+		}, [])
 
     // Sets arrival time
 	const [arrivalTime, setArrival] = useState('');
@@ -46,13 +80,12 @@ const DrivingScreen = ({ navigation }) => {
 	const toggleContactModal = () => {
 		setContactVisible(!contactModalVisible)
 	}
-	
 	// Finishing drive function 
-	const finishGig = () => {
-		finishDrive()
-		toggleFinishModal()
+	function finishGig( navigation ){
+		finishDrive(activeGig.gigId)
+		navigation.navigate("ActiveGigs")
 	}
-	
+
 	const [distance, setDistance] = useState(false);
 	const [duration, setDuration] = useState(false)
 
@@ -120,7 +153,7 @@ const DrivingScreen = ({ navigation }) => {
 				<Marker coordinate={endData} />
 				{/*Renders the route for the gig on the map screen*/}
 				<MapViewDirections
-					origin={activeGig.startCoord}
+					origin={userCoords}
 					destination={activeGig.endCoord}
 					apikey={GOOGLE_MAPS_APIKEY}
 					strokeWidth={3}
@@ -233,7 +266,7 @@ const DrivingScreen = ({ navigation }) => {
 					<Text>Reward: {activeGig.reward}€</Text>
 				</View>
 				<View>
-					<Pressable style={{borderColor: "black", borderWidth: 5}} onPress={finishGig}>
+					<Pressable style={{borderColor: "black", borderWidth: 5}} onPress={() => finishGig(navigation, activeGig)}>
 						<Text> Finish drive </Text>
 					</Pressable>
 					<Pressable style={{borderColor: 'black', borderWidth: 5}} onPress={toggleFinishModal}>
