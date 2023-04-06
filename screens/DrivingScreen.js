@@ -16,13 +16,26 @@ import * as Location from 'expo-location';
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
-import { activeGig, finishDrive } from "../api/api.js"
+import { activeGig, finishDrive, updateCurrentLocation } from "../api/api.js"
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 
 const DrivingScreen = ({ navigation }) => {
 
+
+	// Sets the estimated arrival to hh:mm format
+	const [estimatedArrival, setEstimatedArrival] = useState("")
+	const setEstArrival = () =>{
+		const timeStamp = Date.now();
+		const estimatedDuration = timeStamp + (duration * 60000)
+		const newTime = new Date(estimatedDuration)
+		const estHours = newTime.getHours().toString().padStart(2,'0')
+		const estMinutes = newTime.getMinutes().toString().padStart(2, '0')
+		const estArrival = `${estHours}:${estMinutes}`
+		console.log(estArrival)
+		setEstimatedArrival(estArrival)
+	}
 
 	// Get users location coordinates
 	// User coordinates are stored here
@@ -34,7 +47,7 @@ const DrivingScreen = ({ navigation }) => {
 		longitudeDelta: 0.0421
 	})
 
-	// Function to get user coordinates and set them to storage
+	// Function to get user coordinates and set them to storage and updates estimated arrival time
 	const getUserLocation = async () => {
 		const { coords } = await Location.getCurrentPositionAsync({});
 		const { latitude, longitude } = coords;
@@ -45,16 +58,31 @@ const DrivingScreen = ({ navigation }) => {
 			latitudeDelta: 0.0922,
 			longitudeDelta: 0.0421
 		})
-		console.log("Got user location in 5s")
+		setEstArrival()
+		console.log("Got user location coordinates")
+	}
+	// Uploads user coordinates to database in the selected gig
+	const updateUserLocation = async () => {
+		const { coords } = await Location.getCurrentPositionAsync({})
+		const { latitude, longitude } = coords
+		updateCurrentLocation(activeGig.gigId, `${latitude}, ${longitude}`)
 	}
 
-	// Updates user location every 5 seconds
+	// Updates user location every 1.5 seconds
 	useEffect(() => {
-		const interlId = setInterval(() => {
+		const interId = setInterval(() => {
 			getUserLocation()
-		}, 5000);
-		return () => clearInterval(interlId)
+		}, 1500);
+		return () => clearInterval(interId)
 		}, [])
+
+	// Updates user location to database every x minutes
+	useEffect(() => {
+		const interId = setInterval(() => {
+			updateUserLocation()
+		}, 90000);
+		return () => clearInterval(interId)
+	}, [])
 
     // Sets arrival time
 	const [arrivalTime, setArrival] = useState('');
@@ -82,7 +110,7 @@ const DrivingScreen = ({ navigation }) => {
 	}
 	// Finishing drive function 
 	function finishGig( navigation ){
-		finishDrive(activeGig.gigId)
+		finishDrive(activeGig.gigId, arrivalTime)
 		navigation.navigate("ActiveGigs")
 	}
 
@@ -220,7 +248,7 @@ const DrivingScreen = ({ navigation }) => {
 								Estimated arrival:
 							</Text>
 							<Text style={[STARTGIG.labelL, { flex: 0.5, textAlign: "left" }]}>
-								{duration}
+								{estimatedArrival}
 							</Text>
 						</View>
 						<View
@@ -262,7 +290,7 @@ const DrivingScreen = ({ navigation }) => {
 				onSwipeComplete={toggleFinishModal}>
 				<View>
 					<Text>You have arrived at your destination</Text>
-					<Text>Arrival time: {arrivalTime}</Text>
+					<Text>Arrival time: {estimatedArrival}</Text>
 					<Text>Reward: {activeGig.reward}€</Text>
 				</View>
 				<View>

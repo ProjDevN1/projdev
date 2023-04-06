@@ -194,6 +194,7 @@ function setActiveGig(gig){
 
 async function applyForGig(gigId, arrayPos){
 	if (testMode === true){
+		const time = getCurrentTime()
 		const gigRef = doc(db, "gigs", gigId)
 		updateDoc(gigRef, {user: currentUser.id})
 		const gig = await getDoc(gigRef)
@@ -211,14 +212,26 @@ async function applyForGig(gigId, arrayPos){
 		console.log('Test mode is disabled, no changes to DB made')
 	}
 }
-// Function to mark the gig as completed in the database when user clicks "Finish" on DrivingScreen finish modal
-async function finishDrive(gigId){
+// Function to mark the gig as completed and update endTime to finish time in the database when user clicks "Finish" on DrivingScreen finish modal
+async function finishDrive(gigId, arrivalTime){
 	if (testMode === true){
 		const gigRef = doc(db, "gigs", gigId)
 		updateDoc(gigRef, {completed: true})
+		updateDoc(gigRef, {endTime: arrivalTime})
 		console.log("Finished gig")
 	} else {
-		console.log("didnt work")
+		console.log("Finish gig failed")
+	}
+}
+
+// Function to update current user coordinates in firebase
+async function updateCurrentLocation(gigId, userCoords){
+	if (testMode === true){
+		const gigRef = doc(db, 'gigs', gigId)
+		updateDoc(gigRef, {currentLocation: userCoords})
+		console.log("Location uploaded")
+	} else {
+		console.log("Location upload failed")
 	}
 }
 
@@ -246,5 +259,6 @@ export {
 	activeGig,
 	applyForGig,
 	finishDrive,
-	addStartingTime,	
+	addStartingTime,
+	updateCurrentLocation,	
 };
