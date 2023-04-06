@@ -1,5 +1,6 @@
 import React from 'react';
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
+import * as Location from "expo-location"
 
 // This is where all permission request functions should be written, then exported and used where needed.
 
@@ -29,26 +30,12 @@ const requestCameraPermission = async () => {
 
   // Requests access to precise and general location
   const requestLocationPermission = async () => {
-    try {
-        const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-                title: "Location access needed",
-                message: "Location access required",
-                buttonNeutral: "Ask me later",
-                buttonNegative: "Cancel",
-                buttonPositive: "OK",
-            },
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("Location services enabled");
-        } else {
-            console.log("Denied");
-        }
-    } catch(err) {
-        console.warn(err);
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log("No location services")
+    } else {
+      console.log(status)
     }
   }
-
   
   export { requestCameraPermission, requestLocationPermission }

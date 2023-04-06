@@ -14,7 +14,6 @@ import { STARTGIG } from "../constants/styles";
 import React, { useState, useRef, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import GetLocation from "react-native-get-location";
 import Modal from "react-native-modal";
 
 
@@ -27,22 +26,6 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 only thing changing is that the apply-button changes to start-button*/
 
 const GigStartScreen = ({ navigation }) => {
-
-	// code for jackshit right now
-	const [location, setLocation] = useState(null);
-	useEffect(() => {
-		GetLocation.getCurrentPosition({
-		  enableHighAccuracy: true,
-		  timeout: 15000,
-		})
-		  .then(location => {
-			setLocation(location);
-		  })
-		  .catch(error => {
-			const { code, message } = error;
-			console.warn(code, message);
-		  });
-	  }, []);
 
 	const currentGig = activeGigsData[clickedListItem];
 	console.log(clickedListItem);

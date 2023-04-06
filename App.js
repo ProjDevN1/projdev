@@ -2,7 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
-import GetLocation from "react-native-get-location";
+import { requestLocationPermission } from "./components/RequestPermissions.js";
 
 //Database related imports
 import { signInAnonymously } from "firebase/auth";
@@ -36,25 +36,10 @@ async function initializeData() {
 }
 initializeData();
 
-// Asks for location on start
 
-const curLocation = () => {
+// Request user location permissions on app startup, now works for expo go
+requestLocationPermission()
 
-	GetLocation.getCurrentPosition(
-			{
-		enableHighAccuracy: true,
-		timeout: 6000,
-	})
-		.then((location) => {
-			console.log(location);
-		})
-		.catch((error) => {
-			const { code, message } = error;
-			console.warn(code, message);
-		});
-};
-
-curLocation();
 //Initializes the stack navigator module, used to navigate between screens
 const Stack = createNativeStackNavigator();
 
