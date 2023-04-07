@@ -230,7 +230,6 @@ const Search = (navigation) => {
 
 // Temp until addpicinfo screen gets fixed for android
 function startDrive(navigation, gig){
-	addStartingTime(gig)
 	setActiveGig(gig)
 	navigation.navigate('Driving')
 	
