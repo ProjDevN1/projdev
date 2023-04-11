@@ -32,7 +32,7 @@ function List(props) {
 		endLocation,
 		reward,
 		startTime,
-		endTime,
+		date,
 	}) => (
 		<View>
 			<Ripple
@@ -58,7 +58,7 @@ function List(props) {
 						</View>
 						<View
 							style={{ flex: 1, flexDirection: "row", alignItems: "baseline" }}>
-							<Text style={GIGLIST.date}>DATE</Text>
+							<Text style={GIGLIST.date}>{date}</Text>
 							<Text style={GIGLIST.departure} numberOfLines={1}>
 								({startTime})
 							</Text>
@@ -93,7 +93,7 @@ function List(props) {
 						endLocation={item.endLocation}
 						reward={item.reward}
 						startTime={item.startTime}
-						endTime={item.endTime}
+						date={item.date}
 						id={item.id}
 					/>
 				)}
