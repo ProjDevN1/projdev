@@ -68,8 +68,18 @@ async function switchUser() {
 	console.log(`Current user: ${currentUser.name}`);
 }
 
+function formatDate(date) {
+	const str = date.toString();
+	const year = str.slice(0, 4);
+	const month = str.slice(4, 6);
+	const day = str.slice(6, 8);
+	return `${day}.${month}.${year}`;
+  }
+
 //Edits the required data in correct format for activegigslist screen
 function formatActiveGigsData(gigsData, id, gigId) {
+	
+
 	const ITEM = {
 		id: id,
 		gigId: gigId,
@@ -91,7 +101,7 @@ function formatActiveGigsData(gigsData, id, gigId) {
 		startLon: gigsData.startLon,
 		endLat: gigsData.endLat,
 		endLon: gigsData.endLon,
-		date: gigsData.date,
+		date: formatDate(gigsData.date),
 	};
 	return ITEM;
 }
@@ -113,7 +123,7 @@ function formatAvailableGigsData(aGigsData, id, gigId) {
 		endLat: aGigsData.endLat,
 		endLon: aGigsData.endLon,
 		route: `${aGigsData.startLocation} - ${aGigsData.endLocation}`,
-		date: aGigsData.date,
+		date: formatDate(aGigsData.date),
 	};
 	return ITEM;
 }
