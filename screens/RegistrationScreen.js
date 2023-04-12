@@ -10,6 +10,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { STYLES } from "../constants/styles";
 import { LinearGradient } from "expo-linear-gradient";
+import Modal from "react-native-modal";
 import { db } from "../firebaseConfig.js";
 import {
 	collection,
@@ -17,6 +18,8 @@ import {
 	getCountFromServer,
 	QuerySnapshot,
 } from "firebase/firestore";
+
+import { Camera } from "expo-camera";
 
 import { REGISTER } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
@@ -33,6 +36,35 @@ const verifyRegistration = () => {
 
 
 const RegistrationScreen = ({ navigation }) => {
+
+	// Code for camera modal visibility
+	const [cameraModal, setCameraVisible] = useState(false);
+	const toggleCameraModal = () => {
+		setCameraVisible(!cameraModal);
+	};
+
+	// Camera constants code
+	const [hasCameraPermission, setHasCameraPermission] = useState(null); 
+    const [camera, setCamera] = useState(null);
+    const [image, setImage] = useState(null);
+
+	// Camera permission code
+    const [type, setType] = useState(Camera.Constants.Type.back);useEffect(() => {
+      (async () => {
+        const cameraStatus = await Camera.requestCameraPermissionsAsync();
+        setHasCameraPermission(cameraStatus.status === 'granted');})();
+    }, []);
+
+	// Code for capturing a photo
+	const takePicture = async () => {
+      if(camera){
+          const data = await camera.takePictureAsync(null)
+          setImage(data.uri);
+      }
+    }
+    if (hasCameraPermission === false) {
+      return <Text>No access to camera</Text>;
+    }	
 
 	// Adding a user to the database
 	const [userName, setUsername] = useState(""); //Setting username
@@ -129,7 +161,7 @@ const RegistrationScreen = ({ navigation }) => {
 							<Ripple
 								rippleColor={ELSTYLES.rippleColors().colorAccent}
 								style={[ELSTYLES.button, { marginVertical: 16 }]}
-								onPress={() => CameraScreen()}>
+								onPress={() => toggleCameraModal()}>
 								<Text style={[ELSTYLES.buttonTxt, REGISTER.addLicenceBtn]}>
 									Add drivers licence
 								</Text>
@@ -145,11 +177,45 @@ const RegistrationScreen = ({ navigation }) => {
 					</View>
 				</View>
 			</ScrollView>
+			<Modal
+				isVisible={cameraModal}
+				swipeDirection="down"
+				onRequestClose={toggleCameraModal}
+				onBackButtonPress={toggleCameraModal}
+				scrollOffset={1}
+				onSwipeComplete={toggleCameraModal}>
+					<Camera
+						ref={ref => setCamera(ref)}
+						style={styles.fixedRatio}
+						type={type}
+						ratio={"1:1"}
+						/>
+				<Pressable style={ELSTYLES.button} onPress={() => takePicture()}>
+					<Text style={ELSTYLES.buttonTxt}>Take photo</Text>
+				</Pressable>
+				<Pressable style={ELSTYLES.button} onPress={toggleCameraModal}>
+					<Text>Close camera X</Text>
+				</Pressable>
+
+				{/* Shows taken image below the above buttons */}
+				{image && <Image source={{uri: image}} style={{flex:1}}/>}
+			</Modal>
 		</LinearGradient>
 	);
 };
 const openLanding = (navigation) => {
 	navigation.navigate("Landing");
 };
+
+const styles = StyleSheet.create({
+    cameraContainer: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    fixedRatio:{
+        flex: 1,
+        aspectRatio: 1
+    }
+  })
 
 export default RegistrationScreen;
