@@ -7,7 +7,7 @@ import {
 	ScrollView,
 	Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { STYLES } from "../constants/styles";
 import { LinearGradient } from "expo-linear-gradient";
 import { db } from "../firebaseConfig.js";
@@ -30,7 +30,10 @@ const verifyRegistration = () => {
 
 // Main user interface, different fields for all needed inputs
 
+
+
 const RegistrationScreen = ({ navigation }) => {
+
 	// Adding a user to the database
 	const [userName, setUsername] = useState(""); //Setting username
 	const [userPass, setPass] = useState(""); //Setting password in cleartext
@@ -125,7 +128,8 @@ const RegistrationScreen = ({ navigation }) => {
 
 							<Ripple
 								rippleColor={ELSTYLES.rippleColors().colorAccent}
-								style={[ELSTYLES.button, { marginVertical: 16 }]}>
+								style={[ELSTYLES.button, { marginVertical: 16 }]}
+								onPress={() => CameraScreen()}>
 								<Text style={[ELSTYLES.buttonTxt, REGISTER.addLicenceBtn]}>
 									Add drivers licence
 								</Text>

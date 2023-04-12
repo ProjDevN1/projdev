@@ -15,6 +15,7 @@ import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
 import Ripple from "react-native-material-ripple";
 
+
 //This has the frontend code that shows either a list of active gigs or a text thing. Style accordingly
 function List(props) {
 	const navRef = props.nav;

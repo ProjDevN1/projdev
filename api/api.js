@@ -8,6 +8,7 @@ import {
 	setDoc,
 	updateDoc,
 	arrayUnion,
+	arrayRemove,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig.js";
 import { getCurrentTime, getCurrentDate } from "./DataHandling.js";
@@ -223,11 +224,21 @@ async function applyForGig(gigId, arrayPos){
 	}
 }
 // Function to mark the gig as completed and update endTime to finish time in the database when user clicks "Finish" on DrivingScreen finish modal
-async function finishDrive(gigId, arrivalTime){
+async function finishDrive(gigId, arrivalTime, arrayPos){
 	if (testMode === true){
 		const gigRef = doc(db, "gigs", gigId)
 		updateDoc(gigRef, {completed: true})
 		updateDoc(gigRef, {endTime: arrivalTime})
+		const userRef = doc(db, 'users', currentUser.id)
+		updateDoc(userRef, {
+			gigsCompleted: arrayUnion(gigId)
+		})
+		updateDoc(userRef, {
+			gigsActive: arrayRemove(gigId)
+		})
+
+		{/* Doesnt remove right gig for some reason*/}
+		activeGigsData.splice(arrayPos, 1)
 		console.log("Finished gig")
 	} else {
 		console.log("Finish gig failed")

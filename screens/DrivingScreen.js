@@ -16,13 +16,15 @@ import * as Location from 'expo-location';
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
-import { activeGig, finishDrive, updateCurrentLocation } from "../api/api.js"
+import { activeGig, currentUser, finishDrive, updateCurrentLocation, getActiveGigs } from "../api/api.js"
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 
 const DrivingScreen = ({ navigation }) => {
 
+	const [distance, setDistance] = useState(false);
+	const [duration, setDuration] = useState(false)
 
 	// Sets the estimated arrival to hh:mm format
 	const [estimatedArrival, setEstimatedArrival] = useState("")
@@ -68,14 +70,14 @@ const DrivingScreen = ({ navigation }) => {
 		updateCurrentLocation(activeGig.gigId, `${latitude}, ${longitude}`)
 	}
 
-	// Updates user location every 1.5 seconds
+	// Updates user location every 2 seconds
 	useEffect(() => {
 		const interId = setInterval(() => {
 			getUserLocation()
 		}, 1500);
 		return () => clearInterval(interId)
 		}, [])
-
+	
 	// Updates user location to database every x minutes
 	useEffect(() => {
 		const interId = setInterval(() => {
@@ -110,12 +112,11 @@ const DrivingScreen = ({ navigation }) => {
 	}
 	// Finishing drive function 
 	function finishGig( navigation ){
-		finishDrive(activeGig.gigId, arrivalTime)
+		finishDrive(activeGig.gigId, arrivalTime, activeGig.id)
 		navigation.navigate("ActiveGigs")
 	}
 
-	const [distance, setDistance] = useState(false);
-	const [duration, setDuration] = useState(false)
+
 
 
 	// Code for opening maps navigation to start address
@@ -193,7 +194,7 @@ const DrivingScreen = ({ navigation }) => {
 						);
 					}}
 					onReady={(result) => {
-						setDistance(result.distance);
+						setDistance(result.distance.toFixed(2));
 						setDuration(result.duration);
 						console.log(`Distance: ${result.distance} km`);
 						console.log(`Duration: ${result.duration} min`);
