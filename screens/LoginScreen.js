@@ -13,6 +13,8 @@ const correctLogin = true;
 {
 	/*Main loginscreen function*/
 }
+
+
 const LoginScreen = ({ navigation, route }) => {
 	//Gradient object
 	let [gradientOptions, setGradientOptions] = React.useState({

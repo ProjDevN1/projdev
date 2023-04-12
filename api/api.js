@@ -8,6 +8,7 @@ import {
 	setDoc,
 	updateDoc,
 	arrayUnion,
+	arrayRemove,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig.js";
 import { getCurrentTime, getCurrentDate } from "./DataHandling.js";
@@ -223,11 +224,21 @@ async function applyForGig(gigId, arrayPos){
 	}
 }
 // Function to mark the gig as completed and update endTime to finish time in the database when user clicks "Finish" on DrivingScreen finish modal
-async function finishDrive(gigId, arrivalTime){
+async function finishDrive(gigId, arrivalTime, arrayPos){
 	if (testMode === true){
 		const gigRef = doc(db, "gigs", gigId)
 		updateDoc(gigRef, {completed: true})
 		updateDoc(gigRef, {endTime: arrivalTime})
+		const userRef = doc(db, 'users', currentUser.id)
+		updateDoc(userRef, {
+			gigsCompleted: arrayUnion(gigId)
+		})
+		updateDoc(userRef, {
+			gigsActive: arrayRemove(gigId)
+		})
+
+		{/* Doesnt remove right gig for some reason*/}
+		activeGigsData.splice(arrayPos, 1)
 		console.log("Finished gig")
 	} else {
 		console.log("Finish gig failed")
@@ -247,12 +258,15 @@ async function updateCurrentLocation(gigId, userCoords){
 
 //Function to add starting time to Firebase while user pressses "Start"-button on GigStartScreen
 //@Ira
-//NOT YET FUNCTIONING 4.4.2023
-async function addStartingTime(gig) {
-    const time = getCurrentTime();
-    const tempGig = doc(db, "gigs", gig);
-    updateDoc(tempGig, {driveStartTime: time})
-    console.log("Gig starting time added")
+async function addStartingTime(userId) {
+	if (testMode === true){
+		const time = getCurrentTime();
+		const gigRef = doc(db, "gigs", userId);
+		updateDoc(gigRef, {driveStartTime: time})
+		console.log("Gig starting time added")
+	} else {
+		console.log("Location upload failed")
+	}
 }
 
 //Export non-temp functions and data here
