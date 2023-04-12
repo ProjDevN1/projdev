@@ -94,7 +94,7 @@ const AddPicsAndInfo = ({ navigation }) => {
 				</Pressable>
 				<Pressable style={ELSTYLES.buttonRound}
 				onPress={() => navigation.navigate('Driving')}
-				>
+				> 
 					<Text style={ELSTYLES.buttonTxt}>Next</Text>
 				</Pressable>
 			</View>
@@ -138,3 +138,4 @@ const styles = StyleSheet.create({
   })
 
 export default AddPicsAndInfo;
+

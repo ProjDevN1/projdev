@@ -258,12 +258,15 @@ async function updateCurrentLocation(gigId, userCoords){
 
 //Function to add starting time to Firebase while user pressses "Start"-button on GigStartScreen
 //@Ira
-//NOT YET FUNCTIONING 4.4.2023
-async function addStartingTime(gig) {
-    const time = getCurrentTime();
-    const tempGig = doc(db, "gigs", gig);
-    updateDoc(tempGig, {driveStartTime: time})
-    console.log("Gig starting time added")
+async function addStartingTime(userId) {
+	if (testMode === true){
+		const time = getCurrentTime();
+		const gigRef = doc(db, "gigs", userId);
+		updateDoc(gigRef, {driveStartTime: time})
+		console.log("Gig starting time added")
+	} else {
+		console.log("Location upload failed")
+	}
 }
 
 //Export non-temp functions and data here
