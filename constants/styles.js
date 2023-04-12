@@ -364,7 +364,7 @@ export const ADDPICTURES = StyleSheet.create({
 		justifyContent: "center",
 		justifyContent: "space-around",
 		widht: "100%",
-		height: "22,5%",
+		height: "22.5%",
 		alignItems: "center",
 		paddingTop: 50,
 		paddingHorizontal: 16,
