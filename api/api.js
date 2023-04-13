@@ -93,7 +93,7 @@ function formatActiveGigsData(gigsData, id, gigId) {
 		startAddress: gigsData.startAddress,
 		arrivalAddress: gigsData.endAddress,
 		estimatedTime: "Not implemented",
-		addInfo: "DOnt have these yet either lol",
+		addInfo: "Dont have these yet either lol",
 		reward: gigsData.reward,
 		client: gigsData.client,
 		startCoord: gigsData.startCoord,
@@ -215,7 +215,7 @@ async function applyForGig(gigId, arrayPos){
 		})
 		availableGigsData.splice(arrayPos, 1)
 		console.log(gig.data())
-		const id = activeGigsData.length - 1
+		const id = activeGigsData.length + 1
 		const formattedGig = formatActiveGigsData(gig.data(), id, gig.id)
 		activeGigsData.push(formattedGig)
 		console.log(formattedGig)
@@ -224,11 +224,12 @@ async function applyForGig(gigId, arrayPos){
 	}
 }
 // Function to mark the gig as completed and update endTime to finish time in the database when user clicks "Finish" on DrivingScreen finish modal
-async function finishDrive(gigId, arrivalTime, arrayPos){
+async function finishDrive(gigId, arrayPos){
 	if (testMode === true){
+		const time = getCurrentTime();
 		const gigRef = doc(db, "gigs", gigId)
 		updateDoc(gigRef, {completed: true})
-		updateDoc(gigRef, {endTime: arrivalTime})
+		updateDoc(gigRef, {driveEndTime: time})
 		const userRef = doc(db, 'users', currentUser.id)
 		updateDoc(userRef, {
 			gigsCompleted: arrayUnion(gigId)
@@ -236,8 +237,6 @@ async function finishDrive(gigId, arrivalTime, arrayPos){
 		updateDoc(userRef, {
 			gigsActive: arrayRemove(gigId)
 		})
-
-		{/* Doesnt remove right gig for some reason*/}
 		activeGigsData.splice(arrayPos, 1)
 		console.log("Finished gig")
 	} else {

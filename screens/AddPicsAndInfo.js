@@ -16,11 +16,6 @@ const AddPicsAndInfo = ({ navigation }) => {
 		setCameraVisible(!cameraModal);
 	};
 
-	const [galleryModal, setGalleryVisible] = useState(false)
-	const toggleGalleryModal = () => {
-		setGalleryVisible(!galleryModal)
-	};
-
 	// Camera constants code
 	const [hasCameraPermission, setHasCameraPermission] = useState(null); 
     const [camera, setCamera] = useState(null);
