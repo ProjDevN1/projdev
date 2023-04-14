@@ -23,6 +23,7 @@ import Ripple from "react-native-material-ripple";
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const GigApplyScreen = ({ navigation }) => {
+
 	const currentGig = availableGigsData[clickedListItem];
 
 	// Code for contact info modal visibility
@@ -194,7 +195,7 @@ const GigApplyScreen = ({ navigation }) => {
 					<Ripple
 						rippleColor={ELSTYLES.rippleColors().colorAccent}
 						style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
-						onPress={() => applyForGig(currentGig.gigId, currentGig.id)}>
+						onPress={() => gigApplyButton(navigation, currentGig)}>
 						<Text style={ELSTYLES.buttonAltTxt}>Apply</Text>
 					</Ripple>
 
@@ -229,12 +230,15 @@ const GigApplyScreen = ({ navigation }) => {
 		</SafeAreaView>
 	);
 };
+// Apply button function to update available and current gigs then navigates user to Active gigs screen
+function gigApplyButton(navigation) {
+	applyForGig(currentGig.gigId, currentGig.id)
+	navigation.navigate("ActiveGigs")
+	}
 
+// Moves to gig list
 const Search = (navigation) => {
 	navigation.navigate("GigList");
-};
-const Apply = (navigation) => {
-	navigation.navigate("AddPicInfo");
 };
 
 export default GigApplyScreen;

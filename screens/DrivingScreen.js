@@ -16,7 +16,7 @@ import * as Location from 'expo-location';
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
-import { activeGig, currentUser, finishDrive, updateCurrentLocation, getActiveGigs } from "../api/api.js"
+import { activeGig, currentUser, finishDrive, updateCurrentLocation } from "../api/api.js"
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
@@ -70,34 +70,22 @@ const DrivingScreen = ({ navigation }) => {
 		updateCurrentLocation(activeGig.gigId, `${latitude}, ${longitude}`)
 	}
 
-	// Updates user location every 2 seconds
+	// Updates user location every 1500 ms
 	useEffect(() => {
 		const interId = setInterval(() => {
 			getUserLocation()
 		}, 1500);
 		return () => clearInterval(interId)
-		}, [])
+		},)
 	
 	// Updates user location to database every x minutes
 	useEffect(() => {
 		const interId = setInterval(() => {
 			updateUserLocation()
-		}, 90000);
+		}, 45000);
 		return () => clearInterval(interId)
-	}, [])
+	},)
 
-    // Sets arrival time
-	const [arrivalTime, setArrival] = useState('');
-
-	// Gets current hours:minutes from device
-	useEffect(() => {
-	  var hours = new Date().getHours(); //Current Hours
-	  var min = new Date().getMinutes(); //Current Minutes
-
-	  setArrival(
-		hours + ':' + min
-	  );
-	}, []);
 
 	// Code for finish gig modal visibility
 	const [finishModalVisible, setFinishVisible] = useState(false);
@@ -110,13 +98,6 @@ const DrivingScreen = ({ navigation }) => {
 	const toggleContactModal = () => {
 		setContactVisible(!contactModalVisible)
 	}
-	// Finishing drive function 
-	function finishGig( navigation ){
-		finishDrive(activeGig.gigId, arrivalTime, activeGig.id)
-		navigation.navigate("ActiveGigs")
-	}
-
-
 
 
 	// Code for opening maps navigation to start address
@@ -314,7 +295,7 @@ const DrivingScreen = ({ navigation }) => {
 				<View>
 					<Text>Client name goes here</Text>
 					<Pressable style={{borderColor: "blue", borderWidth: 5}}>
-						<Text>Client phone number</Text>
+						<Text>number goes here</Text>
 					</Pressable>
 					<Pressable style={{borderColor: "red", borderWidth: 5}} onPress={toggleContactModal}>
 						<Text>Close</Text>
@@ -324,5 +305,11 @@ const DrivingScreen = ({ navigation }) => {
 		</SafeAreaView>
 	);
 };
+
+// Finishing drive function 
+function finishGig( navigation ){
+	finishDrive(activeGig.gigId, activeGig.id)
+	navigation.navigate("ActiveGigs")
+}
 
 export default DrivingScreen;

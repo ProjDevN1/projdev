@@ -205,9 +205,9 @@ const GigStartScreen = ({ navigation }) => {
 				scrollOffset={1}
 				onSwipeComplete={toggleContactModal}>
 				<View>
-					<Text>Client name goes here</Text>
+					<Text>{clientName}</Text>
 					<Pressable style={{borderColor: "blue", borderWidth: 5}}>
-						<Text>Client phone number</Text>
+						<Text>number goes here</Text>
 					</Pressable>
 					<Pressable style={{borderColor: "red", borderWidth: 5}} onPress={toggleContactModal}>
 						<Text>Close</Text>

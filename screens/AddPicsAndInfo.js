@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 import { Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
 
+import Ripple from "react-native-material-ripple";
 import { ADDPICTURES } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
 import { elastic } from "react-native/Libraries/Animated/Easing";
@@ -14,11 +15,6 @@ const AddPicsAndInfo = ({ navigation }) => {
 	const [cameraModal, setCameraVisible] = useState(false);
 	const toggleCameraModal = () => {
 		setCameraVisible(!cameraModal);
-	};
-
-	const [galleryModal, setGalleryVisible] = useState(false)
-	const toggleGalleryModal = () => {
-		setGalleryVisible(!galleryModal)
 	};
 
 	// Camera constants code
@@ -67,36 +63,38 @@ const AddPicsAndInfo = ({ navigation }) => {
 		<SafeAreaView style={ADDPICTURES.screenWrapper}>
 			<View style={ADDPICTURES.contentWrapperTopBottom}>
 				<Text style={ELSTYLES.titleLlight}>Before starting your drive</Text>
-				<Pressable style={ELSTYLES.buttonRound}>
+				<Ripple style={ELSTYLES.buttonRound} rippleColor={ELSTYLES.rippleColors().colorAccent}>
 					<Text style={ELSTYLES.buttonTxt}>?</Text>
-				</Pressable>
+				</Ripple>
 			</View>
 
 			<View style={ADDPICTURES.contentWrapperMiddle}>
 				<View style={ADDPICTURES.innerContentWrapper1}>
-					<Pressable style={[ELSTYLES.button, ADDPICTURES.addPicsBtn]} onPress={toggleCameraModal}>
+					<Ripple style={[ELSTYLES.button, ADDPICTURES.addPicsBtn]} onPress={toggleCameraModal}
+					rippleColor={ELSTYLES.rippleColors().colorAccent}>
 						<Text style={ELSTYLES.buttonTxt}>Camera</Text>
-					</Pressable>
-					<Pressable style={[ELSTYLES.button, ADDPICTURES.addPicsBtn]} onPress={pickImage}>
+					</Ripple>
+					<Ripple style={[ELSTYLES.button, ADDPICTURES.addPicsBtn]} onPress={pickImage}
+					rippleColor={ELSTYLES.rippleColors().colorAccent}>
 						<Text style={ELSTYLES.buttonTxt}>Gallery</Text>
-					</Pressable>
+					</Ripple>
 				</View>
 
 				<View style={ADDPICTURES.innerContentWrapper2}>
 					<TextInput
-						placeholder="Give additional info about the vehicle"
+						placeholder="Give additional info"
 						style={ADDPICTURES.input}></TextInput>
 				</View>
 			</View>
 			<View style={ADDPICTURES.contentWrapperTopBottom}>
-				<Pressable style={ELSTYLES.buttonRound}>
+				<Ripple style={ELSTYLES.buttonRound} rippleColor={ELSTYLES.rippleColors().colorAccent}>
 					<Text style={ELSTYLES.buttonTxt}>Back</Text>
-				</Pressable>
-				<Pressable style={ELSTYLES.buttonRound}
+				</Ripple>
+				<Ripple style={ELSTYLES.buttonRound}
 				onPress={() => navigation.navigate('Driving')}
-				> 
+				rippleColor={ELSTYLES.rippleColors().colorAccent}> 
 					<Text style={ELSTYLES.buttonTxt}>Next</Text>
-				</Pressable>
+				</Ripple>
 			</View>
 			{/* Camera modal */}
 			<Modal
