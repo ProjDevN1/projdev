@@ -285,6 +285,7 @@ const GigApplyScreen = ({ navigation }) => {
 };
 // Apply button function to update available and current gigs then navigates user to Active gigs screen
 function gigApplyButton(navigation) {
+	const currentGig = availableGigsData[clickedListItem];
 	applyForGig(currentGig.gigId, currentGig.id);
 	navigation.navigate("ActiveGigs");
 }
