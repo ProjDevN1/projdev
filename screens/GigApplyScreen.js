@@ -23,7 +23,6 @@ import Ripple from "react-native-material-ripple";
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const GigApplyScreen = ({ navigation }) => {
-
 	const currentGig = availableGigsData[clickedListItem];
 
 	// Code for contact info modal visibility
@@ -143,16 +142,23 @@ const GigApplyScreen = ({ navigation }) => {
 				{/*rating - absolute element*/}
 				<View style={STARTGIG.ratingWrapper}>
 					<View style={STARTGIG.rating}>
-						<Text style={STARTGIG.ratingTxt}>☆ 0/0</Text>
+						<Text style={STARTGIG.ratingTxt}>0/0</Text>
+						<Image
+							style={[
+								ELSTYLES.buttonFitImg,
+								{ height: 32, width: 32, margin: 2 },
+							]}
+							source={require("../assets/icons/starIco.png")}></Image>
 					</View>
 				</View>
 				<View style={[STARTGIG.textWrapper]}>
 					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
-						<Text style={ELSTYLES.titleXL}>Route:</Text>
-						{/*need seperate routes - origin and destination*/}
 						<Text style={ELSTYLES.titleLlight} numberOfLines={1}>
-							{currentGig.route}
+							Route:
 						</Text>
+
+						<Text style={ELSTYLES.titleL}>{currentGig.route}</Text>
+						{/*need seperate routes - origin and destination*/}
 					</View>
 					<View style={STARTGIG.section}>
 						<View style={{ flexDirection: "row", flex: 1, marginBottom: 4 }}>
@@ -209,22 +215,69 @@ const GigApplyScreen = ({ navigation }) => {
 			</View>
 			<Modal
 				isVisible={contactModalVisible}
-				style={{ margin: 0, justifyContent: "flex-end" }}
+				style={{ justifyContent: "flex-end", margin: 0 }}
 				swipeDirection="down"
 				onRequestClose={toggleContactModal}
 				onBackButtonPress={toggleContactModal}
 				scrollOffset={1}
 				onSwipeComplete={toggleContactModal}>
-				<View>
-					<Text>Client name goes here</Text>
-					<Pressable style={{ borderColor: "blue", borderWidth: 5 }}>
-						<Text>Client phone number</Text>
-					</Pressable>
-					<Pressable
-						style={{ borderColor: "red", borderWidth: 5 }}
-						onPress={toggleContactModal}>
-						<Text>Close</Text>
-					</Pressable>
+				<View style={STARTGIG.contactInfoModal}>
+					<Text style={ELSTYLES.titleLalt}>Contact information:</Text>
+					<View style={{ flexDirection: "row" }}>
+						<View>
+							{/*ROW FOR USER DATA */}
+							<View
+								style={{
+									flexDirection: "row",
+									alignItems: "center",
+									marginVertical: 4,
+								}}>
+								<Image
+									style={[
+										ELSTYLES.buttonFitImg,
+										{ width: 36, height: 36, marginRight: 16 },
+									]}
+									source={require("../assets/icons/userIco.png")}></Image>
+								<Text style={ELSTYLES.txtL}>USERS_NAME</Text>
+							</View>
+							{/*ROW FOR USER DATA END */}
+							{/*ROW FOR USER DATA */}
+							<View
+								style={{
+									flexDirection: "row",
+									alignItems: "center",
+									marginVertical: 4,
+								}}>
+								<Image
+									style={[
+										ELSTYLES.buttonFitImg,
+										{ width: 36, height: 36, marginRight: 16 },
+									]}
+									source={require("../assets/icons/emailIco.png")}></Image>
+								<Text style={ELSTYLES.txtL}>USERS_EMAIL</Text>
+							</View>
+							{/*ROW FOR USER DATA END */}
+							{/*ROW FOR USER DATA */}
+							<View
+								style={{
+									flexDirection: "row",
+									alignItems: "center",
+									marginVertical: 4,
+								}}>
+								<Image
+									style={[
+										ELSTYLES.buttonFitImg,
+										{ width: 36, height: 36, marginRight: 16 },
+									]}
+									source={require("../assets/icons/phoneIco.png")}></Image>
+								<Text style={ELSTYLES.txtL}>USERS_PHONE</Text>
+							</View>
+							{/*ROW FOR USER DATA END */}
+						</View>
+					</View>
+					<View style={{ alignSelf: "stretch" }}>
+						<Button title="Close" onPress={toggleContactModal} />
+					</View>
 				</View>
 			</Modal>
 		</SafeAreaView>
@@ -232,9 +285,9 @@ const GigApplyScreen = ({ navigation }) => {
 };
 // Apply button function to update available and current gigs then navigates user to Active gigs screen
 function gigApplyButton(navigation) {
-	applyForGig(currentGig.gigId, currentGig.id)
-	navigation.navigate("ActiveGigs")
-	}
+	applyForGig(currentGig.gigId, currentGig.id);
+	navigation.navigate("ActiveGigs");
+}
 
 // Moves to gig list
 const Search = (navigation) => {
