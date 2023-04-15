@@ -442,6 +442,11 @@ export const STARTGIG = StyleSheet.create({
 		borderColor: colorDark,
 		borderTopWidth: 4,
 	},
+	routeTitle: {
+		fontFamily: fontMedium,
+		fontSize: fsXL - 12,
+		color: colorBase,
+	},
 
 	infoBtnWrapper: {
 		position: "absolute",
@@ -473,11 +478,15 @@ export const STARTGIG = StyleSheet.create({
 		backgroundColor: colorAlt,
 		justifyContent: "center",
 		alignItems: "center",
+		flexDirection: "row",
 	},
 	ratingTxt: {
 		color: colorDark,
 		fontSize: fsL,
 		fontWeight: "500",
+		alignItems: "center",
+		alignContent: "center",
+		justifyContent: "center",
 	},
 
 	buttonWrapper: {
@@ -503,6 +512,14 @@ export const STARTGIG = StyleSheet.create({
 	section: {
 		flex: 1,
 		justifyContent: "flex-start",
+	},
+	contactInfoModal: {
+		flex: 0.4,
+		backgroundColor: colorBase,
+		padding: 16,
+		margin: 0,
+		flexDirection: "column",
+		justifyContent: "space-between",
 	},
 });
 
