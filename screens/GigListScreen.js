@@ -21,21 +21,20 @@ import Slider from "@react-native-community/slider";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Ripple from "react-native-material-ripple";
 
-let filteredItems = []
+let filteredItems = [];
 
 //This has the frontend code that shows either a list of available gigs or a text thing. Style accordingly
 function List(props) {
 	const navRef = props.nav;
-	const showFilteredList = props.filtered
+	const showFilteredList = props.filtered;
 
 	function decideShownData(filteredItems, availableGigsData, showFilteredList) {
-		if (showFilteredList === true){
-			return filteredItems
+		if (showFilteredList === true) {
+			return filteredItems;
 		} else {
-			return availableGigsData
+			return availableGigsData;
 		}
 	}
-
 
 	//This is the frontend code for an individual list item
 	const Item = ({
@@ -98,7 +97,11 @@ function List(props) {
 	} else {
 		return (
 			<FlatList
-				data={decideShownData(filteredItems, availableGigsData, showFilteredList)}
+				data={decideShownData(
+					filteredItems,
+					availableGigsData,
+					showFilteredList
+				)}
 				renderItem={({ item }) => (
 					<Item
 						startLocation={item.startLocation}
@@ -122,107 +125,118 @@ const GigListScreen = ({ navigation }) => {
 	//State for controlling whether to show full list of gigs or a filtered version
 	const [showFilteredList, setShowFilteredList] = useState(false);
 
-
-
 	//state for controlling the filter menu
 	const [isModalVisible, setModalVisible] = useState(false);
 	const toggleModal = () => {
 		setModalVisible(!isModalVisible);
 	};
 
-	
-	
 	function getPossibleStartLocations(availableGigsData) {
 		const possibleStartLocations = [];
-		
+
 		availableGigsData.forEach((gig) => {
 			// Check if the label already exists in the possibleStartLocations array
 			const labelExists = possibleStartLocations.some(
 				(location) => location.label === gig.startLocation
-				);
-				
-				// If the label doesn't exist, add the current gig to the possibleStartLocations array
-				if (!labelExists) {
-					const obj = { label: gig.startLocation, value: gig.startLocation };
-					possibleStartLocations.push(obj);
-				}
-			});
-			
-			return possibleStartLocations;
-		}
-		
-		function getPossibleEndLocations(availableGigsData) {
-			const possibleEndLocations = [];
-			
-			availableGigsData.forEach((gig) => {
-				// Check if the label already exists in the possibleStartLocations array
-		  const labelExists = possibleEndLocations.some(
-			  (location) => location.label === gig.endLocation
-			  );
-			  
-			  // If the label doesn't exist, add the current gig to the possibleStartLocations array
-			  if (!labelExists) {
-				  const obj = { label: gig.endLocation, value: gig.endLocation };
-				  possibleEndLocations.push(obj);
-				}
-			});
-			
-			return possibleEndLocations;
-		}
-		
-		//From picker
-		const [openFrom, setOpenFrom] = useState(false);
-		const [valueFrom, setValueFrom] = useState(null);
-		const [itemsFrom, setItemsFrom] = useState(getPossibleStartLocations(availableGigsData));
-		
-		//To picker
-		const [openTo, setOpenTo] = useState(false);
-		const [valueTo, setValueTo] = useState(null);
-		const [itemsTo, setItemsTo] = useState(getPossibleEndLocations(availableGigsData));
-		
-		//state for slider
-		const [priceDisplayQuantity, setPriceDisplayQuantity] = useState(0);
-		const [priceQuantity, setPriceQuantity] = useState(0);
-		//set Date
-		const [selectedDate, setSelectedDate] = useState(null);
-		const [datePickerVisible, setDatePickerVisible] = useState(false);
-		
-		const showDatePicker = () => {
-			setDatePickerVisible(true);
-		};
-		
-		const hideDatePicker = () => {
-			setDatePickerVisible(false);
-		};
-		
-		const handleConfirm = (date) => {
-			setSelectedDate(date);
-			hideDatePicker();
-		};
-		
-		//setDateEnd
-		const [selectedDateEnd, setSelectedDateEnd] = useState(null);
-		const [dateEndPickerVisible, setDateEndPickerVisible] = useState(false);
-		
-		const showDateEndPicker = () => {
-			setDateEndPickerVisible(true);
-		};
-		
-		const hideDateEndPicker = () => {
-			setDateEndPickerVisible(false);
-		};
-		
-		const handleConfirmDateEnd = (dateEnd) => {
-			setSelectedDateEnd(dateEnd);
-			hideDateEndPicker();
-		};
+			);
 
+			// If the label doesn't exist, add the current gig to the possibleStartLocations array
+			if (!labelExists) {
+				const obj = { label: gig.startLocation, value: gig.startLocation };
+				possibleStartLocations.push(obj);
+			}
+		});
 
-		function searchButtonPressHandler(valueFrom, valueTo, selectedDate, selectedDateEnd, priceQuantity){
-			filteredItems = getFilteredItems(valueFrom, valueTo, selectedDate, selectedDateEnd, priceQuantity)
-			setShowFilteredList(true);
-			toggleModal();
-		}
+		return possibleStartLocations;
+	}
+
+	function getPossibleEndLocations(availableGigsData) {
+		const possibleEndLocations = [];
+
+		availableGigsData.forEach((gig) => {
+			// Check if the label already exists in the possibleStartLocations array
+			const labelExists = possibleEndLocations.some(
+				(location) => location.label === gig.endLocation
+			);
+
+			// If the label doesn't exist, add the current gig to the possibleStartLocations array
+			if (!labelExists) {
+				const obj = { label: gig.endLocation, value: gig.endLocation };
+				possibleEndLocations.push(obj);
+			}
+		});
+
+		return possibleEndLocations;
+	}
+
+	//From picker
+	const [openFrom, setOpenFrom] = useState(false);
+	const [valueFrom, setValueFrom] = useState(null);
+	const [itemsFrom, setItemsFrom] = useState(
+		getPossibleStartLocations(availableGigsData)
+	);
+
+	//To picker
+	const [openTo, setOpenTo] = useState(false);
+	const [valueTo, setValueTo] = useState(null);
+	const [itemsTo, setItemsTo] = useState(
+		getPossibleEndLocations(availableGigsData)
+	);
+
+	//state for slider
+	const [priceDisplayQuantity, setPriceDisplayQuantity] = useState(0);
+	const [priceQuantity, setPriceQuantity] = useState(0);
+	//set Date
+	const [selectedDate, setSelectedDate] = useState(null);
+	const [datePickerVisible, setDatePickerVisible] = useState(false);
+
+	const showDatePicker = () => {
+		setDatePickerVisible(true);
+	};
+
+	const hideDatePicker = () => {
+		setDatePickerVisible(false);
+	};
+
+	const handleConfirm = (date) => {
+		setSelectedDate(date);
+		hideDatePicker();
+	};
+
+	//setDateEnd
+	const [selectedDateEnd, setSelectedDateEnd] = useState(null);
+	const [dateEndPickerVisible, setDateEndPickerVisible] = useState(false);
+
+	const showDateEndPicker = () => {
+		setDateEndPickerVisible(true);
+	};
+
+	const hideDateEndPicker = () => {
+		setDateEndPickerVisible(false);
+	};
+
+	const handleConfirmDateEnd = (dateEnd) => {
+		setSelectedDateEnd(dateEnd);
+		hideDateEndPicker();
+	};
+
+	function searchButtonPressHandler(
+		valueFrom,
+		valueTo,
+		selectedDate,
+		selectedDateEnd,
+		priceQuantity
+	) {
+		filteredItems = getFilteredItems(
+			valueFrom,
+			valueTo,
+			selectedDate,
+			selectedDateEnd,
+			priceQuantity
+		);
+		setShowFilteredList(true);
+		toggleModal();
+	}
 
 	return (
 		<SafeAreaView style={GIGLIST.screenWrapper}>
@@ -366,13 +380,29 @@ const GigListScreen = ({ navigation }) => {
 							</View>
 						</View>
 					</View>
+					<View style={{ flexDirection: "row" }}>
+						<View style={{ flex: 1 }}>
+							<Button
+								title="Search"
+								onPress={() => {
+									searchButtonPressHandler(
+										valueFrom,
+										valueTo,
+										selectedDate,
+										selectedDateEnd,
+										priceQuantity
+									);
+								}}
+							/>
+						</View>
+						<View style={{ flex: 1 }}>
+							<Button
+								title="Clear"
+								onPress={() => setShowFilteredList(false)}
+							/>
+						</View>
+					</View>
 
-					<View style={{ alignSelf: "stretch" }}>
-						<Button title="Clear" onPress={() => setShowFilteredList(false)}/>
-					</View>
-					<View style={{ alignSelf: "stretch" }}>
-						<Button title="Search" onPress={() => {searchButtonPressHandler(valueFrom, valueTo, selectedDate, selectedDateEnd, priceQuantity)}}/>
-					</View>
 					<View style={{ alignSelf: "stretch" }}>
 						<Button title="Close" onPress={toggleModal} />
 					</View>
