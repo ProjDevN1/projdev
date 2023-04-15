@@ -279,7 +279,25 @@ function getFilteredItems(startLocationParam, endLocationParam, startDateRange, 
 	return filteredItemsList
 }
 
-
+/* 
+//Function to return an array of active gigs between selected dates
+//@Ira
+function getActiveGigsBetweenDates(startDateRange, endDateRange, availableGigsData) {
+	var newList = [];
+	availableGigsData.forEach((gig) => {
+		if (gig.date >= endDateRange && gig.date <= startDateRange) {
+			newList.push(gig);
+		} else if (gig.date >= endDateRange && startDateRange == "") {
+			newList.push(gig);
+		} else if (gig.date <= startDateRange && endDateRange == "") {
+			newList.push(gig);
+		} else {
+			console.log(gig.id + "is not between selected end and start dates.");
+		}
+	})
+	return newList; 
+}
+*/
 
 //Export non-temp functions and data here
 export {
