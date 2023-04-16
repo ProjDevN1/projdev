@@ -142,17 +142,20 @@ const GigApplyScreen = ({ navigation }) => {
 						onPress={() => goToEnd()}>
 						<Text style={{ textAlign: "center" }}>Destination</Text>
 					</Ripple>
-					<Ripple
-						rippleColor={ELSTYLES.rippleColors().colorAccent}
-						rippleCentered={true}
-						style={[ELSTYLES.button, { padding: 4 }]}
-						onPress={() => goToUser()}>
-						<Text style={{ textAlign: "center" }}>Current location</Text>
-					</Ripple>
 				</View>
 			</View>
 			{/*Search/info buttons - absolute element */}
 			<View style={STARTGIG.infoBtnWrapper}>
+				<Ripple
+					rippleColor={ELSTYLES.rippleColors().colorAccent}
+					rippleCentered={true}
+					style={ELSTYLES.buttonRound}
+					rippleContainerBorderRadius={40}
+					onPress={() => goToUser()}>
+					<Image
+						style={{ width: "50%", height: "50%" }}
+						source={require("../assets/icons/locIco.png")}></Image>
+				</Ripple>
 				<Ripple
 					rippleColor={ELSTYLES.rippleColors().colorAccent}
 					rippleCentered={true}

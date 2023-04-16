@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { ELSTYLES } from "../constants/styles";
 import { LANDING } from "../constants/styles";
@@ -57,6 +57,10 @@ const LandingScreen = ({ navigation }) => {
 			end={gradientOptions.end}>
 			{/*Title container*/}
 			<View style={LANDING.titleWrapper}>
+				<Image
+					style={{ width: "36%", height: "36%" }}
+					source={require("../assets/LOGO.png")}></Image>
+
 				<Text style={[ELSTYLES.titleXXLlight, { marginBottom: 16 }]}>
 					Toimauto
 				</Text>

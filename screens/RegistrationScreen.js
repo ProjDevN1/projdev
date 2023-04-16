@@ -33,10 +33,7 @@ const verifyRegistration = () => {
 
 // Main user interface, different fields for all needed inputs
 
-
-
 const RegistrationScreen = ({ navigation }) => {
-
 	// Code for camera modal visibility
 	const [cameraModal, setCameraVisible] = useState(false);
 	const toggleCameraModal = () => {
@@ -44,27 +41,29 @@ const RegistrationScreen = ({ navigation }) => {
 	};
 
 	// Camera constants code
-	const [hasCameraPermission, setHasCameraPermission] = useState(null); 
-    const [camera, setCamera] = useState(null);
-    const [image, setImage] = useState(null);
+	const [hasCameraPermission, setHasCameraPermission] = useState(null);
+	const [camera, setCamera] = useState(null);
+	const [image, setImage] = useState(null);
 
 	// Camera permission code
-    const [type, setType] = useState(Camera.Constants.Type.back);useEffect(() => {
-      (async () => {
-        const cameraStatus = await Camera.requestCameraPermissionsAsync();
-        setHasCameraPermission(cameraStatus.status === 'granted');})();
-    }, []);
+	const [type, setType] = useState(Camera.Constants.Type.back);
+	useEffect(() => {
+		(async () => {
+			const cameraStatus = await Camera.requestCameraPermissionsAsync();
+			setHasCameraPermission(cameraStatus.status === "granted");
+		})();
+	}, []);
 
 	// Code for capturing a photo
 	const takePicture = async () => {
-      if(camera){
-          const data = await camera.takePictureAsync(null)
-          setImage(data.uri);
-      }
-    }
-    if (hasCameraPermission === false) {
-      return <Text>No access to camera</Text>;
-    }	
+		if (camera) {
+			const data = await camera.takePictureAsync(null);
+			setImage(data.uri);
+		}
+	};
+	if (hasCameraPermission === false) {
+		return <Text>No access to camera</Text>;
+	}
 
 	// Adding a user to the database
 	const [userName, setUsername] = useState(""); //Setting username
@@ -110,28 +109,28 @@ const RegistrationScreen = ({ navigation }) => {
 				showsVerticalScrollIndicator={false}
 				style={{ width: "100%" }}>
 				{/*back btn*/}
-				<Ripple
-					style={[
-						ELSTYLES.buttonRound,
-						{ position: "absolute", right: 0, top: 0, margin: 8, opacity: 0.9 },
-					]}
-					rippleColor={ELSTYLES.rippleColors().colorAccent}
-					rippleCentered={true}
-					onPress={() => openLanding(navigation)}>
-					<Image
-						style={ELSTYLES.buttonFitImg}
-						source={require("../assets/icons/arrowLico.png")}></Image>
-				</Ripple>
 
 				<View style={{ flex: 1, alignItems: "center" }}>
 					<View style={{ width: "78%" }}>
-						<Text
-							style={[
-								ELSTYLES.title,
-								{ marginTop: 64, marginBottom: 32, marginHorizontal: 0 },
-							]}>
-							Register
-						</Text>
+						<View
+							style={{
+								flexDirection: "row",
+								marginTop: 64,
+								marginBottom: 32,
+								marginHorizontal: 0,
+								alignItems: "center",
+							}}>
+							<Ripple
+								style={[ELSTYLES.buttonRound, { opacity: 0.9 }]}
+								rippleColor={ELSTYLES.rippleColors().colorAccent}
+								rippleCentered={true}
+								onPress={() => openLanding(navigation)}>
+								<Image
+									style={ELSTYLES.buttonFitImg}
+									source={require("../assets/icons/arrowLico.png")}></Image>
+							</Ripple>
+							<Text style={[ELSTYLES.title]}>Register</Text>
+						</View>
 						<View style={REGISTER.inputContainer}>
 							<Text style={ELSTYLES.label}>Username:</Text>
 							<TextInput
@@ -184,12 +183,12 @@ const RegistrationScreen = ({ navigation }) => {
 				onBackButtonPress={toggleCameraModal}
 				scrollOffset={1}
 				onSwipeComplete={toggleCameraModal}>
-					<Camera
-						ref={ref => setCamera(ref)}
-						style={styles.fixedRatio}
-						type={type}
-						ratio={"1:1"}
-						/>
+				<Camera
+					ref={(ref) => setCamera(ref)}
+					style={styles.fixedRatio}
+					type={type}
+					ratio={"1:1"}
+				/>
 				<Pressable style={ELSTYLES.button} onPress={() => takePicture()}>
 					<Text style={ELSTYLES.buttonTxt}>Take photo</Text>
 				</Pressable>
@@ -198,7 +197,7 @@ const RegistrationScreen = ({ navigation }) => {
 				</Pressable>
 
 				{/* Shows taken image below the above buttons */}
-				{image && <Image source={{uri: image}} style={{flex:1}}/>}
+				{image && <Image source={{ uri: image }} style={{ flex: 1 }} />}
 			</Modal>
 		</LinearGradient>
 	);
@@ -208,14 +207,14 @@ const openLanding = (navigation) => {
 };
 
 const styles = StyleSheet.create({
-    cameraContainer: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    fixedRatio:{
-        flex: 1,
-        aspectRatio: 1
-    }
-  })
+	cameraContainer: {
+		flex: 1,
+		flexDirection: "row",
+	},
+	fixedRatio: {
+		flex: 1,
+		aspectRatio: 1,
+	},
+});
 
 export default RegistrationScreen;
