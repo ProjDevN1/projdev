@@ -57,10 +57,6 @@ const LandingScreen = ({ navigation }) => {
 			end={gradientOptions.end}>
 			{/*Title container*/}
 			<View style={LANDING.titleWrapper}>
-				<Image
-					style={{ width: "36%", height: "36%" }}
-					source={require("../assets/LOGO.png")}></Image>
-
 				<Text style={[ELSTYLES.titleXXLlight, { marginBottom: 16 }]}>
 					Toimauto
 				</Text>
@@ -68,6 +64,16 @@ const LandingScreen = ({ navigation }) => {
 					Lorem ipsum etc
 				</Text>
 			</View>
+			<Image
+				style={{
+					width: "100%",
+					height: "40%",
+					position: "absolute",
+					top: "28%",
+					left: "12%",
+					opacity: 0.7,
+				}}
+				source={require("../assets/LOGO.png")}></Image>
 
 			{/*Buttons*/}
 			<View style={LANDING.buttonWrapper}>
