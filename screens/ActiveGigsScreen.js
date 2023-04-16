@@ -15,7 +15,6 @@ import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
 import Ripple from "react-native-material-ripple";
 
-
 //This has the frontend code that shows either a list of active gigs or a text thing. Style accordingly
 function List(props) {
 	const navRef = props.nav;
@@ -39,12 +38,20 @@ function List(props) {
 				<View
 					style={{
 						flexDirection: "row",
-						alignItems: "baseline",
+						alignItems: "center",
+						overflow: "hidden",
+						paddingVertical: 8,
 					}}>
-					<Text style={GIGLIST.listBtnTitle}>{title} |</Text>
-					<Text style={GIGLIST.vehicle} numberOfLines={1}>
-						{vehicle}
-					</Text>
+					<Text style={[GIGLIST.listBtnTitle]}>{title}</Text>
+					<View style={GIGLIST.separator}></View>
+					<View
+						style={{
+							justifyContent: "center",
+						}}>
+						<Text style={GIGLIST.vehicle} numberOfLines={1}>
+							{vehicle}
+						</Text>
+					</View>
 				</View>
 				<View style={{ flexDirection: "row", marginVertical: 8 }}>
 					<View style={{ flex: 1 }}>
