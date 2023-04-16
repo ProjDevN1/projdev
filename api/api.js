@@ -268,6 +268,37 @@ async function addStartingTime(userId) {
 	}
 }
 
+//Function that takes search parameters from searchfiltermodal and returns an array of accpeted items
+function getFilteredItems(startLocationParam, endLocationParam, startDateRange, endDateRange, minReward){
+	console.log(startLocationParam, endLocationParam, startDateRange, endDateRange, minReward)
+	let filteredItemsList = []
+	if (minReward != 0){
+		filteredItemsList = availableGigsData.filter(obj => obj.reward > minReward)
+	}
+	console.log(filteredItemsList)
+	return filteredItemsList
+}
+
+/* 
+//Function to return an array of active gigs between selected dates
+//@Ira
+function getActiveGigsBetweenDates(startDateRange, endDateRange, availableGigsData) {
+	var newList = [];
+	availableGigsData.forEach((gig) => {
+		if (gig.date >= endDateRange && gig.date <= startDateRange) {
+			newList.push(gig);
+		} else if (gig.date >= endDateRange && startDateRange == "") {
+			newList.push(gig);
+		} else if (gig.date <= startDateRange && endDateRange == "") {
+			newList.push(gig);
+		} else {
+			console.log(gig.id + "is not between selected end and start dates.");
+		}
+	})
+	return newList; 
+}
+*/
+
 //Export non-temp functions and data here
 export {
 	getClientName,
@@ -283,5 +314,6 @@ export {
 	applyForGig,
 	finishDrive,
 	addStartingTime,
-	updateCurrentLocation,	
+	updateCurrentLocation,
+	getFilteredItems,
 };
