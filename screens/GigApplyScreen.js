@@ -8,10 +8,11 @@ import {
 	Image,
 	SafeAreaView,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import MapView, { Circle, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Modal from "react-native-modal";
+import * as Location from 'expo-location';
 
 import { clickedListItem, clientName } from "../screens/GigListScreen";
 import { availableGigsData, applyForGig } from "../api/api";
@@ -30,6 +31,34 @@ const GigApplyScreen = ({ navigation }) => {
 	const toggleContactModal = () => {
 		setContactVisible(!contactModalVisible);
 	};
+
+	// Get users location coordinates
+	// User coordinates are stored here
+	const [userCoords, setUserCoords] = useState({
+		coords: 60.44969899573153, 
+		latitude: 22.26765771615263,
+		longitude: 0,
+		latitudeDelta: 0.0922,
+		longitudeDelta: 0.0421
+	})
+	// Code for getting and setting user location
+	const getUserLocation = async () => {
+		const { coords } = await Location.getCurrentPositionAsync({});
+		const { latitude, longitude } = coords;
+		setUserCoords({
+			coords: latitude + ", " + longitude,
+			latitude: latitude,
+			longitude: longitude,
+			latitudeDelta: 0.0922,
+			longitudeDelta: 0.0421
+		})
+		console.log("Got user location coordinates")
+	}
+	// Code for running getUserLocation once
+	useEffect(() => {
+		getUserLocation()
+	}, [])
+
 
 	// Code used for moving the map to the start and end locations
 	const mapRef = useRef(null);
@@ -57,6 +86,9 @@ const GigApplyScreen = ({ navigation }) => {
 	const goToEnd = () => {
 		mapRef.current.animateToRegion(endData, 3000);
 	};
+	const goToUser = () => {
+		mapRef.current.animateToRegion(userCoords, 3000);
+	}
 
 	return (
 		<SafeAreaView style={STARTGIG.screenWrapper}>
@@ -67,7 +99,7 @@ const GigApplyScreen = ({ navigation }) => {
 					style={STARTGIG.mapWrapper}
 					//specify our coordinates.
 					showsUserLocation={true}
-					showsMyLocationButton={true}
+					showsMyLocationButton={false}
 					initialRegion={{
 						latitude: currentGig.startLat,
 						longitude: currentGig.startLon,
@@ -109,7 +141,14 @@ const GigApplyScreen = ({ navigation }) => {
 						rippleCentered={true}
 						style={[ELSTYLES.button, { padding: 4 }]}
 						onPress={() => goToEnd()}>
-						<Text>Destination</Text>
+						<Text style={{ textAlign: "center" }}>Destination</Text>
+					</Ripple>
+					<Ripple
+						rippleColor={ELSTYLES.rippleColors().colorAccent}
+						rippleCentered={true}
+						style={[ELSTYLES.button, { padding: 4 }]}
+						onPress={() => goToUser()}>
+						<Text style={{ textAlign: "center" }}>Current location</Text>
 					</Ripple>
 				</View>
 			</View>
