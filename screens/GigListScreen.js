@@ -227,15 +227,17 @@ const GigListScreen = ({ navigation }) => {
 		selectedDateEnd,
 		priceQuantity
 	) {
-		filteredItems = getFilteredItems(
-			valueFrom,
-			valueTo,
-			selectedDate,
-			selectedDateEnd,
-			priceQuantity
-		);
-		setShowFilteredList(true);
-		toggleModal();
+		if (valueFrom != null || valueTo != null || selectedDate != null || selectedDateEnd != null || priceQuantity != 0){
+			filteredItems = getFilteredItems(
+				valueFrom,
+				valueTo,
+				selectedDate,
+				selectedDateEnd,
+				priceQuantity
+			);
+			setShowFilteredList(true);
+			toggleModal();
+		}
 	}
 
 	return (
