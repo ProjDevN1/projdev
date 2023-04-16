@@ -270,6 +270,7 @@ async function addStartingTime(userId) {
 
 //Function that takes search parameters from searchfiltermodal and returns an array of accpeted items
 function getFilteredItems(startLocationParam, endLocationParam, startDateRange, endDateRange, minReward){
+	getActiveGigsBetweenDates(startDateRange, endDateRange)
 	console.log(startLocationParam, endLocationParam, startDateRange, endDateRange, minReward)
 	let filteredItemsList = []
 	if (minReward != 0){
@@ -279,25 +280,64 @@ function getFilteredItems(startLocationParam, endLocationParam, startDateRange, 
 	return filteredItemsList
 }
 
-/* 
 //Function to return an array of active gigs between selected dates
 //@Ira
-function getActiveGigsBetweenDates(startDateRange, endDateRange, availableGigsData) {
+function getActiveGigsBetweenDates(startDateRange, endDateRange) {
 	var newList = [];
-	availableGigsData.forEach((gig) => {
-		if (gig.date >= endDateRange && gig.date <= startDateRange) {
-			newList.push(gig);
-		} else if (gig.date >= endDateRange && startDateRange == "") {
-			newList.push(gig);
-		} else if (gig.date <= startDateRange && endDateRange == "") {
-			newList.push(gig);
-		} else {
-			console.log(gig.id + "is not between selected end and start dates.");
-		}
-	})
-	return newList; 
+
+	if (startDateRange != null && endDateRange != null) {
+		const startDate = parseInt((((startDateRange.toISOString()).substr(0,10)).split('-')).join(""));
+		const endDate = parseInt((((endDateRange.toISOString()).substr(0, 10)).split('-')).join(""));
+		//console.log("TÄMÄ 1: " + startDate);
+		//console.log("TÄMÄ 2: " + endDate);
+		availableGigsData.forEach((gig) => {
+			var tempGigDate = (gig.date).split('.');
+			var gigDate = parseInt(tempGigDate[2] + tempGigDate[1] + tempGigDate[0]);
+			//console.log("TÄMÄ 3: " + gigDate); 
+			//console.log(typeof gigDate)
+			//console.log(startDate <= gigDate)
+			//console.log(gigDate <= endDate)
+			if (startDate <= gigDate && gigDate <= endDate) {
+				newList.push(gig);
+			} else {
+				console.log(gig.id, " is not between selected dates.");
+			}
+		})
+		console.log(newList)
+
+	} else if (startDateRange == null && endDateRange != null) {
+		const endDate = parseInt((((endDateRange.toISOString()).substr(0, 10)).split('-')).join(""));
+		availableGigsData.forEach((gig) => {
+			var tempGigDate = (gig.date).split('.');
+			var gigDate = parseInt(tempGigDate[2] + tempGigDate[1] + tempGigDate[0]);
+			if (gigDate <= endDate) {
+				newList.push(gig);
+			} else {
+				console.log(gig.id, " is not between selected dates.");
+			}
+		})
+		console.log(newList)
+
+	} else if (startDateRange != null && endDateRange == null) {
+		const startDate = parseInt((((startDateRange.toISOString()).substr(0,10)).split('-')).join(""));
+		console.log("TÄMÄ 1: " + startDate);
+		availableGigsData.forEach((gig) => {
+			var tempGigDate = (gig.date).split('.');
+			var gigDate = parseInt(tempGigDate[2] + tempGigDate[1] + tempGigDate[0]);
+			if (gigDate >= startDate) {
+				newList.push(gig);
+			} else {
+				console.log(gig.id, " is not between selected dates.");
+			}
+		})
+		console.log(newList)
+
+	} else {
+		newList = availableGigsData;
+	} 
+
+	return newList;
 }
-*/
 
 //Export non-temp functions and data here
 export {
