@@ -26,6 +26,7 @@ import {
 	updateCurrentLocation,
 } from "../api/api.js";
 import { getCurrentTime } from "../api/DataHandling";
+import { SearchBar } from "react-native-screens";
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
@@ -203,18 +204,6 @@ const DrivingScreen = ({ navigation }) => {
 						style={{ width: "50%", height: "50%" }}
 						source={require("../assets/icons/locIco.png")}></Image>
 				</Ripple>
-				<Ripple
-					rippleColor={ELSTYLES.rippleColors().colorAccent}
-					rippleCentered={true}
-					style={ELSTYLES.buttonRound}
-					rippleContainerBorderRadius={40}
-					onPress={() => {
-						Search(navigation);
-					}}>
-					<Image
-						style={ELSTYLES.buttonFitImg}
-						source={require("../assets/icons/searchIco.png")}></Image>
-				</Ripple>
 
 				<Ripple
 					style={ELSTYLES.buttonRound}
@@ -244,33 +233,42 @@ const DrivingScreen = ({ navigation }) => {
 			</View>
 			<View style={STARTGIG.infoWrapper}>
 				<View style={[STARTGIG.textWrapper]}>
-					<View style={[STARTGIG.section, { justifyContent: "center" }]}>
-						<Text style={ELSTYLES.titleL}>Route:</Text>
-						{/* Pressing the city name will open maps with navigation to the gig address, either start or end */}
-						<Pressable
-							style={ELSTYLES.titleLlight}
-							onPress={() => Linking.openURL(startURL)}>
-							<Text style={ELSTYLES.titleLlight}>
-								{activeGig.startLocation}
-							</Text>
-						</Pressable>
-						<Pressable
-							style={ELSTYLES.titleLlight}
-							onPress={() => Linking.openURL(endURL)}>
-							<Text style={ELSTYLES.titleLlight}>{activeGig.endLocation}</Text>
-						</Pressable>
-					</View>
 					<View
 						style={[
 							STARTGIG.section,
-							{ justifyContent: "space-evenly", alignItems: "flex-start" },
+							{ justifyContent: "center", marginVertical: 16 },
 						]}>
+						<Text style={ELSTYLES.titleLlight} numberOfLines={1}>
+							Route:
+						</Text>
+						{/* Pressing the city name will open maps with navigation to the gig address, either start or end */}
+						<View
+							style={{
+								flexDirection: "row",
+								alignItems: "center",
+								marginVertical: 8,
+							}}>
+							<Pressable
+								style={ELSTYLES.buttonBorder}
+								onPress={() => Linking.openURL(startURL)}>
+								<Text style={[ELSTYLES.titleL]}>{activeGig.startLocation}</Text>
+							</Pressable>
+							<Text style={ELSTYLES.titleL}> - </Text>
+
+							<Pressable
+								style={ELSTYLES.buttonBorder}
+								onPress={() => Linking.openURL(endURL)}>
+								<Text style={ELSTYLES.titleL}>{activeGig.endLocation}</Text>
+							</Pressable>
+						</View>
+					</View>
+					<View style={STARTGIG.section}>
 						<View
 							style={{
 								flexDirection: "row",
 								alignItems: "baseline",
 							}}>
-							<Text style={[STARTGIG.labelM, { flex: 1 }]}>
+							<Text style={[STARTGIG.labelM, { flex: 0.8 }]}>
 								Estimated arrival:
 							</Text>
 							<Text style={[STARTGIG.labelL, { flex: 0.5, textAlign: "left" }]}>
@@ -282,16 +280,20 @@ const DrivingScreen = ({ navigation }) => {
 								flexDirection: "row",
 								alignItems: "baseline",
 							}}>
-							<Text style={[STARTGIG.labelM, { flex: 1 }]}>Distance left:</Text>
+							<Text style={[STARTGIG.labelM, { flex: 0.8 }]}>
+								Distance left:
+							</Text>
 							<Text style={[STARTGIG.labelL, { flex: 0.5, textAlign: "left" }]}>
 								{distance} KM
 							</Text>
 						</View>
 					</View>
-					<View style={[STARTGIG.section, { justifyContent: "space-evenly" }]}>
+					<View style={{ flex: 0.5, justifyContent: "flex-start" }}>
+						{/*
+						Do we need this - they already accepted it they know when they started
 						<Text style={ELSTYLES.txtAlt}>
 							Departure: {activeGig.leaveTime}
-						</Text>
+						</Text>*/}
 						<Text style={ELSTYLES.txtAlt}>
 							Arrival: {activeGig.arrivalTime}
 						</Text>

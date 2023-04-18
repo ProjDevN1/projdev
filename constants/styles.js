@@ -207,6 +207,14 @@ export const ELSTYLES = StyleSheet.create({
 		marginVertical: 4,
 	},
 
+	buttonBorder: {
+		borderColor: colorAlt,
+		borderWidth: 1,
+		paddingVertical: 6,
+		paddingHorizontal: 12,
+		borderRadius: borderRadius,
+	},
+
 	buttonTxt: {
 		fontFamily: fontMedium,
 		color: colorAccent,
