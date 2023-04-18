@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { ELSTYLES } from "../constants/styles";
 import { LANDING } from "../constants/styles";
@@ -64,6 +64,16 @@ const LandingScreen = ({ navigation }) => {
 					Lorem ipsum etc
 				</Text>
 			</View>
+			<Image
+				style={{
+					width: "100%",
+					height: "40%",
+					position: "absolute",
+					top: "28%",
+					left: "12%",
+					opacity: 0.7,
+				}}
+				source={require("../assets/LOGO.png")}></Image>
 
 			{/*Buttons*/}
 			<View style={LANDING.buttonWrapper}>

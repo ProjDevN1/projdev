@@ -17,6 +17,7 @@ import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 
 import { activeGig, currentUser, finishDrive, updateCurrentLocation } from "../api/api.js"
+import { getCurrentTime } from "../api/DataHandling";
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
@@ -42,8 +43,8 @@ const DrivingScreen = ({ navigation }) => {
 	// Get users location coordinates
 	// User coordinates are stored here
 	const [userCoords, setUserCoords] = useState({
-		coords: 0,
-		latitude: 0,
+		coords: 60.44969899573153, 
+		latitude: 22.26765771615263,
 		longitude: 0,
 		latitudeDelta: 0.0922,
 		longitudeDelta: 0.0421
@@ -137,12 +138,16 @@ const DrivingScreen = ({ navigation }) => {
 		latitudeDelta: 0.01,
 		longitudeDelta: 0.01,
 	};
+
 	const goToStart = () => {
 		mapRef.current.animateToRegion(startData, 3000);
 	};
 	const goToEnd = () => {
 		mapRef.current.animateToRegion(endData, 3000);
 	};
+	const goToUser= () => {
+		mapRef.current.animateToRegion(userCoords, 3000)
+	}
 
 	return (
 		<SafeAreaView style={STARTGIG.screenWrapper}>
@@ -152,6 +157,7 @@ const DrivingScreen = ({ navigation }) => {
 				//specify our coordinates.
 				showsUserLocation={true}
 				followsUserLocation={true}
+				showsMyLocationButton={false}
 				initialRegion={{
 					latitude: activeGig.startLat,
 					longitude: activeGig.startLon,
@@ -202,6 +208,11 @@ const DrivingScreen = ({ navigation }) => {
 					style={[ELSTYLES.button, { padding: 4 }]}
 					onPress={() => goToEnd()}>
 					<Text>Destination</Text>
+				</Pressable>
+				<Pressable
+					style={[ELSTYLES.button, { padding: 4 }]}
+					onPress={() => goToUser()}>
+					<Text>User Location</Text>
 				</Pressable>
 			</View>
 			<View style={STARTGIG.infoWrapper}>
@@ -272,7 +283,7 @@ const DrivingScreen = ({ navigation }) => {
 				onSwipeComplete={toggleFinishModal}>
 				<View>
 					<Text>You have arrived at your destination</Text>
-					<Text>Arrival time: {estimatedArrival}</Text>
+					<Text>Arrival time: CURRENTTIME</Text>
 					<Text>Reward: {activeGig.reward}€</Text>
 				</View>
 				<View>

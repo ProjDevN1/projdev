@@ -557,7 +557,6 @@ export const GIGLIST = StyleSheet.create({
 		fontFamily: fontMedium,
 		fontSize: fsL,
 		color: colorAlt,
-		flex: 1,
 	},
 	reward: {
 		fontSize: fsL,
@@ -581,8 +580,14 @@ export const GIGLIST = StyleSheet.create({
 		fontSize: fsSm,
 		color: colorAlt,
 		fontWeight: "400",
-		marginHorizontal: 4,
-		flex: 1,
+		alignSelf: "flex-end",
+	},
+	separator: {
+		height: "100%",
+		borderColor: colorAlt,
+		borderWidth: 0.8,
+		marginHorizontal: 8,
+		alignSelf: "center",
 	},
 
 	modalWrapper: {
