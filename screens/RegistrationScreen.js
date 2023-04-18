@@ -123,7 +123,10 @@ const RegistrationScreen = ({ navigation }) => {
 								left: "-2%",
 							}}>
 							<Ripple
-								style={[ELSTYLES.buttonRound, { opacity: 0.9 }]}
+								style={[
+									ELSTYLES.buttonRound,
+									{ opacity: 0.9, marginRight: 12 },
+								]}
 								rippleColor={ELSTYLES.rippleColors().colorAccent}
 								rippleCentered={true}
 								onPress={() => openLanding(navigation)}>
