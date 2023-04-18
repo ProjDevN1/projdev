@@ -78,6 +78,11 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsXL,
 		color: colorBase,
 	},
+	titleXLlight: {
+		fontFamily: fontLight,
+		fontSize: fsXL,
+		color: colorBase,
+	},
 
 	titleL: {
 		fontFamily: fontMedium,
@@ -110,6 +115,9 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsSm,
 		color: colorBase,
 	},
+	fontMedium: {
+		fontFamily: fontMedium,
+	},
 	//End of titles
 	//texts and labels
 	txtL: {
@@ -133,6 +141,20 @@ export const ELSTYLES = StyleSheet.create({
 		color: colorBase,
 		fontSize: fsM,
 		font: fontMedium,
+	},
+	txtAltL: {
+		color: colorBase,
+		fontSize: fsL,
+		fontFamily: fontMedium,
+	},
+	txtAltLlight: {
+		color: colorBase,
+		fontSize: fsL,
+		fontFamily: fontLight,
+	},
+	txtAltXL: {
+		color: colorBase,
+		fontSize: fsXL - 4,
 	},
 	numtxtAltM: {
 		color: colorBase,
@@ -214,6 +236,9 @@ export const ELSTYLES = StyleSheet.create({
 		paddingHorizontal: 12,
 		borderRadius: borderRadius,
 	},
+	buttonBorderTxt: {
+		color: colorAlt,
+	},
 
 	buttonTxt: {
 		fontFamily: fontMedium,
@@ -223,6 +248,10 @@ export const ELSTYLES = StyleSheet.create({
 		font: fontBold,
 		color: colorAccent,
 		fontSize: fsM,
+	},
+	buttonTxtDark: {
+		fontFamily: fontMedium,
+		color: colorDark,
 	},
 	buttonTxtPressed: {
 		font: font,
@@ -528,6 +557,31 @@ export const STARTGIG = StyleSheet.create({
 		margin: 0,
 		flexDirection: "column",
 		justifyContent: "space-between",
+	},
+	finishDriveModal: {
+		backgroundColor: colorAccent,
+		paddingHorizontal: 16,
+		paddingVertical: 22,
+		margin: 0,
+		flexDirection: "column",
+		justifyContent: "space-between",
+		borderRadius: borderRadius + 10,
+		borderColor: colorDark,
+		borderWidth: 8,
+	},
+	finishDriveBtn: {
+		padding: 8,
+		alignItems: "center",
+		marginVertical: 16,
+	},
+	finishDriveBtnTxt: {
+		fontFamily: fontMedium,
+		fontSize: fsL,
+	},
+	closefinishModalBtn: {
+		fontFamily: fontLight,
+		fontSize: fsM,
+		alignSelf: "center",
 	},
 });
 

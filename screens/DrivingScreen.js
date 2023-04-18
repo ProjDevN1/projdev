@@ -315,28 +315,56 @@ const DrivingScreen = ({ navigation }) => {
 			</View>
 			<Modal
 				isVisible={finishModalVisible}
-				style={{ margin: 0, justifyContent: "flex-end" }}
+				style={{ marginBottom: "40%", justifyContent: "flex-end", margin: 12 }}
 				swipeDirection="down"
 				onRequestClose={toggleFinishModal}
 				onBackButtonPress={toggleFinishModal}
 				scrollOffset={1}
 				onSwipeComplete={toggleFinishModal}>
-				<View>
-					<Text>You have arrived at your destination</Text>
-					<Text>Arrival time: CURRENTTIME</Text>
-					<Text>Reward: {activeGig.reward}€</Text>
-				</View>
-				<View>
-					<Pressable
-						style={{ borderColor: "black", borderWidth: 5 }}
-						onPress={() => finishGig(navigation, activeGig)}>
-						<Text> Finish drive </Text>
-					</Pressable>
-					<Pressable
-						style={{ borderColor: "black", borderWidth: 5 }}
-						onPress={toggleFinishModal}>
-						<Text>CLOSE MODAL</Text>
-					</Pressable>
+				<View style={STARTGIG.finishDriveModal}>
+					<View>
+						<Text style={[ELSTYLES.titleXLlight, { marginBottom: 16 }]}>
+							You have arrived!
+						</Text>
+						<View
+							style={{
+								flexDirection: "row",
+								marginVertical: 8,
+								alignItems: "center",
+							}}>
+							<Text style={[ELSTYLES.txtAltL, { flex: 1 }]}>Arrival time:</Text>
+							<Text style={[ELSTYLES.txtAltXL, { flex: 0.6 }]}>CT</Text>
+						</View>
+						<View
+							style={{
+								flexDirection: "row",
+								marginVertical: 8,
+								alignItems: "center",
+							}}>
+							<Text style={[ELSTYLES.txtAltL, { flex: 1 }]}>Payment:</Text>
+							<Text style={[ELSTYLES.txtAltXL, { flex: 0.6 }]}>
+								{activeGig.reward} €
+							</Text>
+						</View>
+					</View>
+					<View style={{}}>
+						<Ripple
+							style={[ELSTYLES.buttonAlt, STARTGIG.finishDriveBtn]}
+							onPress={() => finishGig(navigation, activeGig)}>
+							<Text style={[ELSTYLES.buttonAltTxt, STARTGIG.finishDriveBtnTxt]}>
+								Finish drive
+							</Text>
+						</Ripple>
+						<Ripple style={[ELSTYLES.buttonBorder]} onPress={toggleFinishModal}>
+							<Text
+								style={[
+									ELSTYLES.buttonBorderTxt,
+									STARTGIG.closefinishModalBtn,
+								]}>
+								Close
+							</Text>
+						</Ripple>
+					</View>
 				</View>
 			</Modal>
 			<Modal
