@@ -13,7 +13,7 @@ import { STYLES } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
 import { GIGLISTFILTER } from "../constants/styles";
-import { availableGigsData, getClientName, getFilteredItems } from "../api/api";
+import { availableGigsData, getClientName, getFilteredItems, getClientPhone, getClientEmail } from "../api/api";
 
 import Modal from "react-native-modal";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -418,9 +418,14 @@ const GigListScreen = ({ navigation }) => {
 //Putting the client name function here ensures that the data gets fetched before the next screen renders
 let clickedListItem = "";
 let clientName = "";
+let clientPhone = "";
+let clientEmail = "";
+
 async function onListItemPress(navigation, id) {
 	clickedListItem = id;
 	clientName = await getClientName("available", id);
+	clientPhone = await getClientPhone("available", id);
+	clientEmail = await getClientEmail("available", id);
 	navigation.navigate("GigApply");
 }
 
@@ -429,4 +434,4 @@ const activeGigs = (navigation) => {
 };
 
 export default GigListScreen;
-export { clickedListItem, clientName };
+export { clickedListItem, clientName, clientEmail, clientPhone };

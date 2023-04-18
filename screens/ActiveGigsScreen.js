@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 
 import { STYLES } from "../constants/styles";
-import { activeGigsData, getClientName } from "../api/api";
+import { activeGigsData, getClientName, getClientPhone, getClientEmail } from "../api/api";
 
 import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
@@ -142,9 +142,14 @@ const ActiveGigsScreen = ({ navigation }) => {
 //Putting the client name function here ensures that the data gets fetched before the next screen renders
 let clickedListItem = "";
 let clientName = "";
+let clientPhone = "";
+let clientEmail = "";
+
 async function onListItemPress(navigation, id) {
 	clickedListItem = id;
 	clientName = await getClientName("active", id);
+	clientPhone = await getClientPhone("active", id);
+	clientEmail = await getClientEmail("active", id);
 	navigation.navigate("GigStart");
 }
 
@@ -153,4 +158,4 @@ const Search = (navigation) => {
 };
 
 export default ActiveGigsScreen;
-export { clickedListItem, clientName };
+export { clickedListItem, clientName, clientPhone, clientEmail };

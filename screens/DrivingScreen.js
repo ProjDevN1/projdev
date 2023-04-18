@@ -25,6 +25,7 @@ import {
 	finishDrive,
 	updateCurrentLocation,
 } from "../api/api.js";
+import { clientName, clientEmail, clientPhone } from "../screens/ActiveGigsScreen";
 import { getCurrentTime } from "../api/DataHandling";
 import { SearchBar } from "react-native-screens";
 
@@ -33,6 +34,7 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 const DrivingScreen = ({ navigation }) => {
 	const [distance, setDistance] = useState(false);
 	const [duration, setDuration] = useState(false);
+
 
 	// Sets the estimated arrival to hh:mm format
 	const [estimatedArrival, setEstimatedArrival] = useState("");
@@ -46,6 +48,26 @@ const DrivingScreen = ({ navigation }) => {
 		console.log(estArrival);
 		setEstimatedArrival(estArrival);
 	};
+
+	const [arrivalTime, setArrivalTime] = useState("")
+	const setArrival = () => {
+		var hours = new Date().getHours()
+		var minutes = new Date().getMinutes()
+		setArrivalTime(hours + ":" + minutes)
+	}
+
+	// Code for opening dialling screen on phone with client phone number set ready.
+	const dialCall = () => {
+		let phoneNumber = ""
+		if (Platform.OS === 'android') {
+			phoneNumber = `tel:${clientPhone}`
+		}
+		else {
+			phoneNumber = `telprompt:${clientPhone}`
+		}
+		Linking.openURL(phoneNumber)
+	}
+
 
 	// Get users location coordinates
 	// User coordinates are stored here
@@ -320,7 +342,8 @@ const DrivingScreen = ({ navigation }) => {
 				onRequestClose={toggleFinishModal}
 				onBackButtonPress={toggleFinishModal}
 				scrollOffset={1}
-				onSwipeComplete={toggleFinishModal}>
+				onSwipeComplete={toggleFinishModal}
+				onLayout={setArrival}>
 				<View style={STARTGIG.finishDriveModal}>
 					<View>
 						<Text style={[ELSTYLES.titleXLlight, { marginBottom: 16 }]}>
@@ -333,7 +356,7 @@ const DrivingScreen = ({ navigation }) => {
 								alignItems: "center",
 							}}>
 							<Text style={[ELSTYLES.txtAltL, { flex: 1 }]}>Arrival time:</Text>
-							<Text style={[ELSTYLES.txtAltXL, { flex: 0.6 }]}>CT</Text>
+							<Text style={[ELSTYLES.txtAltXL, { flex: 0.6 }]}>{arrivalTime}</Text>
 						</View>
 						<View
 							style={{
@@ -392,7 +415,7 @@ const DrivingScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/userIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_NAME</Text>
+								<Text style={ELSTYLES.txtL}>{clientName}</Text>
 							</View>
 							{/*ROW FOR USER DATA END */}
 							{/*ROW FOR USER DATA */}
@@ -408,7 +431,7 @@ const DrivingScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/emailIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_EMAIL</Text>
+								<Text style={ELSTYLES.txtL}>clientEmail</Text>
 							</View>
 							{/*ROW FOR USER DATA END */}
 							{/*ROW FOR USER DATA */}
@@ -424,7 +447,9 @@ const DrivingScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/phoneIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_PHONE</Text>
+								<Pressable onPress={dialCall}>
+									<Text style={ELSTYLES.txtL}>{clientPhone}</Text>
+								</Pressable>
 							</View>
 							{/*ROW FOR USER DATA END */}
 						</View>

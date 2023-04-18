@@ -14,7 +14,7 @@ import MapViewDirections from "react-native-maps-directions";
 import Modal from "react-native-modal";
 import * as Location from "expo-location";
 
-import { clickedListItem, clientName } from "../screens/GigListScreen";
+import { clickedListItem, clientName, clientEmail, clientPhone } from "../screens/GigListScreen";
 import { availableGigsData, applyForGig } from "../api/api";
 
 import { ELSTYLES } from "../constants/styles";
@@ -31,7 +31,17 @@ const GigApplyScreen = ({ navigation }) => {
 	const toggleContactModal = () => {
 		setContactVisible(!contactModalVisible);
 	};
-
+	// Code for opening dialling screen on phone with client phone number set ready.
+	const dialCall = () => {
+		let phoneNumber = ""
+		if (Platform.OS === 'android') {
+			phoneNumber = `tel:${clientPhone}`
+		}
+		else {
+			phoneNumber = `telprompt:${clientPhone}`
+		}
+		Linking.openURL(phoneNumber)
+	}
 	// Get users location coordinates
 	// User coordinates are stored here
 	const [userCoords, setUserCoords] = useState({
@@ -233,7 +243,7 @@ const GigApplyScreen = ({ navigation }) => {
 						style={[
 							{ flex: 0.5, justifyContent: "space-between", marginTop: 8 },
 						]}>
-						<Text style={ELSTYLES.txtAlt}>Fuel budget: 69 €</Text>
+						<Text style={ELSTYLES.txtAlt}>Fuel budget: 70 €</Text>
 						<Text style={ELSTYLES.txtAlt}>Client name: {clientName}</Text>
 					</View>
 				</View>
@@ -279,7 +289,7 @@ const GigApplyScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/userIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_NAME</Text>
+								<Text style={ELSTYLES.txtL}>{clientName}</Text>
 							</View>
 							{/*ROW FOR USER DATA END */}
 							{/*ROW FOR USER DATA */}
@@ -295,7 +305,7 @@ const GigApplyScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/emailIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_EMAIL</Text>
+								<Text style={ELSTYLES.txtL}>{clientEmail}</Text>
 							</View>
 							{/*ROW FOR USER DATA END */}
 							{/*ROW FOR USER DATA */}
@@ -311,7 +321,9 @@ const GigApplyScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/phoneIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_PHONE</Text>
+								<Pressable onPress={dialCall}>
+									<Text style={ELSTYLES.txtL}>{clientPhone}</Text>
+								</Pressable>
 							</View>
 							{/*ROW FOR USER DATA END */}
 						</View>
