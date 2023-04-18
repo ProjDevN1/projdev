@@ -14,7 +14,6 @@ const correctLogin = true;
 	/*Main loginscreen function*/
 }
 
-
 const LoginScreen = ({ navigation, route }) => {
 	//Gradient object
 	let [gradientOptions, setGradientOptions] = React.useState({
@@ -30,23 +29,32 @@ const LoginScreen = ({ navigation, route }) => {
 			start={gradientOptions.start}
 			end={gradientOptions.end}>
 			{/*back btn*/}
-			<Ripple
-				style={[
-					ELSTYLES.buttonRound,
-					{ position: "absolute", right: 0, top: 0, margin: 8, opacity: 0.9 },
-				]}
-				rippleColor={ELSTYLES.rippleColors().colorAccent}
-				rippleCentered={true}
-				onPress={() => openLanding(navigation)}>
-				<Image
-					style={ELSTYLES.buttonFitImg}
-					source={require("../assets/icons/arrowLico.png")}></Image>
-			</Ripple>
 
 			<View>
 				{/*title*/}
-				<Text style={[ELSTYLES.title, { marginBottom: 32 }]}>Log in</Text>
 
+				<View
+					style={{
+						flexDirection: "row",
+						marginTop: 64,
+						marginBottom: 32,
+						marginHorizontal: 0,
+						alignItems: "center",
+						position: "relative",
+						left: "-5%",
+					}}>
+					<Ripple
+						style={[ELSTYLES.buttonRound, { opacity: 0.9, marginRight: 12 }]}
+						rippleColor={ELSTYLES.rippleColors().colorAccent}
+						rippleCentered={true}
+						onPress={() => openLanding(navigation)}>
+						<Image
+							style={ELSTYLES.buttonFitImg}
+							source={require("../assets/icons/arrowLico.png")}></Image>
+					</Ripple>
+
+					<Text style={[ELSTYLES.title]}>Log in</Text>
+				</View>
 				{/*container*/}
 				<View style={LOGIN.container}>
 					{/*

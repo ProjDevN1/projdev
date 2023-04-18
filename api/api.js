@@ -200,9 +200,50 @@ async function getClientName(gigType, id) {
 	} else if (gigType === "active") {
 		clientId = activeGigsData[id].client;
 		const clientSnap = await getDoc(doc(db, "clients", clientId));
+		console.log(clientSnap.data().name)
 		return clientSnap.data().name;
 	} else {
 		console.log("Incorrect gig type");
+	}
+}
+
+
+// Code to get client phone number for contact info 
+async function getClientPhone(gigType, id) {
+	//Gig type should be either available or active, depending on which screen it is called from
+	let clientId = "";
+
+	//Checks if to get the client from active or available gigs and returns the correct clients phone
+	if (gigType === "available") {
+		clientId = availableGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		return clientSnap.data().phone;
+	} else if (gigType === "active") {
+		clientId = activeGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		console.log(clientSnap.data().phone)
+		return clientSnap.data().phone
+	} else {
+		console.log("incorrect gig type")
+	}
+}
+
+// Code to get client email for contact info
+async function getClientEmail(gigType, id) {
+
+	//Gig type should be either available or active, depending on which screen it is called from
+	let clientId = "";
+	//Checks if to get the client from active or available gigs and returns the correct clients email
+	if (gigType === "available") {
+		clientId = availableGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		return clientSnap.data().email;
+	} else if (gigType === "active") {
+		clientId = activeGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		return clientSnap.data().email
+	} else {
+		console.log("incorrect gig type")
 	}
 }
 
@@ -402,4 +443,6 @@ export {
 	updateCurrentLocation,
 	getFilteredItems,
 	resetGigsProgress,
+	getClientPhone,
+	getClientEmail,
 };

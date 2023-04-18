@@ -17,7 +17,7 @@ import MapViewDirections from "react-native-maps-directions";
 import Modal from "react-native-modal";
 import * as Location from "expo-location";
 
-import { clickedListItem, clientName } from "../screens/ActiveGigsScreen";
+import { clickedListItem, clientName, clientEmail, clientPhone } from "../screens/ActiveGigsScreen";
 import {
 	activeGig,
 	activeGigsData,
@@ -35,6 +35,7 @@ const GigStartScreen = ({ navigation }) => {
 	const currentGig = activeGigsData[clickedListItem];
 	console.log(clickedListItem);
 
+
 	// Code for navigation line on ios and android
 	const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
 	const sLatLng = `${currentGig.startLat},${currentGig.startLon}`;
@@ -51,6 +52,18 @@ const GigStartScreen = ({ navigation }) => {
 		android: `${scheme}${eLatLng}(${endLabel})`,
 	});
 
+	// Code for opening dialling screen on phone with client phone number set ready.
+	const dialCall = () => {
+		let phoneNumber = ""
+		if (Platform.OS === 'android') {
+			phoneNumber = `tel:${clientPhone}`
+		}
+		else {
+			phoneNumber = `telprompt:${clientPhone}`
+		}
+		Linking.openURL(phoneNumber)
+	}
+
 	// Code for contact info modal visibility
 	const [contactModalVisible, setContactVisible] = useState(false);
 	const toggleContactModal = () => {
@@ -60,9 +73,9 @@ const GigStartScreen = ({ navigation }) => {
 	// Get users location coordinates
 	// User coordinates are stored here
 	const [userCoords, setUserCoords] = useState({
-		coords: 60.44969899573153,
-		latitude: 22.26765771615263,
-		longitude: 0,
+		coords: 60.44969899573153 + "," + 22.26765771615263,
+		latitude: 60.44969899573153,
+		longitude: 22.26765771615263,
 		latitudeDelta: 0.0922,
 		longitudeDelta: 0.0421,
 	});
@@ -312,7 +325,7 @@ const GigStartScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/userIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_NAME</Text>
+								<Text style={ELSTYLES.txtL}>{clientName}</Text>
 							</View>
 							{/*ROW FOR USER DATA END */}
 							{/*ROW FOR USER DATA */}
@@ -328,7 +341,7 @@ const GigStartScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/emailIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_EMAIL</Text>
+								<Text style={ELSTYLES.txtL}>{clientEmail}</Text>
 							</View>
 							{/*ROW FOR USER DATA END */}
 							{/*ROW FOR USER DATA */}
@@ -344,7 +357,9 @@ const GigStartScreen = ({ navigation }) => {
 										{ width: 36, height: 36, marginRight: 16 },
 									]}
 									source={require("../assets/icons/phoneIco.png")}></Image>
-								<Text style={ELSTYLES.txtL}>USERS_PHONE</Text>
+								<Pressable onPress={dialCall}>
+									<Text style={ELSTYLES.txtL} >{clientPhone}</Text>
+								</Pressable>
 							</View>
 							{/*ROW FOR USER DATA END */}
 						</View>

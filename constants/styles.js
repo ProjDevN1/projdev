@@ -78,6 +78,11 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsXL,
 		color: colorBase,
 	},
+	titleXLlight: {
+		fontFamily: fontLight,
+		fontSize: fsXL,
+		color: colorBase,
+	},
 
 	titleL: {
 		fontFamily: fontMedium,
@@ -110,6 +115,9 @@ export const ELSTYLES = StyleSheet.create({
 		fontSize: fsSm,
 		color: colorBase,
 	},
+	fontMedium: {
+		fontFamily: fontMedium,
+	},
 	//End of titles
 	//texts and labels
 	txtL: {
@@ -133,6 +141,20 @@ export const ELSTYLES = StyleSheet.create({
 		color: colorBase,
 		fontSize: fsM,
 		font: fontMedium,
+	},
+	txtAltL: {
+		color: colorBase,
+		fontSize: fsL,
+		fontFamily: fontMedium,
+	},
+	txtAltLlight: {
+		color: colorBase,
+		fontSize: fsL,
+		fontFamily: fontLight,
+	},
+	txtAltXL: {
+		color: colorBase,
+		fontSize: fsXL - 4,
 	},
 	numtxtAltM: {
 		color: colorBase,
@@ -207,6 +229,17 @@ export const ELSTYLES = StyleSheet.create({
 		marginVertical: 4,
 	},
 
+	buttonBorder: {
+		borderColor: colorAlt,
+		borderWidth: 1,
+		paddingVertical: 6,
+		paddingHorizontal: 12,
+		borderRadius: borderRadius,
+	},
+	buttonBorderTxt: {
+		color: colorAlt,
+	},
+
 	buttonTxt: {
 		fontFamily: fontMedium,
 		color: colorAccent,
@@ -215,6 +248,10 @@ export const ELSTYLES = StyleSheet.create({
 		font: fontBold,
 		color: colorAccent,
 		fontSize: fsM,
+	},
+	buttonTxtDark: {
+		fontFamily: fontMedium,
+		color: colorDark,
 	},
 	buttonTxtPressed: {
 		font: font,
@@ -359,61 +396,64 @@ export const ADDPICTURES = StyleSheet.create({
 		flex: 1,
 		justifyContent: "space-evenly",
 	},
-	contentWrapperTopBottom: {
-		flexDirection: "row",
+	contentWrapperTop: {
 		justifyContent: "center",
-		justifyContent: "space-around",
-		widht: "100%",
-		height: "22.5%",
+		justifyContent: "center",
 		alignItems: "center",
-		paddingTop: 50,
+		marginTop: 72,
 		paddingHorizontal: 16,
+	},
+	contentWrapperBottom: {
+		justifyContent: "center",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "row",
+		marginBottom: 32,
+		justifyContent: "space-around",
 	},
 	innerTop: {
 		display: "flex",
 	},
 	contentWrapperMiddle: {
-		height: "55%",
+		flex: 1,
 		justifyContent: "space-evenly",
 		alignItems: "center",
+		margin: "10%",
 	},
 	innerContentWrapper1: {
-		backgroundColor: colorAlt,
-		padding: 16,
-		width: 250,
+		flex: 1,
+		backgroundColor: colorBase,
 		borderRadius: borderRadius,
 		flexDirection: "row",
 		alignItems: "center",
-		height: "25%",
+		justifyContent: "space-between",
+		marginBottom: 12,
+		paddingHorizontal: 8,
 	},
 	innerContentWrapper2: {
+		flex: 1.2,
+		width: "100%",
 		backgroundColor: colorAlt,
 		padding: 16,
-		width: 250,
 		borderRadius: borderRadius,
-		height: "60%",
-		justifyContent: "space-evenly",
-	},
-	addPicsBtn: {
-		alignSelf: "center",
-		flex: 1,
 		alignItems: "center",
-		paddingVertical: "8%",
-		margin: "8%",
+		justifyContent: "center",
 	},
 	input: {
+		padding: 12,
+		paddingTop: 12,
+		paddingBottom: 12,
+		paddingRight: 12,
+		textAlignVertical: "top",
 		fontSize: fsSm,
 		fontFamily: fontLight,
 		backgroundColor: colorBase,
 		borderRadius: borderRadius,
-		paddingVertical: 8,
-		paddingHorizontal: 12,
-		marginTop: 8,
-		marginBottom: 8,
 		borderWidth: 2,
 		borderColor: colorAccent,
 		color: colorDarker,
-		height: "90%",
+		flex: 1,
+		width: "100%",
 	},
 });
 
@@ -520,6 +560,31 @@ export const STARTGIG = StyleSheet.create({
 		margin: 0,
 		flexDirection: "column",
 		justifyContent: "space-between",
+	},
+	finishDriveModal: {
+		backgroundColor: colorAccent,
+		paddingHorizontal: 16,
+		paddingVertical: 22,
+		margin: 0,
+		flexDirection: "column",
+		justifyContent: "space-between",
+		borderRadius: borderRadius + 10,
+		borderColor: colorDark,
+		borderWidth: 8,
+	},
+	finishDriveBtn: {
+		padding: 8,
+		alignItems: "center",
+		marginVertical: 16,
+	},
+	finishDriveBtnTxt: {
+		fontFamily: fontMedium,
+		fontSize: fsL,
+	},
+	closefinishModalBtn: {
+		fontFamily: fontLight,
+		fontSize: fsM,
+		alignSelf: "center",
 	},
 });
 

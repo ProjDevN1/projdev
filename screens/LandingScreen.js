@@ -69,11 +69,11 @@ const LandingScreen = ({ navigation }) => {
 					width: "100%",
 					height: "40%",
 					position: "absolute",
-					top: "28%",
+					top: "32%",
 					left: "12%",
-					opacity: 0.7,
+					opacity: 0.64,
 				}}
-				source={require("../assets/LOGO.png")}></Image>
+				source={require("../assets/LOGONO.png")}></Image>
 
 			{/*Buttons*/}
 			<View style={LANDING.buttonWrapper}>
