@@ -60,9 +60,9 @@ const GigStartScreen = ({ navigation }) => {
 	// Get users location coordinates
 	// User coordinates are stored here
 	const [userCoords, setUserCoords] = useState({
-		coords: 60.44969899573153,
-		latitude: 22.26765771615263,
-		longitude: 0,
+		coords: 60.44969899573153 + "," + 22.26765771615263,
+		latitude: 60.44969899573153,
+		longitude: 22.26765771615263,
 		latitudeDelta: 0.0922,
 		longitudeDelta: 0.0421,
 	});
