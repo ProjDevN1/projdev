@@ -9,6 +9,7 @@ import {
 	updateDoc,
 	arrayUnion,
 	arrayRemove,
+	get,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig.js";
 import { getCurrentTime, getCurrentDate } from "./DataHandling.js";
@@ -129,6 +130,14 @@ function formatAvailableGigsData(aGigsData, id, gigId) {
 	return ITEM;
 }
 
+function sortGigsByDate(gigs) {
+	return gigs.sort((a, b) => {
+		const dateA = Date.parse(a.date.split('.').reverse().join('-'));
+		const dateB = Date.parse(b.date.split('.').reverse().join('-'));
+		return dateA - dateB;
+	});
+}
+
 //This stores current users active gigs, so that asctivegigslist does not need to load the data on layout
 var activeGigsData = [];
 //Gets an array of user_1 active gigs. When user switching is completed, will change it to get active gigs of current user
@@ -155,7 +164,7 @@ async function getActiveGigs() {
 		return "No active gigs";
 	} else {
 		await activeGigsPerUser.forEach(getGig);
-		activeGigsData = activeGigs;
+		activeGigsData = sortGigsByDate(activeGigs);
 		return activeGigs;
 	}
 }
@@ -174,7 +183,7 @@ async function getOngoingGigs() {
 		const id = gigArray.length;
 		const formattedGig = formatAvailableGigsData(doc.data(), id, doc.id);
 		gigArray.push(formattedGig); //Append gigs to gigArray-list
-		availableGigsData = gigArray;
+		availableGigsData = sortGigsByDate(gigArray);
 	});
 }
 
@@ -339,6 +348,42 @@ function getActiveGigsBetweenDates(startDateRange, endDateRange) {
 	return newList;
 }
 
+async function resetGigsProgress(){
+	try {
+		// Loop through each document in the users collection
+		const usersSnapshot = await getDocs(collection(db, "users"));
+		for (const userDoc of usersSnapshot.docs) {
+		  const docRef = doc(db, "users", userDoc.id)
+		  // Clear the "gigsActive" and "gigsCompleted" arrays
+		  await updateDoc(docRef, {
+			gigsActive: [],
+			gigsCompleted: []
+		  });
+		}
+	
+		// Loop through each document in the gigs collection
+		const gigsSnapshot = await getDocs(collection(db, "gigs"));
+		for (const gigDoc of gigsSnapshot.docs) {
+		  const docRef = doc(db, "gigs", gigDoc.id)
+		  // Reset the "completed" field to false
+		  // and clear the "driveEndTime", "driveStartTime", "user" and "currentLocation" fields
+		  await updateDoc(docRef, {
+			completed: false,
+			driveEndTime: {time: ""},
+			driveStartTime: {time: ""},
+			user: "",
+			currentLocation: ""
+		  });
+		}
+	
+		console.log('Gigs progress reset complete.');
+	  } catch (error) {
+		console.error('Error resetting gigs progress:', error);
+	  }
+}
+
+
+
 //Export non-temp functions and data here
 export {
 	getClientName,
@@ -356,4 +401,5 @@ export {
 	addStartingTime,
 	updateCurrentLocation,
 	getFilteredItems,
+	resetGigsProgress,
 };

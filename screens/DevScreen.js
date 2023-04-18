@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native'
 import React from 'react'
 import { requestCameraPermission } from '../components/RequestPermissions'
+import { resetGigsProgress  } from '../api/api'
 
 //There should be no reason to edit this screen other than to add a button to navigate to a new screen
 //Also btw you can comment with just // if the comment is outside of a react component. If it's inside one, there are different rules
@@ -25,6 +26,7 @@ const DevScreen = ({navigation}) => {
         <Text>Danger zone, don't touch unless you know what you are doing</Text>
         <Button title="DB Testing" onPress={() => navigation.navigate('DBTest')}/>
         <Button title="Camera test screen" onPress={() => navigation.navigate("MapTest")}/>
+        <Button title="Reset all gigs progress and reservations" onPress={resetGigsProgress}/>
     </View>
   )
 }
