@@ -206,6 +206,41 @@ async function getClientName(gigType, id) {
 	}
 }
 
+
+// Code to get client phone number for contact info 
+async function getClientPhone(gigType, id) {
+	let clientId = "";
+
+	if (gigType === "available") {
+		clientId = availableGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		return clientSnap.data().phone;
+	} else if (gigType === "active") {
+		clientId = activeGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		return clientSnap.data().phone
+	} else {
+		console.log("incorrect gig type")
+	}
+}
+
+// Code to get client email for contact info
+async function getClientEmail(gigType, id) {
+	let clientId = "";
+
+	if (gigType === "available") {
+		clientId = availableGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		return clientSnap.data().phone;
+	} else if (gigType === "active") {
+		clientId = activeGigsData[id].client
+		const clientSnap = await getDoc(doc(db, "clients", clientId))
+		return clientSnap.data().phone
+	} else {
+		console.log("incorrect gig type")
+	}
+}
+
 let activeGig = ''
 function setActiveGig(gig){
 	activeGig = gig;
