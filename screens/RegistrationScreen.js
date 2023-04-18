@@ -119,6 +119,8 @@ const RegistrationScreen = ({ navigation }) => {
 								marginBottom: 32,
 								marginHorizontal: 0,
 								alignItems: "center",
+								position: "relative",
+								left: "-2%",
 							}}>
 							<Ripple
 								style={[ELSTYLES.buttonRound, { opacity: 0.9 }]}
