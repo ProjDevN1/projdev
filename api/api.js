@@ -138,6 +138,16 @@ function sortGigsByDate(gigs) {
 	});
 }
 
+//So it appears that giving the gigs id's based on their array position is not a good idea
+//Because when you then sort them by date, it makes you apply for the wrong gig lol
+//So I had to make this abomination to quickfix it
+function updateIds(gigs) {
+	for (let i = 0; i < gigs.length; i++) {
+		gigs[i].id = i;
+	}
+	return gigs;
+  }
+
 //This stores current users active gigs, so that asctivegigslist does not need to load the data on layout
 var activeGigsData = [];
 //Gets an array of user_1 active gigs. When user switching is completed, will change it to get active gigs of current user
@@ -164,7 +174,8 @@ async function getActiveGigs() {
 		return "No active gigs";
 	} else {
 		await activeGigsPerUser.forEach(getGig);
-		activeGigsData = sortGigsByDate(activeGigs);
+		const x = sortGigsByDate(activeGigs);
+		activeGigsData = updateIds(x);
 		return activeGigs;
 	}
 }
@@ -183,7 +194,8 @@ async function getOngoingGigs() {
 		const id = gigArray.length;
 		const formattedGig = formatAvailableGigsData(doc.data(), id, doc.id);
 		gigArray.push(formattedGig); //Append gigs to gigArray-list
-		availableGigsData = sortGigsByDate(gigArray);
+		const x = sortGigsByDate(gigArray);
+		availableGigsData = updateIds(x)
 	});
 }
 
@@ -318,21 +330,48 @@ async function addStartingTime(userId) {
 	}
 }
 
+
+function filterLocations(arr, startLocationParam, endLocationParam) {
+	return arr.filter(obj => {
+	  if (startLocationParam && endLocationParam) {
+		return obj.startLocation === startLocationParam && obj.endLocation === endLocationParam;
+	  } else if (startLocationParam) {
+		return obj.startLocation === startLocationParam;
+	  } else if (endLocationParam) {
+		return obj.endLocation === endLocationParam;
+	  }
+	});
+  }
+  
+
+
 //Function that takes search parameters from searchfiltermodal and returns an array of accpeted items
 function getFilteredItems(startLocationParam, endLocationParam, startDateRange, endDateRange, minReward){
-	getActiveGigsBetweenDates(startDateRange, endDateRange)
 	console.log(startLocationParam, endLocationParam, startDateRange, endDateRange, minReward)
 	let filteredItemsList = []
-	if (minReward != 0){
-		filteredItemsList = availableGigsData.filter(obj => obj.reward > minReward)
+	if (startDateRange != null || endDateRange != null){
+		filteredItemsList = getGigsBetweenDates(startDateRange, endDateRange) 
 	}
+	if (minReward != 0 && filteredItemsList.length === 0){
+		filteredItemsList = availableGigsData.filter(obj => obj.reward > minReward)
+	} else if (minReward != 0) {
+		filteredItemsList = filteredItemsList.filter(obj => obj.reward > minReward)
+	}
+	if (startLocationParam != null || endLocationParam != null){
+		if (filteredItemsList.length === 0){
+			filteredItemsList = filterLocations(availableGigsData, startLocationParam, endLocationParam)
+		} else {
+			filteredItemsList = filterLocations(filteredItemsList, startLocationParam, endLocationParam)
+		}
+	}
+
 	console.log(filteredItemsList)
 	return filteredItemsList
 }
 
 //Function to return an array of active gigs between selected dates
 //@Ira
-function getActiveGigsBetweenDates(startDateRange, endDateRange) {
+function getGigsBetweenDates(startDateRange, endDateRange) {
 	var newList = [];
 
 	if (startDateRange != null && endDateRange != null) {
@@ -382,8 +421,6 @@ function getActiveGigsBetweenDates(startDateRange, endDateRange) {
 		})
 		console.log(newList)
 
-	} else {
-		newList = availableGigsData;
 	} 
 
 	return newList;

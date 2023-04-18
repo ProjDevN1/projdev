@@ -15,7 +15,7 @@ import Modal from "react-native-modal";
 import * as Location from "expo-location";
 
 import { clickedListItem, clientName, clientEmail, clientPhone } from "../screens/GigListScreen";
-import { availableGigsData, applyForGig } from "../api/api";
+import { availableGigsData, applyForGig, } from "../api/api";
 
 import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";

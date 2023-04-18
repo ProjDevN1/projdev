@@ -22,10 +22,8 @@ function List(props) {
 	const Item = ({
 		id,
 		title,
-		addInfo,
 		arrivalAddress,
 		arrivalTime,
-		estimatedTime,
 		leaveTime,
 		reward,
 		startAddress,
@@ -65,8 +63,6 @@ function List(props) {
 				</View>
 				<View style={{ flexDirection: "row" }}>
 					<View>
-						<Text>{estimatedTime}</Text>
-						<Text>{addInfo}</Text>
 					</View>
 					<View
 						style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
