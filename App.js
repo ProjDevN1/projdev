@@ -71,7 +71,6 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Screen name="Dev" component={DevScreen} />
 				<Stack.Screen name="Landing" component={LandingScreen} />
 				<Stack.Screen name="Login" component={LoginScreen} />
 				<Stack.Screen name="GigList" component={GigListScreen} options={{title: "Gig list"}} />
@@ -85,6 +84,7 @@ export default function App() {
 
 				<Stack.Screen name="DBTest" component={DatabaseTestingScreen} />
 				<Stack.Screen name="MapTest" component={MapsTestScreen} />
+				<Stack.Screen name="Dev" component={DevScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
