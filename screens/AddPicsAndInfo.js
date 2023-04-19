@@ -101,7 +101,7 @@ const AddPicsAndInfo = ({ navigation }) => {
 						onPress={toggleCameraModal}
 						rippleColor={ELSTYLES.rippleColors().colorAccent}>
 						<Image
-							style={{ height: "50%", width: "50%" }}
+							style={{ height: "50%", width: "80%" }}
 							source={require("../assets/icons/cameraIco.png")}></Image>
 					</Ripple>
 					<Ripple
@@ -118,7 +118,7 @@ const AddPicsAndInfo = ({ navigation }) => {
 						onPress={pickImage}
 						rippleColor={ELSTYLES.rippleColors().colorAccent}>
 						<Image
-							style={{ height: "50%", width: "50%" }}
+							style={{ height: "50%", width: "80%" }}
 							source={require("../assets/icons/galleryIco.png")}></Image>
 					</Ripple>
 				</View>

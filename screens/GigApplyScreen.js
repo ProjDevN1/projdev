@@ -24,6 +24,16 @@ import Ripple from "react-native-material-ripple";
 const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const GigApplyScreen = ({ navigation }) => {
+
+	const confirmationAlert = (navigation, currentGig) =>
+    Alert.alert('Confirmation', 'Are you sure?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Apply', onPress: () => gigApplyButton(navigation, currentGig)},
+    ]);
 	const currentGig = availableGigsData[clickedListItem];
 
 	// Code for contact info modal visibility
@@ -252,7 +262,7 @@ const GigApplyScreen = ({ navigation }) => {
 					<Ripple
 						rippleColor={ELSTYLES.rippleColors().colorAccent}
 						style={[ELSTYLES.buttonAlt, STARTGIG.buttonStart]}
-						onPress={() => gigApplyButton(navigation, currentGig)}>
+						onPress={() => confirmationAlert(navigation, currentGig)}>
 						<Text style={ELSTYLES.buttonAltTxt}>Apply</Text>
 					</Ripple>
 
@@ -337,9 +347,9 @@ const GigApplyScreen = ({ navigation }) => {
 	);
 };
 // Apply button function to update available and current gigs then navigates user to Active gigs screen
-function gigApplyButton(navigation) {
+async function gigApplyButton(navigation) {
 	const currentGig = availableGigsData[clickedListItem];
-	applyForGig(currentGig.gigId, currentGig.id);
+	await applyForGig(currentGig.gigId, currentGig.id);
 	navigation.navigate("ActiveGigs");
 }
 

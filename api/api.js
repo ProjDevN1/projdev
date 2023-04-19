@@ -265,6 +265,16 @@ function setActiveGig(gig){
 }
 
 
+function removeGigById(id){
+	for (let i = 0; i < availableGigsData.length; i++) {
+		if (availableGigsData[i].gigId === id) {
+			availableGigsData.splice(i, 1);
+			availableGigsData = updateIds(availableGigsData)
+			break;
+		}
+	  }
+}
+
 async function applyForGig(gigId, arrayPos){
 	if (testMode === true){
 		const time = getCurrentTime()
@@ -275,11 +285,12 @@ async function applyForGig(gigId, arrayPos){
 		updateDoc(userRef, {
 			gigsActive: arrayUnion(gigId)
 		})
-		availableGigsData.splice(arrayPos, 1)
-		console.log(gig.data())
-		const id = activeGigsData.length + 1
+		removeGigById(gigId)
+		console.log(availableGigsData.length)
+		const id = activeGigsData.length
 		const formattedGig = formatActiveGigsData(gig.data(), id, gig.id)
 		activeGigsData.push(formattedGig)
+		console.log(activeGigsData.length)
 		console.log(formattedGig)
 	} else {
 		console.log('Test mode is disabled, no changes to DB made')
@@ -460,6 +471,23 @@ async function resetGigsProgress(){
 	  }
 }
 
+function getUpdatedData(type) {
+	if (type === "active"){
+		console.log("act")
+		for (let i = 0; i < activeGigsData.length; i++) {
+			console.log(activeGigsData[i].gigId)
+		}
+		return activeGigsData
+	}
+	if (type === "available"){
+		console.log("av")
+		for (let i = 0; i < availableGigsData.length; i++) {
+			console.log(availableGigsData[i].gigId)
+		}
+		return availableGigsData
+	}
+}
+
 
 
 //Export non-temp functions and data here
@@ -482,4 +510,5 @@ export {
 	resetGigsProgress,
 	getClientPhone,
 	getClientEmail,
+	getUpdatedData,
 };

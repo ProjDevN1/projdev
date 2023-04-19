@@ -7,14 +7,15 @@ import {
 	Button,
 	Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { STYLES } from "../constants/styles";
 import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
 import { GIGLISTFILTER } from "../constants/styles";
-import { availableGigsData, getClientName, getFilteredItems, getClientPhone, getClientEmail } from "../api/api";
+import { availableGigsData, getClientName, getFilteredItems, getClientPhone, getClientEmail, getUpdatedData } from "../api/api";
 
+import { useIsFocused } from "@react-navigation/native";
 import Modal from "react-native-modal";
 import DropDownPicker from "react-native-dropdown-picker";
 import Slider from "@react-native-community/slider";
@@ -23,18 +24,18 @@ import Ripple from "react-native-material-ripple";
 
 let filteredItems = [];
 
+function decideShownData(filteredItems, availableGigsData, showFilteredList) {
+	if (showFilteredList === true) {
+		return filteredItems;
+	} else {
+		return getUpdatedData("available");
+	}
+}
 //This has the frontend code that shows either a list of available gigs or a text thing. Style accordingly
 function List(props) {
 	const navRef = props.nav;
 	const showFilteredList = props.filtered;
 
-	function decideShownData(filteredItems, availableGigsData, showFilteredList) {
-		if (showFilteredList === true) {
-			return filteredItems;
-		} else {
-			return availableGigsData;
-		}
-	}
 
 	//This is the frontend code for an individual list item
 	const Item = ({
@@ -119,6 +120,13 @@ function List(props) {
 }
 
 const GigListScreen = ({ navigation }) => {
+	const isFocused = useIsFocused();
+
+	useEffect(() => {
+	  if (!isFocused) {
+		decideShownData(filteredItems, availableGigsData, showFilteredList)
+	  }
+	}, [isFocused]);
 	//The List component is the function above. It returns the forntend code for available gigs list if there are available gigs
 	//Otherwise just returns text component telling the user that no gigs are available
 

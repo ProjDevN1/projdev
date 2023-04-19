@@ -74,14 +74,14 @@ export default function App() {
 				<Stack.Screen name="Dev" component={DevScreen} />
 				<Stack.Screen name="Landing" component={LandingScreen} />
 				<Stack.Screen name="Login" component={LoginScreen} />
-				<Stack.Screen name="GigList" component={GigListScreen} />
-				<Stack.Screen name="ActiveGigs" component={ActiveGigsScreen} />
+				<Stack.Screen name="GigList" component={GigListScreen} options={{title: "Gig list"}} />
+				<Stack.Screen name="ActiveGigs" component={ActiveGigsScreen} options={{title: "Active gigs"}} />
 				<Stack.Screen name="Registration" component={RegistrationScreen} />
 				<Stack.Screen name="Driving" component={DrivingScreen} />
-				<Stack.Screen name="AddPicInfo" component={AddPicsAndInfo} />
-				<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-				<Stack.Screen name="GigApply" component={GigApplyScreen} />
-				<Stack.Screen name="GigStart" component={GigStartScreen} />
+				<Stack.Screen name="AddPicInfo" component={AddPicsAndInfo} options={{title: "Add pictures and info"}} />
+				<Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{title: "Test"}} />
+				<Stack.Screen name="GigApply" component={GigApplyScreen} options={{title: "Apply for a gig"}}/>
+				<Stack.Screen name="GigStart" component={GigStartScreen} options={{title: "Start a gig"}}/>
 
 				<Stack.Screen name="DBTest" component={DatabaseTestingScreen} />
 				<Stack.Screen name="MapTest" component={MapsTestScreen} />
