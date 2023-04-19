@@ -6,19 +6,29 @@ import {
 	FlatList,
 	Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { STYLES } from "../constants/styles";
-import { activeGigsData, getClientName, getClientPhone, getClientEmail } from "../api/api";
+import { activeGigsData, getClientName, getClientPhone, getClientEmail, getUpdatedData } from "../api/api";
 
+import { useIsFocused } from "@react-navigation/native";
 import { ELSTYLES } from "../constants/styles";
 import { GIGLIST } from "../constants/styles";
 import Ripple from "react-native-material-ripple";
 
 //This has the frontend code that shows either a list of active gigs or a text thing. Style accordingly
+
 function List(props) {
 	const navRef = props.nav;
+	let listData = props.listData
 	//This is the frontend code for an individual list item
+	const isFocused = useIsFocused();
+
+	useEffect(() => {
+	  if (!isFocused) {
+		listData = getUpdatedData("active")
+	  }
+	}, [isFocused]);
 	const Item = ({
 		id,
 		title,
@@ -78,7 +88,7 @@ function List(props) {
 	} else {
 		return (
 			<FlatList
-				data={activeGigsData}
+				data={listData}
 				renderItem={({ item }) => (
 					<Item
 						title={item.title}
@@ -101,6 +111,7 @@ function List(props) {
 }
 
 const ActiveGigsScreen = ({ navigation }) => {
+	let listData = getUpdatedData("active");
 	//The List component is the function above. It returns the forntend code for active gigs list if there are active gigs
 	//Otherwise just returns text component telling the user that no gigs are active
 	return (
@@ -128,7 +139,7 @@ const ActiveGigsScreen = ({ navigation }) => {
 				</Ripple>
 			</View>
 			<View style={GIGLIST.content}>
-				<List nav={navigation} />
+				<List nav={navigation} listData={listData} />
 			</View>
 		</SafeAreaView>
 	);
