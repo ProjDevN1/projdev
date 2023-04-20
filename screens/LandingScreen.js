@@ -61,7 +61,7 @@ const LandingScreen = ({ navigation }) => {
 					Toimauto
 				</Text>
 				<Text style={[ELSTYLES.titleMlight, { paddingLeft: 8 }]}>
-					Lorem ipsum etc
+					Car delivery service
 				</Text>
 			</View>
 			<Image
