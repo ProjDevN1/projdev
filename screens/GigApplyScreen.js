@@ -21,7 +21,6 @@ import { ELSTYLES } from "../constants/styles";
 import { STARTGIG } from "../constants/styles";
 import Ripple from "react-native-material-ripple";
 
-const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const GigApplyScreen = ({ navigation }) => {
 

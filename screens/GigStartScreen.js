@@ -26,7 +26,6 @@ import {
 } from "../api/api";
 import Ripple from "react-native-material-ripple";
 
-const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 /*This screen is very similar to the GigApplyScreen, because apparently the 
 only thing changing is that the apply-button changes to start-button*/

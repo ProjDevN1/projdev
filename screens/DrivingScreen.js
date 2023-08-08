@@ -29,7 +29,6 @@ import { clientName, clientEmail, clientPhone } from "../screens/ActiveGigsScree
 import { getCurrentTime } from "../api/DataHandling";
 import { SearchBar } from "react-native-screens";
 
-const GOOGLE_MAPS_APIKEY = "AIzaSyBP6tdUhVPg34f1PfSR55r_eEZIrDAWsJo";
 
 const DrivingScreen = ({ navigation }) => {
 	const [distance, setDistance] = useState(false);
